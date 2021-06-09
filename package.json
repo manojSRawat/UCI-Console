@@ -64,32 +64,32 @@
     "tslint": "~5.11.0",
     "typescript": "~3.4.0"
   },
-  "description": "Sunbird discussions ui library",
+  "description": "Samagra UCI-Console Frontend Module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sunbird-Ed/discussions-UI.git"
+    "url": "git+https://github.com/samagra-development/uci-console.git"
   },
   "keywords": [
     "sunbird",
     "discussion",
     "angular"
   ],
-  "author": "Vinu Kumar",
+  "author": "Bharat Kashyap",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Sunbird-Ed/discussions-UI/issues"
+    "url": "https://github.com/samagra-development/uci-console/issues"
   },
-  "homepage": "https://github.com/Sunbird-Ed/discussions-UI#readme",
+  "homepage": "https://github.com/samagra-development/uci-console#readme",
   "jest": {
     "globals": {
       "ts-jest": {
-        "tsConfig": "<rootDir>/projects/discussion-ui/tsconfig.spec.json"
+        "tsConfig": "<rootDir>/projects/uci-console/tsconfig.spec.json"
       }
     },
     "browser": false,
     "rootDir": "./",
     "roots": [
-      "<rootDir>/projects/discussion-ui/src/"
+      "<rootDir>/projects/uci-console/src/"
     ],
     "moduleDirectories": [
       "node_modules"
