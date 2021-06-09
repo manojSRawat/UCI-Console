@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/discussion-ui",
+  "dest": "../../dist/uci-console",
   "lib": {
     "entryFile": "src/public-api.ts"
   }

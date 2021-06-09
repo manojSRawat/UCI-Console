@@ -22,11 +22,11 @@
       "dom"
     ],
     "paths": {
-      "discussion-ui": [
-        "dist/discussion-ui"
+      "uci-console": [
+        "dist/uci-console"
       ],
-      "discussion-ui/*": [
-        "dist/discussion-ui/*"
+      "uci-console/*": [
+        "dist/uci-console/*"
       ]
     }
   }

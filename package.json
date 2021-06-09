@@ -1,5 +1,5 @@
 {
-  "name": "sunbird-ed-discussions-ui-v8",
+  "name": "uci-console",
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
@@ -9,7 +9,7 @@
     "test:ci": "jest --silent --ci --w 2 --collectCoverage=true --coverageReporters=lcov",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "copy:assets": "cp -r ./projects/discussion-ui/assets dist/discussion-ui/",
+    "copy:assets": "cp -r ./projects/uci-console/assets dist/uci-console/",
     "build-lib": "ng build && npm run copy:assets",
     "build-doc": "compodoc -p tsconfig.doc.json"
   },

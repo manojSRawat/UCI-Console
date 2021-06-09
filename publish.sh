@@ -1,6 +1,6 @@
 nvm use 14
 yarn
 npm run build-lib
-cd ./dist/discussion-ui
+cd ./dist/uci-console
 # npm publish
 npm publish --tag beta
