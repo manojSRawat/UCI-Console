@@ -1,10 +1,10 @@
-import { NSDiscussData } from './../../models/discuss.model';
-import { TelemetryUtilsService } from './../../telemetry-utils.service';
-import { DiscussionService } from './../../services/discussion.service';
+import { NSDiscussData } from '../../models/discuss.model';
+import { TelemetryUtilsService } from '../../telemetry-utils.service';
+import { UciService } from '../../services/uci.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import * as CONSTANTS from './../../common/constants.json';
+import * as CONSTANTS from '../../common/constants.json';
 
 /* tslint:disable */
 import * as _ from 'lodash'
@@ -14,11 +14,11 @@ import { IdiscussionConfig, IMenuOptions } from '../../models/discussion-config.
 /* tslint:enable */
 
 @Component({
-  selector: 'lib-side-pannel',
-  templateUrl: './side-pannel.component.html',
-  styleUrls: ['./side-pannel.component.scss']
+  selector: 'lib-side-panel',
+  templateUrl: './side-panel.component.html',
+  styleUrls: ['./side-panel.component.scss']
 })
-export class SidePannelComponent implements OnInit, OnDestroy {
+export class SidePanelComponent implements OnInit, OnDestroy {
 
   paramsSubscription: Subscription;
 
@@ -34,7 +34,7 @@ export class SidePannelComponent implements OnInit, OnDestroy {
 
   constructor(
     public router: Router,
-    public discussService: DiscussionService,
+    public uciService: UciService,
     public activatedRoute: ActivatedRoute,
     private telemetryUtils: TelemetryUtilsService,
     private configService: ConfigService

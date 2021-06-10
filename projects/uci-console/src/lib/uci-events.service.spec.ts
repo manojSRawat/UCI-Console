@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DiscussUtilsService } from './discuss-utils.service';
+import { UciEventsService } from './uci-events.service';
 
-describe('DiscussUtilsService', () => {
+describe('DiscussionEventsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: DiscussUtilsService = TestBed.get(DiscussUtilsService);
+    const service: UciEventsService = TestBed.get(UciEventsService);
     expect(service).toBeTruthy();
   });
 });

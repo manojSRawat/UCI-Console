@@ -6,7 +6,7 @@ import * as _ from 'lodash'
 @Injectable({
   providedIn: 'root'
 })
-export class DiscussionEventsService {
+export class UciEventsService {
 
   public telemetryEvent = new Subject<any>();
   public actionEvent = new EventEmitter<any>();

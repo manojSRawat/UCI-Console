@@ -1,5 +1,5 @@
 
-import { DiscussionEventsService } from './discussion-events.service';
+import { UciEventsService } from './uci-events.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 /* tslint:disable */
@@ -20,7 +20,7 @@ export class TelemetryUtilsService {
   currentObj = {};
 
   constructor(
-    private discussionEvents: DiscussionEventsService,
+    private discussionEvents: UciEventsService,
     private router: Router
   ) { }
 

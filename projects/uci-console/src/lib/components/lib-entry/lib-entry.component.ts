@@ -1,8 +1,8 @@
-import { DiscussionService } from './../../services/discussion.service';
+import { UciService } from './../../services/uci.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { DiscussionEventsService } from './../../discussion-events.service';
+import { UciEventsService } from '../../uci-events.service';
 import { TelemetryUtilsService } from './../../telemetry-utils.service';
 import { NSDiscussData } from './../../models/discuss.model';
 
@@ -22,10 +22,10 @@ export class LibEntryComponent implements OnInit {
 
   constructor(
     public activatedRoute: ActivatedRoute,
-    private discussionService: DiscussionService,
+    private UciService: UciService,
     private configService: ConfigService,
     private location: Location,
-    private discussionEventService: DiscussionEventsService,
+    private uciEventsService: UciEventsService,
     private telemetryUtils: TelemetryUtilsService
 
   ) { }
@@ -39,10 +39,10 @@ export class LibEntryComponent implements OnInit {
       this.configService.setConfigFromParams(this.activatedRoute);
       this.data = this.configService.getConfig();
     }
-    this.discussionService.userName = _.get(this.data, 'userName');
-    const rawCategories = _.get(this.data, 'categories');
-    this.discussionService.forumIds = _.get(rawCategories, 'result');
-    this.discussionService.initializeUserDetails(this.discussionService.userName);
+    // this.UciService.userName = _.get(this.data, 'userName');
+    // const rawCategories = _.get(this.data, 'categories');
+    // this.UciService.forumIds = _.get(rawCategories, 'result');
+    // this.UciService.initializeUserDetails(this.UciService.userName);
    }
 
   goBack() {
@@ -53,7 +53,7 @@ export class LibEntryComponent implements OnInit {
     const eventAction = {
       action: 'DF_CLOSE'
     };
-    this.discussionEventService.emitTelemetry(eventAction);
+    this.uciEventsService.emitTelemetry(eventAction);
     this.telemetryUtils.logInteract(event, NSDiscussData.IPageName.LIB_ENTRY);
   }
 }

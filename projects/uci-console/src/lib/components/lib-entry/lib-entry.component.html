@@ -1,21 +1,21 @@
 <div class="ui container">
     <div class="relative position">
-        <div class="py-8 df-btn-container df-back-btn-container">
+        <div class="py-8 ua-btn-container ua-back-btn-container">
             <!-- /* Back button */ -->
             <button (click)="goBack()" type="button" class="sb-btn sb-btn-normal sb-btn-outline-primary sb-left-icon mx-8">
              <img src="./assets/discussion-ui/images/back-img.png" alt="back-image" class="ml-4" width="16px" height="16px">
                 Back
             </button>
-            <button (click)="close($event)" class="sb-btn sb-btn-normal df-btn-close sb-left-icon-btn mx-8" id="close-discussion-forum" type="button"> Close 
+            <button (click)="close($event)" class="sb-btn sb-btn-normal ua-btn-close sb-left-icon-btn mx-8" id="close-discussion-forum" type="button"> Close 
             <img class="ml-4" height="8px" src="./assets/discussion-ui/images/close.png" width="8px"></button>
         </div>
     </div>
-    <div class="discussion-forum">
-        <div class="discussion-forum-content">
-            <div class="discuss-left-panel df-side-content">
-                <lib-side-pannel></lib-side-pannel>
+    <div class="uci-admin">
+        <div class="uci-admin-content">
+            <div class="uci-admin-left-panel ua-side-content">
+                <lib-side-panel></lib-side-panel>
             </div>
-                <div class="discuss-right-panel df-main-content">
+                <div class="uci-admin-right-panel ua-main-content">
                     <router-outlet></router-outlet>
                 </div>
         </div>

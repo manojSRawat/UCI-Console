@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TagAllDiscussionComponent } from './tag-all-discussion.component';
+import { SidePanelComponent } from './side-panel.component';
 
-describe('TagAllDiscussionComponent', () => {
-  let component: TagAllDiscussionComponent;
-  let fixture: ComponentFixture<TagAllDiscussionComponent>;
+describe('SidePanelComponent', () => {
+  let component: SidePanelComponent;
+  let fixture: ComponentFixture<SidePanelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TagAllDiscussionComponent ]
+      declarations: [ SidePanelComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TagAllDiscussionComponent);
+    fixture = TestBed.createComponent(SidePanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,4 +1,4 @@
-import { DiscussionService } from './discussion.service';
+import { UciService } from './uci.service';
 import { Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -21,7 +21,7 @@ export class ConfigService implements OnInit {
 
   constructor(
     public activatedRoute: ActivatedRoute,
-    private discussionService: DiscussionService,
+    private UciService: UciService,
   ) { }
 
   ngOnInit() {

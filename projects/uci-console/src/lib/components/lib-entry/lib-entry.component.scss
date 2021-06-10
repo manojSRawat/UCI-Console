@@ -1,64 +1,64 @@
-.df-btn-container{
+.ua-btn-container{
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: #fff;
 }
 
-.df-btn-close{
+.ua-btn-close{
     color: #000;
     font-weight: bold;
     background: #ef64af;
 }
 
-.discussion-forum{
+.uci-admin{
     width: 100%;
     min-height: 100vh;
     position: relative;
     z-index: unset;
 }
 
-.discussion-forum-content {
+.uci-admin-content {
     display: grid;
     grid-template-columns: 1fr 4fr;
     margin: 0 1.5rem;
 }
 
-.discuss-left-panel{
+.uci-admin-left-panel {
     padding: 1.5rem;
     position: relative;
     z-index: 2;
 }
 
-.discuss-right-panel{
+.uci-admin-right-panel {
     padding: 1.5rem;
 }
 
 
 @media (max-width: 768px) {
-    .discussion-forum{
+    .uci-admin{
         padding: 0 8px;
         height: 100vh;
         overflow: auto;
         background:#e9e8d9;
     }
-    .discuss-left-panel{
+    .uci-admin-left-panel {
         padding: 1rem 0;
     }
-    .discuss-right-panel{
+    .uci-admin-right-panel {
      padding: 0px 0px 48px 0px;
     }
   }
 
   @media screen and (min-width: 376px) and (max-width: 768px){
-    .discussion-forum-content {
+    .uci-admin-content {
         grid-template-columns: 1fr;  
         margin:0px;
     }
   }
 
   @media screen and (min-width: 320px) and (max-width:375px){
-    .discussion-forum-content {
+    .uci-admin-content {
         grid-template-columns: repeat(auto-fill,minmax(292px,1fr));
         margin:0px;
     }

@@ -2,7 +2,7 @@ export const urlConfig = {
     // endpoint configs...!
     // host: 'http://localhost:3002',
     host: 'https://dev.sunbirded.org',
-    apiSlug: '/discussion',
+    apiSlug: '/uci',
     apiBasePath: () => `${urlConfig.host}${urlConfig.apiSlug}`,
 
     // URLs...!
