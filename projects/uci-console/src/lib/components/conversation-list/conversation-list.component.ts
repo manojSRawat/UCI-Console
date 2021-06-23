@@ -25,7 +25,7 @@ export class ConversationListComponent implements OnInit {
     sortDirection = '';
     reverse = false;
     queryParams: any;
-
+    search;
     constructor(
         private uciService: UciService,
         private route: Router
@@ -37,7 +37,10 @@ export class ConversationListComponent implements OnInit {
     }
 
     getAllChatBots() {
-        this.uciService.fetchAllChatBots({}).subscribe(
+        const param = {
+            search: this.search
+        };
+        this.uciService.fetchAllChatBots(param).subscribe(
             data => {
                 this.chatBots = data.data;
                 this.pager = {
@@ -75,4 +78,13 @@ export class ConversationListComponent implements OnInit {
         this.route.navigate(['u', this.pageNumber], {queryParams: this.queryParams});
     }
 
+    getSearch() {
+        console.log('--->>>search', this.search);
+        this.getAllChatBots();
+    }
+
+    addNew() {
+        console.log('--->>add new');
+        this.route.navigateByUrl('uci-add');
+    }
 }

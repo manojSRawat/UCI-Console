@@ -2,11 +2,17 @@
     padding-top: 1.5rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+    z-index: 2!important;
 }
 .cursor-pointer {
     cursor: pointer;
 }
-.add-new-btn{
+.cancel-btn{
+    z-index: 2;
+    background-color: #fff!important;
+}
+.add-btn{
+    margin-left: 1rem;
     z-index: 2;
     background-color: #fff!important;
 }
@@ -15,4 +21,10 @@
 }
 .ellipsis-icon{
     font-size: 1.2rem;
+}
+.w-50-px{
+    width: 50px!important;
+}
+.font-1-5{
+    font-size: 1.5rem;
 }

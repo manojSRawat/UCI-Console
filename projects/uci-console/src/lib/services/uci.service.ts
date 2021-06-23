@@ -38,6 +38,9 @@ export class UciService extends BaseService {
     fetchAllChatBots(params): Observable<any> {
         return this.getRequest(this.BASE_URL + 'admin/v1/bot/get', params);
     }
+    fetchUserSegment(params): Observable<any> {
+        return this.getRequest(this.BASE_URL + 'admin/v1/dummy', params);
+    }
 
     // createPost(data: any) {
     //   // return this.http.post(urlConfig.createPost(), data);
