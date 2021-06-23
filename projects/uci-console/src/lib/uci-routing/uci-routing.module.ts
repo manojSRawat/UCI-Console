@@ -3,19 +3,20 @@ import { LibEntryComponent } from '../components/lib-entry/lib-entry.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import {ConversationListComponent} from '../components/conversation-list/conversation-list.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: LibEntryComponent,
-    children: [       
+    component: ConversationListComponent,
+    /*children: [
       {
         path: 'conversations',
         pathMatch: 'full',
         component: ConversationAllComponent
       }
-    ]
+    ]*/
   },
 ];
 

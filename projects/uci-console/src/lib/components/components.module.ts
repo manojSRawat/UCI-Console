@@ -10,10 +10,14 @@ import { ConversationAllComponent } from './conversations/conversation-all.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ConversationListComponent } from './conversation-list/conversation-list.component';
+import { ConversationAddComponent } from './conversation-add/conversation-add.component';
 @NgModule({
   declarations: [
     SidePanelComponent,
-    ConversationAllComponent
+    ConversationAllComponent,
+    ConversationListComponent,
+    ConversationAddComponent
   ],
   imports: [
     CommonModule,
