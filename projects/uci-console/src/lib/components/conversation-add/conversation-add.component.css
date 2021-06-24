@@ -1,0 +1,71 @@
+.uci-add-container {
+    /*padding-top: 1.5rem;*/
+    /*padding-left: 1.5rem;*/
+    /*padding-right: 1.5rem;*/
+    /*z-index: 2!important;*/
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.cancel-btn{
+    z-index: 2;
+    background-color: #fff!important;
+}
+.add-btn{
+    margin-left: 1rem;
+    z-index: 2;
+    background-color: #fff!important;
+}
+.filter_search{
+    border-radius: 25px!important;
+}
+.ellipsis-icon{
+    font-size: 1.2rem;
+}
+.w-50-px{
+    width: 50px!important;
+}
+.font-1-2{
+    font-size: 1.2rem;
+}
+.steps{
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    border: 1px solid #777777;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e2e2e2;
+    color: #000000;
+    margin-right: 0.7rem;
+    font-size: 0.75rem;
+}
+.font-0-75{
+    font-size: 0.75rem;
+}
+.line{
+    background-color: #777;
+    width: 50%;
+    height: 1px;
+    margin-top: 0.6rem;
+    margin-left: 5px;
+}
+.blue-bg-white-text{
+    background-color: #0c5593!important;
+    color: #FFFFFF!important;
+}
+.green-bg-white-text{
+    background-color: #3c763d!important;
+    color: #FFFFFF!important;
+}
+.w-25-per{
+    width: 25%;
+}
+.add-logic{
+    margin-top: 1rem;
+}
+.term-condition{
+    margin-left: 1rem;
+}

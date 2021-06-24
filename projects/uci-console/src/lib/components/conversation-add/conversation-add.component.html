@@ -1,1 +1,156 @@
-<p>conversation-add works!</p>
+<div class="uci-add-container">
+    <div class="ui grid">
+        <div class="five wide column">
+            <div class="d-flex flex-row justify-content-start align-items-center font-0-75">
+                <div class="steps"
+                     [ngClass]="{'blue-bg-white-text': stepIndex === 1, 'green-bg-white-text': stepIndex === 2}">1
+                </div>
+                <div>Conversation setup</div>
+                <div class="line"></div>
+            </div>
+        </div>
+        <div class="three wide column">
+            <div class="d-flex flex-row justify-content-start align-items-center font-0-75">
+                <div class="steps" [ngClass]="{'blue-bg-white-text': stepIndex === 2}">2</div>
+                <div>Conversation flow</div>
+            </div>
+        </div>
+        <div class="four wide column">
+            <ng-container *ngIf="stepIndex === 1; else stp2_btn">
+                <div class="right-floated pt-0">
+                    <button class="sb-btn sb-btn-normal cursor-pointer cancel-btn"> Cancel</button>
+                    <button class="sb-btn sb-btn-normal cursor-pointer add-btn" (click)="nextStep()"> Next</button>
+                </div>
+            </ng-container>
+            <ng-template #stp2_btn>
+                <div class="ui grid">
+                    <div class="twelve wide column">
+                        <div class="right-floated pt-0">
+                            <button class="sb-btn sb-btn-normal cursor-pointer cancel-btn"> Cancel</button>
+                            <button class="sb-btn sb-btn-normal cursor-pointer add-btn"> Save</button>
+                            <button class="sb-btn sb-btn-normal cursor-pointer add-btn"> Submit</button>
+                        </div>
+                    </div>
+                    <div class="" style="margin-left: 2rem; margin-bottom: 1rem">
+                        <div class="d-flex flex-row justify-content-start align-items-center font-0-75">
+                            <div>
+                                <input type="checkbox" class="form-control" />
+                            </div>
+                            <div class="term-condition">
+                                I agree the terms and conditions
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </ng-template>
+
+        </div>
+    </div>
+    <div class="step1-wrapper" *ngIf="stepIndex === 1">
+        <div class="ui grid">
+            <div class="ten wide column font-1-2">
+                Add new conversation
+            </div>
+        </div>
+        <div class="ui grid">
+            <div class="six wide column">
+                <h6>User segment</h6>
+                <p>0 segment added</p>
+            </div>
+            <div class="six wide column">
+                <div class="pt-0">
+                    <button class="sb-btn sb-btn-normal cursor-pointer cancel-btn"> Create new</button>
+                    <button class="sb-btn sb-btn-normal cursor-pointer add-btn" (click)="userSegment()"> Choose from
+                        existing
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="step2-wrapper" *ngIf="stepIndex === 2">
+        <div class="ui grid">
+            <div class="ten wide column font-1-2">
+                Conversation flow
+            </div>
+            <div class="two wide column">
+                <button class="sb-btn sb-btn-normal cursor-pointer add-btn" *ngIf="conversationFLowList && conversationFLowList.length"> Add Logic</button>
+            </div>
+        </div>
+        <div class="ui grid">
+            <ng-container *ngIf="conversationFLowList && conversationFLowList.length <= 0; else showTable">
+                <div class="twelve wide column">
+                    <div class="pt-0 d-flex flex-row justify-content-center">
+                        <div class="w-25-per text-center" style="margin: auto; border: 1px solid; padding: 2rem;">
+                            <div class="text-center">
+                                <div class="text-center"><i class="plus circle icon font-1-2"></i></div>
+                                No logic Added
+                            </div>
+
+                            <button class="sb-btn sb-btn-normal cursor-pointer add-btn add-logic"> Add logic
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-template #showTable>
+                <div class="twelve wide column">
+                    <table class="ui table" style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0 w-50-px" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+
+                            </th>
+                            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                                Steps
+                            </th>
+                            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                                Name
+                            </th>
+                            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                                Description
+                            </th>
+                            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                                Action
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="UpForReviewListHover" *ngFor="let content of conversationFLowList; let i = index;">
+
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>{{content.step}}</td>
+                            <td>{{content?.name}}</td>
+                            <td>{{content?.description}}</td>
+                            <td><i class="ellipsis vertical icon ellipsis-icon"></i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                                <div class="ui grid">
+                                    <div class="two wide column"></div>
+                                    <div class="ten wide column">
+                                        <div class="pb-10">
+                                            <div class="ui pagination menu mt-10 right-floated pt-0" *ngIf="pager.pages">
+                                                <a [ngClass]="{disabled:pager.currentPage===1 }" class="item " (click)="navigateToPage(1) ">First</a>
+                                                <a [ngClass]="{disabled:pager.currentPage===1 }" class="item " (click)="navigateToPage(pager.currentPage - 1)">Previous</a>
+                                                <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage===page}" (click)="navigateToPage(page)" class="item">{{page}}</a>
+                                                <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}" (click)="navigateToPage(pager.currentPage + 1)" class="item">Next</a>
+                                                <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}" (click)="navigateToPage(pager.totalPages)" class="item ">Last</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                </div>
+            </ng-template>
+
+        </div>
+    </div>
+</div>
