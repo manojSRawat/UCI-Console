@@ -25,7 +25,8 @@
             <div class="four wide column">
                 <ng-container *ngIf="stepIndex === 1; else stp2_btn">
                     <div class="right-floated pt-0">
-                        <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onAddCancel()"> Cancel
+                        <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onAddCancel()">
+                            Cancel
                         </button>
                         <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="nextStep()"> Next</button>
                     </div>
@@ -34,8 +35,11 @@
                     <div class="ui grid">
                         <div class="twelve wide column">
                             <div class="right-floated pt-0">
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onAddCancel()"> Cancel</button>
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onSave()"> Save
+                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10"
+                                        (click)="onAddCancel()"> Cancel
+                                </button>
+                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onSave()">
+                                    Save
                                 </button>
                                 <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onSubmit()"> Submit
                                 </button>
@@ -75,7 +79,8 @@
                 </div>
                 <div class="six wide column">
                     <div class="pt-0">
-                        <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onUserSegmentCancel()">
+                        <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10"
+                                (click)="onUserSegmentCancel()">
                             Create new
                         </button>
                         <button class="sb-btn sb-btn-normal sb-btn-outline-primary" (click)="userSegment()">
@@ -85,9 +90,25 @@
                 </div>
             </div>
             <div class="ui grid">
-                <div *ngFor="let userSegment of userSegments">
-                    {{userSegment.name}}
-                </div>
+                <ng-container *ngIf="userSegments && userSegments.length">
+                    <div class="five wide column" *ngFor="let userSegment of userSegments; let i = index">
+                        <div class="custom-card">
+                            <div class="ui grid">
+                                <div class="nine wide column">
+                                    <h6>{{userSegment.name}}</h6>
+                                    <p>User count 10000</p>
+
+                                </div>
+                                <div class="three wide column">
+                                    <div class="delete-icon-sec">
+                                        <i class="trash alternate icon delete-icon" (click)="onUserSegmentDelete(i)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
             </div>
         </div>
 
