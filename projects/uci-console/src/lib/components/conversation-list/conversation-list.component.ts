@@ -39,8 +39,8 @@ export class ConversationListComponent implements OnInit {
 
     getAllChatBots() {
         const param = {
-            limit: this.pager.pageSize,
-            offset: (this.pageNumber - 1) * (this.pager.pageSize),
+            page: this.pager.currentPage,
+            perPage: this.pager.pageSize
         };
 
         if (this.search) {
@@ -48,18 +48,18 @@ export class ConversationListComponent implements OnInit {
         }
         this.uciService.fetchAllChatBots(param).subscribe(
             data => {
-                this.chatBots = data.data;
-                this.pager = {
-                    totalItems: data.total,
-                    currentPage: 1,
-                    pageSize: 10,
-                    totalPages: Math.ceil(data.total / this.pager.pageSize),
-                    startPage: 0,
-                    endPage: 0,
-                    startIndex: 0,
-                    endIndex: 0,
-                    pages: []
-                };
+                this.chatBots = [];
+                data.data.forEach(bot => {
+                    const obj = {...bot, userCount: 0};
+                    bot.userSegments.forEach(userSegment => {
+                        obj.userCount += (userSegment.count || 0);
+                    });
+
+                    this.chatBots.push(obj);
+                });
+                this.pager.totalItems = data.total;
+                this.pager.totalPages = Math.ceil(data.total / this.pager.pageSize);
+                this.pager.pages = [];
                 let i = 1;
                 while (i <= Math.ceil(data.total / this.pager.pageSize)) {
                     this.pager.pages.push(i);
@@ -81,6 +81,7 @@ export class ConversationListComponent implements OnInit {
             return;
         }
         this.pageNumber = page;
+        this.pager.currentPage = page;
         this.getAllChatBots();
         // this.route.navigate(['u', this.pageNumber], {queryParams: this.queryParams});
     }
@@ -89,7 +90,19 @@ export class ConversationListComponent implements OnInit {
         this.getAllChatBots();
     }
 
-    addNew() {
+    onAddNew() {
         this.route.navigateByUrl('uci/add');
+    }
+
+    onEdit() {
+
+    }
+
+    onStatus(botId, index) {
+        this.uciService.toggleBotStatus(botId).subscribe(
+            data => {
+                this.chatBots[index].status = 'Live';
+            }
+        );
     }
 }

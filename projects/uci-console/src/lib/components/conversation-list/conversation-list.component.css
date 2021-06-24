@@ -3,16 +3,11 @@
     /*padding-left: 1.5rem;*/
     /*padding-right: 1.5rem;*/
 }
-.cursor-pointer {
-    cursor: pointer;
+
+.filter_search {
+    border-radius: 25px !important;
 }
-.add-new-btn{
-    z-index: 2;
-    background-color: #fff!important;
-}
-.filter_search{
-    border-radius: 25px!important;
-}
-.ellipsis-icon{
+
+.ellipsis-icon {
     font-size: 1.2rem;
 }

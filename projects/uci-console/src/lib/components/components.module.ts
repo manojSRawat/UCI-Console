@@ -13,6 +13,7 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {ConversationListComponent} from './conversation-list/conversation-list.component';
 import {ConversationAddComponent} from './conversation-add/conversation-add.component';
 import {UserSegmentListComponent} from './user-segment-list/user-segment-list.component';
+import {CommonFormElementsModule} from 'common-form-elements';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import {UserSegmentListComponent} from './user-segment-list/user-segment-list.co
         ReactiveFormsModule,
         TagInputModule,
         PipesModule,
-        InfiniteScrollModule
+        InfiniteScrollModule,
+        CommonFormElementsModule
     ],
     exports: [
         SidePanelComponent,

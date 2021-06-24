@@ -21,6 +21,17 @@ export class BaseService {
         );
     }
 
+    public postRequest(url, data = {}) {
+        return this.http.post(url, data).pipe(
+            map(res => {
+                return res;
+            }),
+            catchError(err => {
+                return this.handleError(err);
+            })
+        );
+    }
+
 
     public handleError(error: HttpErrorResponse) {
         if (error instanceof ErrorEvent) {

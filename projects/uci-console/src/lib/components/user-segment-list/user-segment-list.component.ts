@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UciService} from '../../services/uci.service';
 import {Router} from '@angular/router';
 
@@ -8,26 +8,11 @@ import {Router} from '@angular/router';
     styleUrls: ['./user-segment-list.component.css']
 })
 export class UserSegmentListComponent implements OnInit {
-    userSegmentList = [
-        {
-            name: 'tester',
-            Category: '123',
-            total_member: '12',
-            update: 'xyz',
-        },
-        {
-            name: 'tester',
-            Category: '123',
-            total_member: '12',
-            update: 'xyz',
-        },
-        {
-            name: 'tester',
-            Category: '123',
-            total_member: '12',
-            update: 'xyz',
-        }
-    ];
+    @Output() cancel = new EventEmitter<boolean>();
+    @Output() add = new EventEmitter<any>();
+    @Input() selectedUserSegments = [];
+
+    userSegments = [];
     pager: any = {
         totalItems: 0,
         currentPage: 1,
@@ -45,6 +30,7 @@ export class UserSegmentListComponent implements OnInit {
     reverse = false;
     queryParams: any;
     search;
+
     constructor(
         private uciService: UciService,
         private route: Router
@@ -57,28 +43,21 @@ export class UserSegmentListComponent implements OnInit {
 
     getUserSegment() {
         const param = {
-            search: this.search
+            page: this.pager.currentPage,
+            perPage: this.pager.pageSize
         };
+
         this.uciService.fetchUserSegment(param).subscribe(
             data => {
-                this.userSegmentList = data.data;
-                // this.pager = {
-                //     totalItems: data.total,
-                //     currentPage: 1,
-                //     pageSize: 10,
-                //     totalPages: Math.ceil(data.total / this.pager.pageSize),
-                //     startPage: 0,
-                //     endPage: 0,
-                //     startIndex: 0,
-                //     endIndex: 0,
-                //     pages: []
-                // };
-                // let i = 1;
-                // while (i <= Math.ceil(data.total / this.pager.pageSize)) {
-                //     this.pager.pages.push(i);
-                //     i++;
-                // }
-                // console.log(this.pager);
+                const selectedIds = [];
+                this.selectedUserSegments.forEach(selectedUserSegment => {
+                    selectedIds.push(selectedUserSegment.id);
+                });
+                this.userSegments = [];
+                data.data.forEach(segment => {
+                    segment.isSelected = selectedIds.indexOf(segment.id) !== -1;
+                    this.userSegments.push(segment);
+                });
             }
         );
     }
@@ -100,5 +79,20 @@ export class UserSegmentListComponent implements OnInit {
     getSearch() {
         console.log('--->>>search', this.search);
         this.getUserSegment();
+    }
+
+    onCancel() {
+        this.cancel.emit(false);
+    }
+
+    onAdd() {
+        const selectedSegments = [];
+        this.userSegments.forEach(userSegment => {
+            if (userSegment.isSelected) {
+                selectedSegments.push(userSegment);
+            }
+        });
+
+        this.add.emit(selectedSegments);
     }
 }

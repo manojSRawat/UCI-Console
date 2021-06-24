@@ -29,17 +29,31 @@ export class UciService extends BaseService {
     usr: any;
 
     // todo add this in separate file
-    BASE_URL = 'http://uci-dev.ngrok.samagra.io/';
+    BASE_URL = 'http://uci-dev3.ngrok.samagra.io/admin/v1/';
+    FORM_BASE_URL = 'https://dev.sunbirded.org/';
 
     constructor(public http: HttpClient) {
         super(http);
     }
 
     fetchAllChatBots(params): Observable<any> {
-        return this.getRequest(this.BASE_URL + 'admin/v1/bot/get', params);
+        return this.getRequest(this.BASE_URL + 'bot/get', params);
     }
+
+    toggleBotStatus(botId): Observable<any> {
+        return this.getRequest(this.BASE_URL + 'bot/get', {});
+    }
+
     fetchUserSegment(params): Observable<any> {
-        return this.getRequest(this.BASE_URL + 'admin/v1/dummy', params);
+        return this.getRequest(this.BASE_URL + 'userSegment/get', params);
+    }
+
+    botCreate(data) {
+        return this.postRequest(this.BASE_URL + 'bot/create', data);
+    }
+
+    readForm(data) {
+        return this.postRequest(this.FORM_BASE_URL + 'api/data/v1/form/read', data);
     }
 
     // createPost(data: any) {

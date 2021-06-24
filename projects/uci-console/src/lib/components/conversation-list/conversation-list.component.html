@@ -15,7 +15,7 @@
         <div class="two wide column">
             <div class="pb-10">
                 <div class="right-floated pt-0">
-                    <button class="sb-btn sb-btn-normal cursor-pointer add-new-btn" (click)="addNew()"> Add New</button>
+                    <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onAddNew()"> Add New</button>
                 </div>
             </div>
         </div>
@@ -53,11 +53,13 @@
         <tbody>
         <tr class="UpForReviewListHover" *ngFor="let content of chatBots; let i = index;">
             <td>{{content.name}}</td>
-            <td>{{content?.status}}</td>
+            <td [ngClass]="'status-' + content?.status">{{content?.status}}</td>
             <td>{{content?.description}}</td>
             <td>{{content?.segments}}</td>
-            <td>{{content?.users}}</td>
-            <td><i class="ellipsis vertical icon ellipsis-icon"></i></td>
+            <td>{{content?.userCount}}</td>
+            <td>
+                <i class="ellipsis vertical icon ellipsis-icon"></i>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -75,5 +77,4 @@
             </div>
         </div>
     </div>
-
 </div>
