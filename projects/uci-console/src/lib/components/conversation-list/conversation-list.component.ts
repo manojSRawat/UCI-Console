@@ -26,6 +26,7 @@ export class ConversationListComponent implements OnInit {
     reverse = false;
     queryParams: any;
     search;
+
     constructor(
         private uciService: UciService,
         private route: Router
@@ -38,8 +39,13 @@ export class ConversationListComponent implements OnInit {
 
     getAllChatBots() {
         const param = {
-            search: this.search
+            limit: this.pager.pageSize,
+            offset: (this.pageNumber - 1) * (this.pager.pageSize),
         };
+
+        if (this.search) {
+            // param['search'] = this.search;
+        }
         this.uciService.fetchAllChatBots(param).subscribe(
             data => {
                 this.chatBots = data.data;
@@ -75,16 +81,15 @@ export class ConversationListComponent implements OnInit {
             return;
         }
         this.pageNumber = page;
-        this.route.navigate(['u', this.pageNumber], {queryParams: this.queryParams});
+        this.getAllChatBots();
+        // this.route.navigate(['u', this.pageNumber], {queryParams: this.queryParams});
     }
 
     getSearch() {
-        console.log('--->>>search', this.search);
         this.getAllChatBots();
     }
 
     addNew() {
-        console.log('--->>add new');
-        this.route.navigateByUrl('uci-add');
+        this.route.navigateByUrl('uci/add');
     }
 }

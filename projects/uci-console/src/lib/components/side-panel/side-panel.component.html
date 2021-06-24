@@ -5,16 +5,13 @@
 </ul>
 
 <!-- for mobile-view -->
-<button type="button" class="openbtn" (click)="showMenuButton()">☰</button> 
+<button type="button" class="openbtn" (click)="showMenuButton()">☰</button>
 <div class="overlay-sidebar" *ngIf="!showSideMenu">
   <div class="overlay-sidebar__menu">
       <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
       <div class="sidebar-menu__content">
         <ul class="sb-sidebar-menu-mob pl-0">
-          <li class="ua-sidebar-menu-list" *ngIf="false" (click)="navigate('home', $event)" id="all-discussions"><a>All discussions</a></li>
-          <li class="ua-sidebar-menu-list" [ngClass]="{'menu-active': selectedTab === 'categories'}" (click)="navigate('categories', $event)" id="discussion-categories"><a>Bots</a></li>
-          <li class="ua-sidebar-menu-list" [ngClass]="{'menu-active': selectedTab === 'tags'}" (click)="navigate('tags', $event)" id="discussion-tags"><a>Tags</a></li>
-          <li class="ua-sidebar-menu-list" [ngClass]="{'menu-active': selectedTab === 'my-discussion'}" (click)="navigate('my-discussion', $event)" id="my-discussion"><a>My discussions</a></li>
+          <li class="ua-sidebar-menu-list" *ngIf="false" (click)="navigate('', $event)" id="all-discussions"><a>Bots</a></li>
       </ul>
       </div>
   </div>
