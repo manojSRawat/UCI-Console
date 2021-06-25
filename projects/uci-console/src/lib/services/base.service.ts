@@ -35,12 +35,9 @@ export class BaseService {
 
     public handleError(error: HttpErrorResponse) {
         if (error instanceof ErrorEvent) {
-            console.error('An error occurred:', error.error.message);
-        } else {
-            console.error(
-                `Backend returned code ${error.status}, ` +
-                `body was: ${error.error}`);
+            return throwError(error.error.message);
         }
+
         return throwError(error.error);
     }
 }

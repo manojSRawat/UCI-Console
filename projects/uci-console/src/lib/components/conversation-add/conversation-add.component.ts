@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {UciService} from '../../services/uci.service';
 
-// import {ModalTemplate, SuiModalService, TemplateModalConfig} from 'ng2-semantic-ui-v9';
+import {SuiModalService} from 'ng2-semantic-ui-v9';
 
 @Component({
     selector: 'lib-conversation-add',
@@ -10,32 +10,20 @@ import {UciService} from '../../services/uci.service';
     styleUrls: ['./conversation-add.component.css']
 })
 export class ConversationAddComponent implements OnInit {
-    // @ViewChild('modalTemplate', {static: false}) modalTemplate: ModalTemplate<{ data: string }, string, string>;
     currentViewState = 'ADD_CONVERSATION';
     stepIndex = 1;
     conversationFLowList = [];
-    pager: any = {
-        totalItems: 0,
-        currentPage: 1,
-        pageSize: 10,
-        totalPages: 0,
-        startPage: 0,
-        endPage: 0,
-        startIndex: 0,
-        endIndex: 0,
-        pages: []
-    };
-    pageNumber = 1;
+    userSegments = [];
     column = '';
     sortDirection = '';
     reverse = false;
     formFieldProperties: Array<any>;
-    userSegments = [];
+    collectionListModal = false;
 
     constructor(
         private uciService: UciService,
         private router: Router,
-        // private modalService: SuiModalService
+        private modalService: SuiModalService
     ) {
     }
 
@@ -81,15 +69,6 @@ export class ConversationAddComponent implements OnInit {
         this.reverse = !this.reverse;
     }
 
-    navigateToPage(page: number): undefined | void {
-        if (page < 1 || page > this.pager.totalPages) {
-            return;
-        }
-        this.pageNumber = page;
-        // this.getAllChatBots();
-        // this.route.navigate(['u', this.pageNumber], {queryParams: this.queryParams});
-    }
-
     getForm() {
         this.uciService.readForm(
             {
@@ -126,15 +105,21 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onSubmit() {
+        this.router.navigate(['uci/success']);
+
+        // todo uncomment after dynamic form
+        /*this.uciService.botCreate({}).subscribe(
+            data => {
+                this.router.navigate(['uci/success']);
+            }
+        );*/
     }
 
     openModel() {
-        /*const config = new TemplateModalConfig(this.modalTemplate);
-        config.isClosable = false;
-        config.size = 'small';
-        config.transitionDuration = 0;
-        config.mustScroll = true;
-        this.modalService
-            .open(config);*/
+        this.collectionListModal = true;
+    }
+
+    onLogicAdd() {
+        this.conversationFLowList.push({name: 'Test ' + (this.conversationFLowList.length + 1), step: 1, description: 'test'});
     }
 }

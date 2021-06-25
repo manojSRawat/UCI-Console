@@ -1,9 +1,9 @@
 <ng-container [ngSwitch]="currentViewState">
 
-    <lib-add-segment *ngSwitchCase="'ADD_SEGMENT'"
+    <lib-user-segment-add *ngSwitchCase="'ADD_SEGMENT'"
                      (cancel)="onUserSegmentCancel()"
                      (add)="onUserSegmentCreate($event)">
-    </lib-add-segment>
+    </lib-user-segment-add>
 
     <lib-user-segment-list *ngSwitchCase="'SELECT_SEGMENT'"
                            (cancel)="onUserSegmentCancel()"
@@ -51,17 +51,10 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="" style="margin-left: 2rem; margin-bottom: 1rem">
-                            <div class="d-flex flex-row justify-content-start align-items-center font-0-75">
-                                <div>
-                                    <input type="checkbox" class="form-control"/>
-                                </div>
-                                <div class="term-condition">
-                                    I agree the terms and conditions
-                                </div>
-                            </div>
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="example">
+                            <label> I agree the terms and conditions</label>
                         </div>
-
                     </div>
                 </ng-template>
 
@@ -69,7 +62,7 @@
         </div>
         <div class="step1-wrapper" *ngIf="stepIndex === 1">
             <div class="ui grid">
-                <div class="ten wide column font-1-2" (click)="openModel()">
+                <div class="ten wide column font-1-2">
                     Add new conversation
                 </div>
                 <div class="ten wide column font-1-2">
@@ -78,6 +71,7 @@
                                      (valueChanges)="valueChanges($event)"></sb-dynamic-form>
                 </div>
             </div>
+            <div class="ui divider"></div>
             <div class="ui grid">
                 <div class="six wide column">
                     <h6>User segment</h6>
@@ -97,18 +91,13 @@
             </div>
             <div class="ui grid">
                 <ng-container *ngIf="userSegments && userSegments.length">
-                    <div class="five wide column" *ngFor="let userSegment of userSegments; let i = index">
-                        <div class="custom-card">
-                            <div class="ui grid">
-                                <div class="nine wide column">
-                                    <h6>{{userSegment.name}}</h6>
-                                    <p>User count {{userSegment.count}}</p>
-                                </div>
-                                <div class="three wide column">
-                                    <div class="delete-icon-sec">
-                                        <i class="trash alternate icon delete-icon"
-                                           (click)="onUserSegmentDelete(i)"></i>
-                                    </div>
+                    <div class="ui three column grid">
+                        <div class="column"  *ngFor="let userSegment of userSegments; let i = index">
+                            <div class="ui fluid card">
+                                <div class="content">
+                                    <i class="right floated icon trash delete-icon" (click)="onUserSegmentDelete(i)"></i>
+                                    {{userSegment.name}}
+                                    <div class="meta">User count {{userSegment.count}}</div>
                                 </div>
                             </div>
                         </div>
@@ -124,8 +113,9 @@
                     Conversation flow
                 </div>
                 <div class="two wide column">
-                    <button class="sb-btn sb-btn-normal"
-                            *ngIf="conversationFLowList && conversationFLowList.length"> Add Logic
+                    <button class="sb-btn sb-btn-normal" *ngIf="conversationFLowList && conversationFLowList.length"
+                            (click)="openModel()">
+                        Add Logic
                     </button>
                 </div>
             </div>
@@ -139,7 +129,8 @@
                                     No logic Added
                                 </div>
 
-                                <button class="sb-btn sb-btn-normal add-logic"> Add logic
+                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary" (click)="openModel()">
+                                    Add logic
                                 </button>
                             </div>
                         </div>
@@ -191,26 +182,6 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div class="ui grid">
-                            <div class="two wide column"></div>
-                            <div class="ten wide column">
-                                <div class="pb-10">
-                                    <div class="ui pagination menu mt-10 right-floated pt-0" *ngIf="pager.pages">
-                                        <a [ngClass]="{disabled:pager.currentPage===1 }" class="item "
-                                           (click)="navigateToPage(1) ">First</a>
-                                        <a [ngClass]="{disabled:pager.currentPage===1 }" class="item "
-                                           (click)="navigateToPage(pager.currentPage - 1)">Previous</a>
-                                        <a *ngFor="let page of pager.pages"
-                                           [ngClass]="{active:pager.currentPage===page}" (click)="navigateToPage(page)"
-                                           class="item">{{page}}</a>
-                                        <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}"
-                                           (click)="navigateToPage(pager.currentPage + 1)" class="item">Next</a>
-                                        <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}"
-                                           (click)="navigateToPage(pager.totalPages)" class="item ">Last</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </ng-template>
 
@@ -219,36 +190,20 @@
     </div>
 </ng-container>
 
-<ng-template let-context let-modal="modal" #modalTemplate>
-    <div class="sb-modal sb-error">
-        <div class="ui modal visible active small">
-            <i class="icon close" (click)="modal.deny('denied')" tabindex="0"></i>
-            <!--Header-->
-            <div class="sb-modal-header">
-                Header
-            </div>
-            <!--/Header-->
-
-            <!--Content-->
-            <div class="sb-modal-content">
-                Content
-            </div>
-            <!--/Content-->
-
-            <!--Actions-->
-            <div class="sb-modal-actions flex-jc-space-between">
-                <div>
-                    <button class="sb-btn sb-btn-normal sb-btn-outline-error mr-10" (click)="modal.deny('denied')">
-                        no
-                    </button>
-                    <button class="sb-btn sb-btn-normal sb-btn-error ui disabled" autofocus>
-                        Yes
-                    </button>
-
-                </div>
-            </div>
-            <!--/Actions-->
-
-        </div>
+<sui-modal *ngIf="collectionListModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0" [size]="'large'"
+           class="sb-modal custom-lg-modal" (dismissed)="this.collectionListModal = false" #modal>
+    <div class="sb-modal-header">
+        Add Conversation Logic
     </div>
-</ng-template>
+    <div class="sb-modal-content">
+
+    </div>
+    <div class="sb-modal-actions">
+        <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicAdd();modal.deny('denied')">
+            Add
+        </button>
+        <button class="sb-btn sb-btn-normal sb-btn-outline-primary" (click)="modal.deny('denied')">
+            Cancel
+        </button>
+    </div>
+</sui-modal>

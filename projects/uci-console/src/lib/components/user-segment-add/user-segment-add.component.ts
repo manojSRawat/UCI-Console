@@ -2,19 +2,18 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {UciService} from '../../services/uci.service';
 
 @Component({
-    selector: 'lib-add-segment',
-    templateUrl: './add-segment.component.html',
-    styleUrls: ['./add-segment.component.css']
+    selector: 'lib-user-segment-add',
+    templateUrl: './user-segment-add.component.html',
+    styleUrls: ['./user-segment-add.component.css']
 })
-export class AddSegmentComponent implements OnInit {
+export class UserSegmentAddComponent implements OnInit {
     @Output() cancel = new EventEmitter<boolean>();
     @Output() add = new EventEmitter<any>();
 
     formFieldProperties: Array<any>;
     userSegment;
 
-    constructor(
-        private uciService: UciService,) {
+    constructor(private uciService: UciService) {
     }
 
     ngOnInit() {

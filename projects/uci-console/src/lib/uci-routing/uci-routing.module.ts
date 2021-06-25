@@ -5,7 +5,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {ConversationListComponent} from '../components/conversation-list/conversation-list.component';
 import {ConversationAddComponent} from '../components/conversation-add/conversation-add.component';
 import {UserSegmentListComponent} from '../components/user-segment-list/user-segment-list.component';
-import {AddSegmentComponent} from '../components/add-segment/add-segment.component';
+import {UserSegmentAddComponent} from '../components/user-segment-add/user-segment-add.component';
+import {ConversationSuccessComponent} from '../components/conversation-success/conversation-success.component';
 
 
 const routes: Routes = [
@@ -31,8 +32,13 @@ const routes: Routes = [
             {
                 path: 'add-segment',
                 pathMatch: 'full',
-                component: AddSegmentComponent,
-            }
+                component: UserSegmentAddComponent,
+            },
+            {
+                path: 'success',
+                pathMatch: 'full',
+                component: ConversationSuccessComponent,
+            },
         ]
     }
 ];
