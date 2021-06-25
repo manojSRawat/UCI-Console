@@ -26,7 +26,6 @@ export class ConversationListComponent implements OnInit {
     reverse = false;
     queryParams: any;
     search;
-
     constructor(
         private uciService: UciService,
         private route: Router

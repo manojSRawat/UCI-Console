@@ -1,16 +1,15 @@
 <div class="uci-container">
     <div class="ui grid">
         <div class="ten wide column">
-            <div class="ui fluid icon input left action" id="search-input-container">
-                <div class="searchfilterinput ui search">
-                    <div class="searchicon ui icon input ">
-                        <input class="upForReviewSearchBox filter_search" type="text" name="filter_search"
-                               [(ngModel)]="search"
-                               title="Search" autocomplete="off" placeholder="Search" spellcheck="false" dir="auto" />
-                        <i class="circular search link icon" (click)="getSearch()"></i>
-                    </div>
+            <div class="sb-search-box b-0 ml-0 large">
+                <div class="input-div relative" id="search-input-container">
+                    <img alt="Search Icon" class="search icon" src="assets/images/search-icon.svg">
+                    <input class="sb-search-input disabled ng-untouched ng-pristine" id="keyword" name="filter_search"
+                           type="text" placeholder="Search">
                 </div>
+                <button class="sb-btn sb-btn-normal disabled" (click)="getSearch()">Search</button>
             </div>
+
         </div>
         <div class="two wide column">
             <div class="pb-10">
@@ -53,12 +52,13 @@
         <tbody>
         <tr class="UpForReviewListHover" *ngFor="let content of chatBots; let i = index;">
             <td>{{content.name}}</td>
-            <td [ngClass]="'status-' + content?.status">{{content?.status}}</td>
+            <td [ngClass]="'status-' + (content.status ? content.status.toLowerCase(): '')">{{content?.status}}</td>
             <td>{{content?.description}}</td>
             <td>{{content?.segments}}</td>
             <td>{{content?.userCount}}</td>
             <td>
                 <i class="ellipsis vertical icon ellipsis-icon"></i>
+
             </td>
         </tr>
         </tbody>

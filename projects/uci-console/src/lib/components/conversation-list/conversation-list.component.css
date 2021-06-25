@@ -5,9 +5,14 @@
 }
 
 .filter_search {
-    border-radius: 25px !important;
 }
 
 .ellipsis-icon {
     font-size: 1.2rem;
+}
+.status-live{
+    color: #3c763d;
+}
+.status-draft{
+    color: #ffb300;
 }

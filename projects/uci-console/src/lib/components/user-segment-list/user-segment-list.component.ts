@@ -77,7 +77,7 @@ export class UserSegmentListComponent implements OnInit {
     }
 
     getSearch() {
-        console.log('--->>>search', this.search);
+        // console.log('--->>>search', this.search);
         this.getUserSegment();
     }
 
