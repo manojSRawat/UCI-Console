@@ -14,6 +14,7 @@ import {ConversationListComponent} from './conversation-list/conversation-list.c
 import {ConversationAddComponent} from './conversation-add/conversation-add.component';
 import {UserSegmentListComponent} from './user-segment-list/user-segment-list.component';
 import {CommonFormElementsModule} from 'common-form-elements';
+import {AddSegmentComponent} from './add-segment/add-segment.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import {CommonFormElementsModule} from 'common-form-elements';
         ConversationAllComponent,
         ConversationListComponent,
         ConversationAddComponent,
-        UserSegmentListComponent
+        UserSegmentListComponent,
+        AddSegmentComponent
     ],
     imports: [
         CommonModule,

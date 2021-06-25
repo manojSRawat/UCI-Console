@@ -51,6 +51,7 @@ export class ConversationAddComponent implements OnInit {
 
     onUserSegmentCancel() {
         this.isUserSegmentVisible = false;
+        this.router.navigateByUrl('uci/add-segment');
     }
 
     onUserSegmentAdd(segments) {
