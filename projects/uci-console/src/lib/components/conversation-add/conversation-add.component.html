@@ -1,11 +1,17 @@
-<lib-user-segment-list *ngIf="isUserSegmentVisible; else addForm"
-                       (cancel)="onUserSegmentCancel()"
-                       (add)="onUserSegmentAdd($event)"
-                       [selectedUserSegments]="userSegments">
-</lib-user-segment-list>
+<ng-container [ngSwitch]="currentViewState">
 
-<ng-template #addForm>
-    <div class="uci-add-container">
+    <lib-add-segment *ngSwitchCase="'ADD_SEGMENT'"
+                     (cancel)="onUserSegmentCancel()"
+                     (add)="onUserSegmentCreate($event)">
+    </lib-add-segment>
+
+    <lib-user-segment-list *ngSwitchCase="'SELECT_SEGMENT'"
+                           (cancel)="onUserSegmentCancel()"
+                           (add)="onUserSegmentAdd($event)"
+                           [selectedUserSegments]="userSegments">
+    </lib-user-segment-list>
+
+    <div *ngSwitchCase="'ADD_CONVERSATION'" class="uci-add-container">
         <div class="ui grid">
             <div class="five wide column">
                 <div class="d-flex flex-row justify-content-start align-items-center font-0-75">
@@ -80,7 +86,7 @@
                 <div class="six wide column">
                     <div class="pt-0">
                         <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10"
-                                (click)="onUserSegmentCancel()">
+                                (click)="onUserSegmentAddClick()">
                             Create new
                         </button>
                         <button class="sb-btn sb-btn-normal sb-btn-outline-primary" (click)="userSegment()">
@@ -211,7 +217,7 @@
             </div>
         </div>
     </div>
-</ng-template>
+</ng-container>
 
 <ng-template let-context let-modal="modal" #modalTemplate>
     <div class="sb-modal sb-error">

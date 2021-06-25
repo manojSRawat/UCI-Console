@@ -5,12 +5,17 @@
         </div>
         <div class="three wide column">
             <div class="right-floated pt-0">
-                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10">
+                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onCancel()">
                     Cancel
                 </button>
-                <button class="sb-btn sb-btn-normal sb-btn-primary"> Add</button>
+                <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onAdd()">Add</button>
             </div>
         </div>
+    </div>
 
+    <div class="ten wide column font-1-2">
+        <sb-dynamic-form *ngIf="formFieldProperties" [config]="formFieldProperties"
+                         (statusChanges)="onStatusChanges($event)"
+                         (valueChanges)="valueChanges($event)"></sb-dynamic-form>
     </div>
 </div>

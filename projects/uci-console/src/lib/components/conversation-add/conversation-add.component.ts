@@ -11,9 +11,8 @@ import {UciService} from '../../services/uci.service';
 })
 export class ConversationAddComponent implements OnInit {
     // @ViewChild('modalTemplate', {static: false}) modalTemplate: ModalTemplate<{ data: string }, string, string>;
-
+    currentViewState = 'ADD_CONVERSATION';
     stepIndex = 1;
-    isUserSegmentVisible = false;
     conversationFLowList = [];
     pager: any = {
         totalItems: 0,
@@ -45,18 +44,25 @@ export class ConversationAddComponent implements OnInit {
     }
 
     userSegment() {
-        this.isUserSegmentVisible = true;
-        // this.router.navigateByUrl('uci/user-segment');
+        this.currentViewState = 'SELECT_SEGMENT';
     }
 
     onUserSegmentCancel() {
-        this.isUserSegmentVisible = false;
-        this.router.navigateByUrl('uci/add-segment');
+        this.currentViewState = 'ADD_CONVERSATION';
+    }
+
+    onUserSegmentAddClick() {
+        this.currentViewState = 'ADD_SEGMENT';
     }
 
     onUserSegmentAdd(segments) {
         this.userSegments = segments;
-        this.isUserSegmentVisible = false;
+        this.currentViewState = 'ADD_CONVERSATION';
+    }
+
+    onUserSegmentCreate(segment) {
+        this.userSegments.push(segment);
+        this.currentViewState = 'ADD_CONVERSATION';
     }
 
     onUserSegmentDelete(index) {
