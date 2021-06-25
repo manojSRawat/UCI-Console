@@ -96,12 +96,12 @@
                             <div class="ui grid">
                                 <div class="nine wide column">
                                     <h6>{{userSegment.name}}</h6>
-                                    <p>User count 10000</p>
-
+                                    <p>User count {{userSegment.count}}</p>
                                 </div>
                                 <div class="three wide column">
                                     <div class="delete-icon-sec">
-                                        <i class="trash alternate icon delete-icon" (click)="onUserSegmentDelete(i)"></i>
+                                        <i class="trash alternate icon delete-icon"
+                                           (click)="onUserSegmentDelete(i)"></i>
                                     </div>
                                 </div>
                             </div>

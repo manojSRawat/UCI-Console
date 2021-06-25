@@ -69,7 +69,8 @@
 .term-condition {
     margin-left: 1rem;
 }
-.custom-card{
+
+.custom-card {
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -82,15 +83,17 @@
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
-    border: 1px solid rgba(0,0,0,.125);
+    border: 1px solid rgba(0, 0, 0, .125);
     border-radius: .25rem;
     padding: 10px;
 }
-.delete-icon{
+
+.delete-icon {
     color: red;
     font-size: 1.5rem;
 }
-.delete-icon-sec{
+
+.delete-icon-sec {
     display: flex;
     justify-content: center;
     align-items: center;

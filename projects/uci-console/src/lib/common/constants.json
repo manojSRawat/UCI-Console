@@ -585,32 +585,13 @@
     }
   ],
   "ROUTES": {
-    "TOPIC": "/discussion-forum/topic/",
-    "DISCUSSION": "/discussion-forum/",
-    "CATEGORY": "/discussion-forum/category/",
-    "TAG": "/discussion-forum/tags/"
+    "UCI": "/uci"
   },
   "MENUOPTIONS":[
     {
-      "route": "all-discussions",
-      "label": "All discussions",
-      "enable": false
-    },
-    {   
-      "route": "categories",
-      "label": "Categories",
-      "enable": true
-    },
-    {
-      "route": "tags",
-      "label": "Tags",
-      "enable": true
-    },
-    {
-      "route": "my-discussion",
-      "label": "My discussion",
+      "route": "uci",
+      "label": "Unified communication interface",
       "enable": true
     }
-    
   ]
 }
