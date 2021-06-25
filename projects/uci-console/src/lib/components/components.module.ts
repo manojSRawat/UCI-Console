@@ -7,7 +7,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SidePanelComponent} from './side-panel/side-panel.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {TagInputModule} from 'ngx-chips';
+// import {TagInputModule} from 'ngx-chips';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {ConversationListComponent} from './conversation-list/conversation-list.component';
 import {ConversationAddComponent} from './conversation-add/conversation-add.component';
@@ -29,7 +29,7 @@ import {AddSegmentComponent} from './add-segment/add-segment.component';
         ElementsModule,
         FormsModule,
         ReactiveFormsModule,
-        TagInputModule,
+        // TagInputModule,
         PipesModule,
         InfiniteScrollModule,
         CommonFormElementsModule
