@@ -13,19 +13,25 @@
 
     <div *ngSwitchCase="'ADD_CONVERSATION'" class="uci-add-container">
         <div class="ui grid">
-            <div class="five wide column">
-                <div class="d-flex flex-row justify-content-start align-items-center font-0-75">
-                    <div class="steps"
-                         [ngClass]="{'blue-bg-white-text': stepIndex === 1, 'green-bg-white-text': stepIndex === 2}">1
+            <div class="four wide column pr-0">
+                <div class="d-flex font-0-75">
+                    <div style="width: 40px">
+                        <button class="circular ui icon button" style="width: 100%"
+                                [ngClass]="{'blue-bg-white-text': stepIndex === 1, 'green-bg-white-text': stepIndex === 2}">
+                            1
+                        </button>
                     </div>
-                    <div>Conversation setup</div>
-                    <div class="line"></div>
+                    <div class="px-5 pt-10">Conversation setup</div>
+                    <div class="line mt-20"></div>
                 </div>
             </div>
-            <div class="three wide column">
-                <div class="d-flex flex-row justify-content-start align-items-center font-0-75">
-                    <div class="steps" [ngClass]="{'blue-bg-white-text': stepIndex === 2}">2</div>
-                    <div>Conversation flow</div>
+            <div class="four wide column pl-0">
+                <div class="d-flex font-0-75">
+                    <div style="width: 40px">
+                        <button class="circular ui icon button" style="width: 100%"
+                                [ngClass]="{'blue-bg-white-text': stepIndex === 2}">2</button>
+                    </div>
+                    <div class="px-5 pt-10">Conversation flow</div>
                 </div>
             </div>
             <div class="four wide column">
@@ -51,9 +57,13 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="ui checkbox">
-                            <input type="checkbox" name="example">
-                            <label> I agree the terms and conditions</label>
+                        <div class="twelve wide column pt-0">
+                            <div class="right-floated pt-0">
+                                <div class="ui checkbox">
+                                    <input type="checkbox" name="example">
+                                    <label> I agree the terms and conditions</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </ng-template>
