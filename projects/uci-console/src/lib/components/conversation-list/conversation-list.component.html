@@ -1,0 +1,91 @@
+<div class="uci-container">
+    <div class="ui grid">
+        <div class="ten wide column">
+            <div class="sb-search-box b-0 ml-0 large">
+                <div class="input-div relative" id="search-input-container">
+                    <img alt="Search Icon" class="search icon" src="assets/images/search-icon.svg">
+                    <input class="sb-search-input disabled ng-untouched ng-pristine" id="keyword" name="filter_search"
+                           type="text" placeholder="Search">
+                </div>
+                <button class="sb-btn sb-btn-normal disabled" (click)="getSearch()">Search</button>
+            </div>
+
+        </div>
+        <div class="two wide column">
+            <div class="pb-10">
+                <div class="right-floated pt-0">
+                    <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onAddNew()"> Add New</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="ui single line sortable upForReviewTable table">
+        <thead>
+        <tr>
+            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                Name
+            </th>
+            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                Status
+            </th>
+            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                Description
+            </th>
+            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                Segments
+            </th>
+            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                Users
+            </th>
+            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                Action
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="UpForReviewListHover" *ngFor="let content of chatBots; let i = index;">
+            <td>{{content.name}}</td>
+            <td [ngClass]="'status-' + (content.status ? content.status.toLowerCase(): '')">{{content?.status}}</td>
+            <td>{{content?.description}}</td>
+            <td>{{content?.segments}}</td>
+            <td>{{content?.userCount}}</td>
+            <td>
+                <div class="ui dropdown">
+                    <i class="ellipsis vertical icon ellipsis-icon dropdown"></i>
+                    <div class="menu">
+                        <div class="item">New</div>
+                        <div class="item">
+                            Edit
+                        </div>
+                        <div class="item">
+                            Disable
+                        </div>
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="ui grid">
+        <div class="two wide column"></div>
+        <div class="ten wide column">
+            <div class="pb-10">
+                <div class="ui pagination menu mt-10 right-floated pt-0" *ngIf="pager.pages">
+                    <a [ngClass]="{disabled:pager.currentPage===1 }" class="item " (click)="navigateToPage(1) ">First</a>
+                    <a [ngClass]="{disabled:pager.currentPage===1 }" class="item " (click)="navigateToPage(pager.currentPage - 1)">Previous</a>
+                    <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage===page}" (click)="navigateToPage(page)" class="item">{{page}}</a>
+                    <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}" (click)="navigateToPage(pager.currentPage + 1)" class="item">Next</a>
+                    <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}" (click)="navigateToPage(pager.totalPages)" class="item ">Last</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

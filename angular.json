@@ -18,7 +18,12 @@
             "tsConfig": "projects/uci-console/tsconfig.lib.json",
             "project": "projects/uci-console/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/uci-console/tsconfig.lib.prod.json"
+            }
+          }
+},
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {

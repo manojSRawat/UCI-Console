@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConversationAllComponent } from './conversation-all.component';
+import { UserSegmentListComponent } from './user-segment-list.component';
 
-describe('ConversationAllComponent', () => {
-  let component: ConversationAllComponent;
-  let fixture: ComponentFixture<ConversationAllComponent>;
+describe('UserSegmentListComponent', () => {
+  let component: UserSegmentListComponent;
+  let fixture: ComponentFixture<UserSegmentListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConversationAllComponent ]
+      declarations: [ UserSegmentListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConversationAllComponent);
+    fixture = TestBed.createComponent(UserSegmentListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,18 @@
+.uci-container {
+    /*padding-top: 1.5rem;*/
+    /*padding-left: 1.5rem;*/
+    /*padding-right: 1.5rem;*/
+}
+
+.filter_search {
+}
+
+.ellipsis-icon {
+    font-size: 1.2rem;
+}
+.status-live{
+    color: #3c763d;
+}
+.status-draft{
+    color: #ffb300;
+}

@@ -1,0 +1,70 @@
+<div class="uci-container">
+    <div class="ui grid">
+        <div class="seven wide column font-1-5">
+            Select user segment
+        </div>
+        <div class="five wide column">
+            <div class="right-floated pt-0">
+                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onCancel()"> Cancel</button>
+                <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onAdd()"> Add</button>
+            </div>
+        </div>
+    </div>
+    <div class="ui grid">
+        <div class="ten wide column">
+            <div class="sb-search-box b-0 ml-0 large">
+                <div class="input-div relative" id="search-input-container">
+                    <img alt="Search Icon" class="search icon" src="assets/images/search-icon.svg">
+                    <input class="sb-search-input disabled ng-untouched ng-pristine" id="keyword" name="filter_search"
+                           type="text" placeholder="Search">
+                </div>
+                <button class="sb-btn sb-btn-normal disabled" (click)="getSearch()">Search</button>
+            </div>
+        </div>
+    </div>
+    <table class="ui single line sortable upForReviewTable table">
+        <thead>
+        <tr>
+            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0 w-50-px" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+
+            </th>
+            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                Name
+            </th>
+            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                Category
+            </th>
+            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                Total members
+            </th>
+            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                Update
+            </th>
+            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                Action
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="UpForReviewListHover" *ngFor="let content of userSegments; let i = index;">
+            <td>
+                <input type="checkbox" [(ngModel)]="content.isSelected">
+            </td>
+            <td>{{content.name}}</td>
+            <td>{{content?.category}}</td>
+            <td>{{content?.count}}</td>
+            <td>{{content?.updated_at | date}}</td>
+            <td>
+                <i class="ellipsis vertical icon ellipsis-icon"></i>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+

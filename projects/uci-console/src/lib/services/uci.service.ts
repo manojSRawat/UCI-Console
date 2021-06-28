@@ -1,102 +1,42 @@
-import { Inject, Injectable } from '@angular/core';
-import { of as observableOf, throwError as observableThrowError, Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { urlConfig } from '../config/url.config';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {BaseService} from './base.service';
+import {Observable} from 'rxjs';
 
 export const CONTEXT_PROPS = {
-  cid: 'cid',
-  tid: 'tid',
-  uid: 'uid'
+    cid: 'cid',
+    tid: 'tid',
+    uid: 'uid'
 };
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class UciService {
+export class UciService extends BaseService {
+    BASE_URL = 'http://uci-dev3.ngrok.samagra.io/admin/v1/';
+    FORM_BASE_URL = 'https://dev.sunbirded.org/';
 
-  // tslint:disable-next-line:variable-name
-  private _userDetails: any;
+    constructor(public http: HttpClient) {
+        super(http);
+    }
 
-  // tslint:disable-next-line:variable-name
-  private _userName: any;
+    fetchAllChatBots(params): Observable<any> {
+        return this.getRequest(this.BASE_URL + 'bot/get', params);
+    }
 
-  // tslint:disable-next-line:variable-name
-  private _forumIds: any;
+    toggleBotStatus(botId): Observable<any> {
+        return this.getRequest(this.BASE_URL + 'bot/get', {});
+    }
 
-  // tslint:disable-next-line:variable-name
-  private _context: any = {};
+    fetchUserSegment(params): Observable<any> {
+        return this.getRequest(this.BASE_URL + 'userSegment/get', params);
+    }
 
-  usr: any;
+    botCreate(data) {
+        return this.postRequest(this.BASE_URL + 'bot/create', data);
+    }
 
-  constructor(
-    private http: HttpClient
-  ) {
-    // TODO: Take from the logged in user data;
-    // this.usr = this.configSvc.userProfile
-    this.usr = { userId: '1234' };
-
-  }
-
-  // createPost(data: any) {
-  //   // return this.http.post(urlConfig.createPost(), data);
-  //   return this.csDiscussionService.createPost(data);
-  // }
-  // /**
-  //  * @description To get all the categories
-  //  */
-
-  // fetchAllCategories() {
-  //   // return this.http.get<NSDiscussData.ICategorie[]>(urlConfig.getAllCategories()).pipe(
-  //   //   map((data: any) => {
-  //   //       // Taking only "categories" from the response
-  //   //       const resp = (data as any).categories;
-  //   //       return resp;
-  //   //   }),
-  //   //   catchError( error => {
-  //   //     return throwError( 'Something went wrong!' );
-  //   //   })
-  //   // );
-  //   console.log('in fetchall categories');
-  //   return this.csDiscussionService.fetchAllCategories().pipe(
-  //     map((data: any) => data.categories)
-  //   );
-  // }
-
-  // fetchSingleCategoryDetails(cid: any) {
-  //   return this.csDiscussionService.fetchSingleCategoryDetails(cid);
-  //   // return this.http.get<NSDiscussData.ICategorie>(urlConfig.getSingleCategoryDetails(cid));
-  // }
-  // fetchSingleCategoryDetailsSort(cid: number, sort: any, page?: any) {
-  //   return this.csDiscussionService.fetchSingleCategoryDetails(cid);
-  // }
-
-  // set userDetails(userDetails) {
-  //   this._userDetails = userDetails;
-  // }
-
-  // get userDetails() {
-  //   return this._userDetails;
-  // }
-
-  // set userName(userName) {
-  //   this._userName = userName;
-  // }
-
-  // get userName() {
-  //   return this._userName;
-  // }
-
-  // setContext(key, value) {
-  //   if (CONTEXT_PROPS[key]) {
-  //     this._context[key] = value;
-  //   } else {
-  //     console.log('Context can not be set for this key: ', key);
-  //   }
-  // }
-
-  // getContext(key?: string) {
-  //   return key ? this._context[key] : this._context;
-  // }
-
+    readForm(data) {
+        return this.postRequest(this.FORM_BASE_URL + 'api/data/v1/form/read', data);
+    }
 }
