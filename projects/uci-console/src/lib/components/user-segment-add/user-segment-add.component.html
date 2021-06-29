@@ -8,7 +8,16 @@
                 <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onCancel()">
                     Cancel
                 </button>
-                <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onAdd()">Add</button>
+                <ng-container *ngIf="isLoaderShow; else addBtn">
+                    <button class="sb-btn sb-btn-normal sb-btn-primary p-0">
+                        <div class="ui active tiny inline loader"></div>
+                    </button>
+                </ng-container>
+                <ng-template #addBtn>
+                    <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onAdd()">
+                        Add
+                    </button>
+                </ng-template>
             </div>
         </div>
     </div>

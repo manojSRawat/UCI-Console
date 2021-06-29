@@ -12,7 +12,7 @@ export class UserSegmentAddComponent implements OnInit {
 
     formFieldProperties: Array<any>;
     userSegment = {};
-
+    isLoaderShow: boolean = false;
     constructor(private uciService: UciService) {
     }
 
@@ -54,9 +54,13 @@ export class UserSegmentAddComponent implements OnInit {
     }
 
     onAdd() {
+        this.isLoaderShow = true;
         this.uciService.createUserSegment({data: this.userSegment}).subscribe(
             data => {
+                this.isLoaderShow = false;
                 this.afterAdd(data);
+            }, err => {
+                this.isLoaderShow = false;
             }
         );
     }

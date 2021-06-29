@@ -24,7 +24,8 @@ export class ConversationAddComponent implements OnInit {
         users: [],
         logic: []
     };
-
+    isLoaderShow: boolean = false;
+    isModalLoaderShow: boolean = false;
     constructor(
         private uciService: UciService,
         private router: Router,
@@ -44,7 +45,7 @@ export class ConversationAddComponent implements OnInit {
         this.currentViewState = 'ADD_CONVERSATION';
     }
 
-    onUserSegmentAddClick() {
+        onUserSegmentAddClick() {
         this.currentViewState = 'ADD_SEGMENT';
     }
 
@@ -139,10 +140,13 @@ export class ConversationAddComponent implements OnInit {
         this.userSegments.forEach(userSegment => {
             this.formResponse.users.push(userSegment.id);
         });
-
+        this.isLoaderShow = true;
         this.uciService.botCreate({data: this.formResponse}).subscribe(
             data => {
+                this.isLoaderShow = false;
                 this.router.navigate(['uci/success']);
+            },  error => {
+                this.isLoaderShow = false;
             }
         );
     }
@@ -153,5 +157,6 @@ export class ConversationAddComponent implements OnInit {
 
     onLogicAdd() {
         this.selectedLogic.push({name: 'Test ' + (this.selectedLogic.length + 1), step: 1, description: 'test'});
+        this.isModalLoaderShow = true;
     }
 }
