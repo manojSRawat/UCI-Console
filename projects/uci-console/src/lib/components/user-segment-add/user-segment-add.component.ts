@@ -11,7 +11,7 @@ export class UserSegmentAddComponent implements OnInit {
     @Output() add = new EventEmitter<any>();
 
     formFieldProperties: Array<any>;
-    userSegment;
+    userSegment = {};
 
     constructor(private uciService: UciService) {
     }
@@ -24,11 +24,11 @@ export class UserSegmentAddComponent implements OnInit {
         this.uciService.readForm(
             {
                 request: {
-                    type: 'content',
-                    subType: 'collection',
-                    action: 'save',
+                    type: 'userSegment',
+                    subType: 'global',
+                    action: 'menubar',
                     framework: 'ekstep_ncert_k-12',
-                    rootOrgId: '01309282781705830427'
+                    rootOrgId: '*'
                 }
             }
         ).subscribe(
@@ -46,6 +46,7 @@ export class UserSegmentAddComponent implements OnInit {
 
     valueChanges(event) {
         console.log('event value', event);
+        this.userSegment = Object.assign(this.userSegment, event);
     }
 
     onCancel() {
@@ -53,9 +54,14 @@ export class UserSegmentAddComponent implements OnInit {
     }
 
     onAdd() {
-        if (!this.userSegment) {
-            return;
-        }
-        this.add.emit(this.userSegment);
+        this.uciService.createUserSegment({data: this.userSegment}).subscribe(
+            data => {
+                this.afterAdd(data);
+            }
+        );
+    }
+
+    afterAdd(data) {
+        this.add.emit(data);
     }
 }

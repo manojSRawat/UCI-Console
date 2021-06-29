@@ -76,7 +76,7 @@
                     Add new conversation
                 </div>
                 <div class="ten wide column font-1-2">
-                    <sb-dynamic-form *ngIf="formFieldProperties" [config]="formFieldProperties"
+                    <sb-dynamic-form *ngIf="conversationFormFieldProperties" [config]="conversationFormFieldProperties"
                                      (statusChanges)="onStatusChanges($event)"
                                      (valueChanges)="valueChanges($event)"></sb-dynamic-form>
                 </div>
@@ -123,14 +123,14 @@
                     Conversation flow
                 </div>
                 <div class="two wide column">
-                    <button class="sb-btn sb-btn-normal" *ngIf="conversationFLowList && conversationFLowList.length"
+                    <button class="sb-btn sb-btn-normal" *ngIf="selectedLogic && selectedLogic.length"
                             (click)="openModel()">
                         Add Logic
                     </button>
                 </div>
             </div>
             <div class="ui grid">
-                <ng-container *ngIf="conversationFLowList && conversationFLowList.length <= 0; else showTable">
+                <ng-container *ngIf="selectedLogic && selectedLogic.length <= 0; else showTable">
                     <div class="twelve wide column">
                         <div class="pt-0 d-flex flex-row justify-content-center">
                             <div class="w-25-per text-center" style="margin: auto; border: 1px solid; padding: 2rem;">
@@ -180,7 +180,7 @@
                             </thead>
                             <tbody>
                             <tr class="UpForReviewListHover"
-                                *ngFor="let content of conversationFLowList; let i = index;">
+                                *ngFor="let content of selectedLogic; let i = index;">
 
                                 <td>
                                     <input type="checkbox">
@@ -206,7 +206,9 @@
         Add Conversation Logic
     </div>
     <div class="sb-modal-content">
-
+        <sb-dynamic-form *ngIf="logicFormFieldProperties" [config]="logicFormFieldProperties"
+                         (statusChanges)="onStatusChanges($event)"
+                         (valueChanges)="valueChanges($event)"></sb-dynamic-form>
     </div>
     <div class="sb-modal-actions">
         <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicAdd();modal.deny('denied')">

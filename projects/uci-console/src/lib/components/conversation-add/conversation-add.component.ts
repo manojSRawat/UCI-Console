@@ -12,13 +12,18 @@ import {SuiModalService} from 'ng2-semantic-ui-v9';
 export class ConversationAddComponent implements OnInit {
     currentViewState = 'ADD_CONVERSATION';
     stepIndex = 1;
-    conversationFLowList = [];
+    selectedLogic = [];
     userSegments = [];
     column = '';
     sortDirection = '';
     reverse = false;
-    formFieldProperties: Array<any>;
+    conversationFormFieldProperties: Array<any>;
+    logicFormFieldProperties: Array<any>;
     collectionListModal = false;
+    formResponse = {
+        users: [],
+        logic: []
+    };
 
     constructor(
         private uciService: UciService,
@@ -28,7 +33,7 @@ export class ConversationAddComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getForm();
+        this.getConversationAddForm();
     }
 
     userSegment() {
@@ -61,6 +66,8 @@ export class ConversationAddComponent implements OnInit {
         if (this.stepIndex === 1) {
             this.stepIndex = 2;
         }
+
+        this.getLogicForm();
     }
 
     sortColumns(column) {
@@ -69,21 +76,41 @@ export class ConversationAddComponent implements OnInit {
         this.reverse = !this.reverse;
     }
 
-    getForm() {
+    getConversationAddForm() {
         this.uciService.readForm(
             {
                 request: {
-                    type: 'content',
-                    subType: 'collection',
-                    action: 'save',
+                    type: 'conversation',
+                    subType: 'global',
+                    action: 'menubar',
                     framework: 'ekstep_ncert_k-12',
-                    rootOrgId: '01309282781705830427'
+                    rootOrgId: '*'
                 }
             }
         ).subscribe(
             (data: any) => {
                 if (data.result && data.result.form && data.result.form.data) {
-                    this.formFieldProperties = data.result.form.data.fields;
+                    this.conversationFormFieldProperties = data.result.form.data.fields;
+                }
+            }
+        );
+    }
+
+    getLogicForm() {
+        this.uciService.readForm(
+            {
+                request: {
+                    type: 'conversationLogic',
+                    subType: 'global',
+                    action: 'menubar',
+                    framework: 'ekstep_ncert_k-12',
+                    rootOrgId: '*'
+                }
+            }
+        ).subscribe(
+            (data: any) => {
+                if (data.result && data.result.form && data.result.form.data) {
+                    this.logicFormFieldProperties = data.result.form.data.fields;
                 }
             }
         );
@@ -95,6 +122,8 @@ export class ConversationAddComponent implements OnInit {
 
     valueChanges(event) {
         console.log('event value', event);
+        this.formResponse = Object.assign(this.formResponse, event);
+        console.log('event value', this.formResponse);
     }
 
     onAddCancel() {
@@ -105,14 +134,17 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onSubmit() {
-        this.router.navigate(['uci/success']);
+        this.formResponse.users = [];
+        this.formResponse.logic = [];
+        this.userSegments.forEach(userSegment => {
+            this.formResponse.users.push(userSegment.id);
+        });
 
-        // todo uncomment after dynamic form
-        /*this.uciService.botCreate({}).subscribe(
+        this.uciService.botCreate({data: this.formResponse}).subscribe(
             data => {
                 this.router.navigate(['uci/success']);
             }
-        );*/
+        );
     }
 
     openModel() {
@@ -120,6 +152,6 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onLogicAdd() {
-        this.conversationFLowList.push({name: 'Test ' + (this.conversationFLowList.length + 1), step: 1, description: 'test'});
+        this.selectedLogic.push({name: 'Test ' + (this.selectedLogic.length + 1), step: 1, description: 'test'});
     }
 }

@@ -13,7 +13,7 @@ export const CONTEXT_PROPS = {
     providedIn: 'root'
 })
 export class UciService extends BaseService {
-    BASE_URL = 'http://uci-dev3.ngrok.samagra.io/admin/v1/';
+    BASE_URL = 'http://uci-dev4.ngrok.samagra.io/admin/v1/';
     FORM_BASE_URL = 'https://dev.sunbirded.org/';
 
     constructor(public http: HttpClient) {
@@ -30,6 +30,10 @@ export class UciService extends BaseService {
 
     fetchUserSegment(params): Observable<any> {
         return this.getRequest(this.BASE_URL + 'userSegment/get', params);
+    }
+
+    createUserSegment(data) {
+        return this.postRequest(this.BASE_URL + 'userSegment/create', data);
     }
 
     botCreate(data) {
