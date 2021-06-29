@@ -12,7 +12,8 @@ export class UserSegmentAddComponent implements OnInit {
 
     formFieldProperties: Array<any>;
     userSegment = {};
-    isLoaderShow: boolean = false;
+    isLoaderShow = false;
+
     constructor(private uciService: UciService) {
     }
 

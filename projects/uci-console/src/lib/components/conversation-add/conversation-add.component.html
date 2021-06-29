@@ -206,7 +206,7 @@
     <div class="sb-modal-content">
         <sb-dynamic-form *ngIf="logicFormFieldProperties" [config]="logicFormFieldProperties"
                          (statusChanges)="onStatusChanges($event)"
-                         (valueChanges)="valueChanges($event)"></sb-dynamic-form>
+                         (valueChanges)="logicValueChanges($event)"></sb-dynamic-form>
     </div>
     <div class="sb-modal-actions">
         <ng-container *ngIf="isModalLoaderShow; else modalBtn">

@@ -36,6 +36,10 @@ export class UciService extends BaseService {
         return this.postRequest(this.BASE_URL + 'userSegment/create', data);
     }
 
+    createLogic(data) {
+        return this.postRequest(this.BASE_URL + 'conversationLogic/create', data);
+    }
+
     botCreate(data) {
         return this.postRequest(this.BASE_URL + 'bot/create', data);
     }

@@ -24,8 +24,10 @@ export class ConversationAddComponent implements OnInit {
         users: [],
         logic: []
     };
-    isLoaderShow: boolean = false;
-    isModalLoaderShow: boolean = false;
+    isLoaderShow = false;
+    isModalLoaderShow = false;
+    logicFormRequest = {};
+
     constructor(
         private uciService: UciService,
         private router: Router,
@@ -45,7 +47,7 @@ export class ConversationAddComponent implements OnInit {
         this.currentViewState = 'ADD_CONVERSATION';
     }
 
-        onUserSegmentAddClick() {
+    onUserSegmentAddClick() {
         this.currentViewState = 'ADD_SEGMENT';
     }
 
@@ -122,9 +124,11 @@ export class ConversationAddComponent implements OnInit {
     }
 
     valueChanges(event) {
-        console.log('event value', event);
         this.formResponse = Object.assign(this.formResponse, event);
-        console.log('event value', this.formResponse);
+    }
+
+    logicValueChanges(event) {
+        this.logicFormRequest = Object.assign(this.logicFormRequest, event);
     }
 
     onAddCancel() {
@@ -140,23 +144,34 @@ export class ConversationAddComponent implements OnInit {
         this.userSegments.forEach(userSegment => {
             this.formResponse.users.push(userSegment.id);
         });
+        this.selectedLogic.forEach(logic => {
+            this.formResponse.logic.push(logic.id);
+        });
+
         this.isLoaderShow = true;
         this.uciService.botCreate({data: this.formResponse}).subscribe(
             data => {
                 this.isLoaderShow = false;
                 this.router.navigate(['uci/success']);
-            },  error => {
+            }, error => {
                 this.isLoaderShow = false;
             }
         );
     }
 
     openModel() {
+        this.logicFormRequest = {};
         this.collectionListModal = true;
     }
 
     onLogicAdd() {
-        this.selectedLogic.push({name: 'Test ' + (this.selectedLogic.length + 1), step: 1, description: 'test'});
-        this.isModalLoaderShow = true;
+        this.uciService.createLogic({data: this.logicFormRequest}).subscribe(
+            data => {
+                this.isModalLoaderShow = true;
+                this.selectedLogic.push(data);
+            }, error => {
+                this.isModalLoaderShow = false;
+            }
+        );
     }
 }
