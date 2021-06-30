@@ -86,9 +86,34 @@
                     Add new conversation
                 </div>
                 <div class="ten wide column font-1-2">
-                    <sb-dynamic-form *ngIf="conversationFormFieldProperties" [config]="conversationFormFieldProperties"
-                                     (statusChanges)="onStatusChanges($event)"
-                                     (valueChanges)="valueChanges($event)"></sb-dynamic-form>
+<!--                    <sb-dynamic-form *ngIf="conversationFormFieldProperties" [config]="conversationFormFieldProperties"-->
+<!--                                     (statusChanges)="onStatusChanges($event)"-->
+<!--                                     (valueChanges)="valueChanges($event)"></sb-dynamic-form>-->
+                    <form [formGroup]="conversationForm" class="ui form">
+                        <div class="field">
+                            <label>Conversation name</label>
+                            <input type="text" name="name" placeholder="Enter name" formControlName="name">
+                        </div>
+                        <div class="field">
+                            <label>Conversation description</label>
+                            <textarea rows="5" name="description" placeholder="Enter description" formControlName="description"></textarea>
+                        </div>
+                        <div class="field">
+                            <label>Starting message</label>
+                            <input type="text" name="startingMessage" placeholder="Enter message" formControlName="startingMessage">
+                        </div>
+                        <div class="two fields">
+                            <div class="field">
+                                <label>Start Date</label>
+                                <input type="date" name="startDate" formControlName="startDate">
+                            </div>
+                            <div class="field">
+                                <label>End Date</label>
+                                <input type="date" name="endDate" formControlName="endDate">
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
             </div>
             <div class="ui divider"></div>
@@ -207,9 +232,36 @@
         Add Conversation Logic
     </div>
     <div class="sb-modal-content">
-        <sb-dynamic-form *ngIf="logicFormFieldProperties" [config]="logicFormFieldProperties"
-                         (statusChanges)="onStatusChanges($event)"
-                         (valueChanges)="logicValueChanges($event)"></sb-dynamic-form>
+<!--        <sb-dynamic-form *ngIf="logicFormFieldProperties" [config]="logicFormFieldProperties"-->
+<!--                         (statusChanges)="onStatusChanges($event)"-->
+<!--                         (valueChanges)="logicValueChanges($event)"></sb-dynamic-form>-->
+        <form [formGroup]="logicForm" class="ui form">
+            <div class="tow fields">
+                <div class="six wide field">
+                    <label>Name</label>
+                    <input type="text" name="name" placeholder="Enter name" formControlName="name">
+                </div>
+                <div class="six wide field">
+                    <label>Description</label>
+                    <input type="text" name="description" placeholder="Enter description" formControlName="description">
+                </div>
+            </div>
+            <div class="field">
+                <label>Upload Form (.xml)</label>
+                <input type="file" name="file" placeholder="Browse..." formControlName="file"
+                       accept=".xlsx,.xls">
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Start Date</label>
+                    <input type="date" name="startDate" formControlName="startDate">
+                </div>
+                <div class="field">
+                    <label>End Date</label>
+                    <input type="date" name="endDate" formControlName="endDate">
+                </div>
+            </div>
+        </form>
     </div>
     <div class="sb-modal-actions">
         <ng-container *ngIf="isModalLoaderShow; else modalBtn">

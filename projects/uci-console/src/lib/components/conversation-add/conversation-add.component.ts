@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {UciService} from '../../services/uci.service';
 
 import {SuiModalService} from 'ng2-semantic-ui-v9';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'lib-conversation-add',
@@ -28,15 +29,32 @@ export class ConversationAddComponent implements OnInit {
     isModalLoaderShow = false;
     logicFormRequest = {};
     isCheckedTermCondition: boolean = false;
+    conversationForm: FormGroup;
+    logicForm: FormGroup;
     constructor(
         private uciService: UciService,
         private router: Router,
+        private fb: FormBuilder,
         private modalService: SuiModalService
     ) {
     }
 
     ngOnInit() {
         this.getConversationAddForm();
+        this.conversationForm = this.fb.group({
+            name: ['', Validators.required],
+            description: ['', Validators.required],
+            startingMessage: ['', Validators.required],
+            startDate: [''],
+            endDate: ['']
+        });
+        this.logicForm = this.fb.group({
+            name: [''],
+            description: [''],
+            file: [''],
+            startDate: [''],
+            endDate: ['']
+        });
     }
 
     userSegment() {
@@ -152,6 +170,8 @@ export class ConversationAddComponent implements OnInit {
         this.selectedLogic.forEach(logic => {
             this.formResponse.logic.push(logic.id);
         });
+        Object.assign(this.formResponse, this.conversationForm.value);
+        console.log('--->>>this.formResponse', this.formResponse);
 
         this.isLoaderShow = true;
         this.uciService.botCreate({data: this.formResponse}).subscribe(
@@ -170,13 +190,15 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onLogicAdd() {
-        this.uciService.createLogic({data: this.logicFormRequest}).subscribe(
-            data => {
-                this.isModalLoaderShow = true;
-                this.selectedLogic.push(data);
-            }, error => {
-                this.isModalLoaderShow = false;
-            }
-        );
+        console.log('--->>>logicForm', this.logicForm.value);
+
+        // this.uciService.createLogic({data: this.logicFormRequest}).subscribe(
+        //     data => {
+        //         this.isModalLoaderShow = true;
+        //         this.selectedLogic.push(data);
+        //     }, error => {
+        //         this.isModalLoaderShow = false;
+        //     }
+        // );
     }
 }
