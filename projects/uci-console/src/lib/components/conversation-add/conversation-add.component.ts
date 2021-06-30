@@ -51,9 +51,7 @@ export class ConversationAddComponent implements OnInit {
         this.logicForm = this.fb.group({
             name: [''],
             description: [''],
-            file: [''],
-            startDate: [''],
-            endDate: ['']
+            file: ['']
         });
     }
 
