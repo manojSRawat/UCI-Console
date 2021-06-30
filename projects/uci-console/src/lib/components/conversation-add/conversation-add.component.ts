@@ -27,7 +27,7 @@ export class ConversationAddComponent implements OnInit {
     isLoaderShow = false;
     isModalLoaderShow = false;
     logicFormRequest = {};
-
+    isCheckedTermCondition: boolean = false;
     constructor(
         private uciService: UciService,
         private router: Router,
@@ -71,6 +71,11 @@ export class ConversationAddComponent implements OnInit {
         }
 
         this.getLogicForm();
+    }
+    backToStepOne() {
+        if (this.stepIndex === 2) {
+            this.stepIndex = 1;
+        }
     }
 
     sortColumns(column) {

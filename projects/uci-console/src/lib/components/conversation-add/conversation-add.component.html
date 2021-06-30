@@ -17,6 +17,7 @@
                 <div class="d-flex font-0-75">
                     <div style="width: 40px">
                         <button class="circular ui icon button" style="width: 100%"
+                                (click)="backToStepOne()"
                                 [ngClass]="{'blue-bg-white-text': stepIndex === 1, 'green-bg-white-text': stepIndex === 2}">
                             1
                         </button>
@@ -59,7 +60,8 @@
                                     </button>
                                 </ng-container>
                                 <ng-template #submitBtn>
-                                    <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onSubmit()"> Submit
+                                    <button class="sb-btn sb-btn-normal sb-btn-primary" [disabled]="!isCheckedTermCondition"
+                                            (click)="onSubmit()"> Submit
                                     </button>
                                 </ng-template>
                             </div>
@@ -67,7 +69,8 @@
                         <div class="twelve wide column pt-0">
                             <div class="right-floated pt-0">
                                 <div class="ui checkbox">
-                                    <input type="checkbox" name="example">
+                                    <input type="checkbox" name="example"
+                                           [(ngModel)]="isCheckedTermCondition">
                                     <label> I agree the terms and conditions</label>
                                 </div>
                             </div>
