@@ -43,7 +43,7 @@ export class ConversationAddComponent implements OnInit {
         this.getConversationAddForm();
         this.conversationForm = this.fb.group({
             name: ['', Validators.required],
-            description: ['', Validators.required],
+            description: [''],
             startingMessage: ['', Validators.required],
             startDate: [''],
             endDate: ['']
@@ -189,7 +189,7 @@ export class ConversationAddComponent implements OnInit {
 
     onLogicAdd() {
         console.log('--->>>logicForm', this.logicForm.value);
-
+        this.selectedLogic.push({name: 'Test ' + (this.selectedLogic.length + 1), step: 1, description: 'test'});
         // this.uciService.createLogic({data: this.logicFormRequest}).subscribe(
         //     data => {
         //         this.isModalLoaderShow = true;

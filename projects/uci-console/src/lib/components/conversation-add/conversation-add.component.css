@@ -20,7 +20,9 @@
 .font-1-2 {
     font-size: 1.2rem;
 }
-
+.ui.form .field>label{
+    font-weight: normal;
+}
 .steps {
     width: 20px;
     height: 20px;
@@ -42,7 +44,7 @@
 
 .line {
     background-color: #777;
-    width: 38%;
+    width: 25%;
     height: 1px;
 }
 
@@ -71,6 +73,10 @@
     align-items: center;
 }
 button:disabled{
-    background: #777777;
-    border-color: #777777;
+    background: #89CFF0;
+    border-color: #89CFF0;
 }
+.asterisk-color{
+    color: red;
+}
+

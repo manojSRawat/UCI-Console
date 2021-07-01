@@ -23,27 +23,27 @@
     <table class="ui single line sortable upForReviewTable table">
         <thead>
         <tr>
-            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+            <th (click)="sortColumns('name')" class="three wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                 Name
             </th>
-            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+            <th (click)="sortColumns('name')" class="two wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                 Status
             </th>
-            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+            <th (click)="sortColumns('name')" class="four wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                 Description
             </th>
-            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+            <th (click)="sortColumns('name')" class="two wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                 Segments
             </th>
-            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+            <th (click)="sortColumns('name')" class="one wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                 Users
             </th>
-            <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
+            <th (click)="sortColumns('name')" class="one wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                 Action
             </th>
@@ -55,8 +55,8 @@
             <td [ngClass]="'status-' + (content.status ? content.status.toLowerCase(): '')">{{content?.status}}</td>
             <td>{{content?.description}}</td>
             <td>{{content?.segments}}</td>
-            <td>{{content?.userCount}}</td>
-            <td>
+            <td class="center aligned">{{content?.userCount}}</td>
+            <td class="center aligned">
                 <div class="ui dropdown">
                     <i class="ellipsis vertical icon ellipsis-icon dropdown"></i>
                     <div class="menu">

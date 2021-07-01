@@ -51,7 +51,15 @@
      padding: 0px 0px 48px 0px;
     }
   }
-
+.font-weight-bold{
+  font-weight: bold;
+}
+.font-weight-normal{
+  font-weight: normal;
+}
+.font-1-2 {
+  font-size: 1.2rem;
+}
   @media screen and (min-width: 376px) and (max-width: 768px){
     .uci-admin-content {
         grid-template-columns: 1fr;  

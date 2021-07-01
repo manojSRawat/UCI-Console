@@ -13,10 +13,10 @@
 
     <div *ngSwitchCase="'ADD_CONVERSATION'" class="uci-add-container">
         <div class="ui grid">
-            <div class="four wide column pr-0">
-                <div class="d-flex font-0-75">
-                    <div style="width: 40px">
-                        <button class="circular ui icon button" style="width: 100%"
+            <div class="five wide column pr-0">
+                <div class="d-flex font-0-75" style="justify-content: flex-end;align-items: baseline;">
+                    <div style="width: 30px">
+                        <button class="circular ui icon button" style="width: 100%; font-size: 0.75rem"
                                 (click)="backToStepOne()"
                                 [ngClass]="{'blue-bg-white-text': stepIndex === 1, 'green-bg-white-text': stepIndex === 2}">
                             1
@@ -26,13 +26,13 @@
                     <div class="line mt-20"></div>
                 </div>
             </div>
-            <div class="four wide column pl-0">
-                <div class="d-flex font-0-75">
-                    <div style="width: 40px">
-                        <button class="circular ui icon button" style="width: 100%"
+            <div class="three wide column pl-0">
+                <div class="d-flex font-0-75" style="justify-content: center;align-items: baseline;">
+                    <div style="width: 30px">
+                        <button class="circular ui icon button" style="width: 100%; font-size: 0.75rem"
                                 [ngClass]="{'blue-bg-white-text': stepIndex === 2}">2</button>
                     </div>
-                    <div class="px-5 pt-10">Conversation flow</div>
+                    <div class="px-5 pt-10 font-weight-bold">Conversation flow</div>
                 </div>
             </div>
             <div class="four wide column">
@@ -71,7 +71,7 @@
                                 <div class="ui checkbox">
                                     <input type="checkbox" name="example"
                                            [(ngModel)]="isCheckedTermCondition">
-                                    <label> I agree the terms and conditions</label>
+                                    <label class="font-weight-normal"> I agree the terms and conditions</label>
                                 </div>
                             </div>
                         </div>
@@ -82,16 +82,16 @@
         </div>
         <div class="step1-wrapper" *ngIf="stepIndex === 1">
             <div class="ui grid">
-                <div class="ten wide column font-1-2">
+                <div class="ten wide column font-1-2 font-weight-bold">
                     Add new conversation
                 </div>
-                <div class="ten wide column font-1-2">
+                <div class="ten wide column pt-0">
 <!--                    <sb-dynamic-form *ngIf="conversationFormFieldProperties" [config]="conversationFormFieldProperties"-->
 <!--                                     (statusChanges)="onStatusChanges($event)"-->
 <!--                                     (valueChanges)="valueChanges($event)"></sb-dynamic-form>-->
                     <form [formGroup]="conversationForm" class="ui form">
                         <div class="field">
-                            <label>Conversation name</label>
+                            <label>Conversation name  <sup><i class="asterisk icon asterisk-color"></i></sup></label>
                             <input type="text" name="name" placeholder="Enter name" formControlName="name">
                         </div>
                         <div class="field">
@@ -99,7 +99,7 @@
                             <textarea rows="5" name="description" placeholder="Enter description" formControlName="description"></textarea>
                         </div>
                         <div class="field">
-                            <label>Starting message</label>
+                            <label>Starting message <sup><i class="asterisk icon asterisk-color"></i></sup></label>
                             <input type="text" name="startingMessage" placeholder="Enter message" formControlName="startingMessage">
                         </div>
                         <div class="two fields">
@@ -120,9 +120,9 @@
             <div class="ui grid">
                 <div class="six wide column">
                     <h6>User segment</h6>
-                    <p>{{userSegments.length}} segment added</p>
+                    <p class="pt-10">{{userSegments.length}} segment added</p>
                 </div>
-                <div class="six wide column">
+                <div class="six wide column  right aligned">
                     <div class="pt-0">
                         <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10"
                                 (click)="onUserSegmentAddClick()">
@@ -154,11 +154,11 @@
 
         <div class="step2-wrapper" *ngIf="stepIndex === 2">
             <div class="ui grid">
-                <div class="ten wide column font-1-2">
+                <div class="ten wide column font-1-2 font-weight-bold">
                     Conversation flow
                 </div>
-                <div class="two wide column">
-                    <button class="sb-btn sb-btn-normal" *ngIf="selectedLogic && selectedLogic.length"
+                <div class="two wide column right aligned">
+                    <button class="sb-btn sb-btn-normal sb-btn-outline-primary" *ngIf="selectedLogic && selectedLogic.length"
                             (click)="openModel()">
                         Add Logic
                     </button>
@@ -166,8 +166,9 @@
             </div>
             <div class="ui grid">
                 <ng-container *ngIf="selectedLogic && selectedLogic.length <= 0; else showTable">
-                    <div class="twelve wide column">
-                        <div class="pt-0 d-flex flex-row justify-content-center">
+                    <div class="twelve wide column center aligned">
+                        <div class="pt-0">
+<!--                            <img alt="Search Icon" src="assets/images/empty.svg">-->
                             <div class="w-25-per text-center" style="margin: auto; border: 1px solid; padding: 2rem;">
                                 <div class="text-center">
                                     <div class="text-center"><i class="plus circle icon font-1-2"></i></div>
@@ -186,12 +187,12 @@
                         <table class="ui table" style="width: 100%">
                             <thead>
                             <tr>
-                                <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0"
+                                <th (click)="sortColumns('name')" class="one wide center aligned UpReviewTableHeader sorted bl-0"
                                     [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                                     Steps
                                 </th>
-                                <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0"
+                                <th (click)="sortColumns('name')" class="three wide UpReviewTableHeader sorted bl-0"
                                     [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                                     Name
@@ -201,7 +202,7 @@
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                                     Description
                                 </th>
-                                <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0"
+                                <th (click)="sortColumns('name')" class="one wide center aligned UpReviewTableHeader sorted bl-0"
                                     [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                                     Action
@@ -211,10 +212,10 @@
                             <tbody>
                             <tr class="UpForReviewListHover"
                                 *ngFor="let content of selectedLogic; let i = index;">
-                                <td>{{content.step}}</td>
+                                <td class="center aligned">{{content.step}}</td>
                                 <td>{{content?.name}}</td>
                                 <td>{{content?.description}}</td>
-                                <td><i class="ellipsis vertical icon ellipsis-icon"></i></td>
+                                <td class="center aligned"><i class="ellipsis vertical icon ellipsis-icon"></i></td>
                             </tr>
                             </tbody>
                         </table>
@@ -226,8 +227,8 @@
     </div>
 </ng-container>
 
-<sui-modal *ngIf="collectionListModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0" [size]="'large'"
-           class="sb-modal custom-lg-modal" (dismissed)="this.collectionListModal = false" #modal>
+<sui-modal *ngIf="collectionListModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0" [size]="'normal'"
+           class="sb-modal" (dismissed)="this.collectionListModal = false" #modal>
     <div class="sb-modal-header">
         Add Conversation Logic
     </div>
@@ -236,15 +237,13 @@
 <!--                         (statusChanges)="onStatusChanges($event)"-->
 <!--                         (valueChanges)="logicValueChanges($event)"></sb-dynamic-form>-->
         <form [formGroup]="logicForm" class="ui form">
-            <div class="tow fields">
-                <div class="six wide field">
-                    <label>Name</label>
-                    <input type="text" name="name" placeholder="Enter name" formControlName="name">
-                </div>
-                <div class="six wide field">
-                    <label>Description</label>
-                    <input type="text" name="description" placeholder="Enter description" formControlName="description">
-                </div>
+            <div class="field">
+                <label>Name</label>
+                <input type="text" name="name" placeholder="Enter name" formControlName="name">
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea rows="3" name="description" placeholder="Enter description" formControlName="description"></textarea>
             </div>
             <div class="field">
                 <label>Upload Form (.xml)</label>
