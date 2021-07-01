@@ -31,7 +31,7 @@ export class ConversationAddComponent implements OnInit {
     isCheckedTermCondition: boolean = false;
     conversationForm: FormGroup;
     logicForm: FormGroup;
-
+    selectedLogicItemId;
     constructor(
         private uciService: UciService,
         private router: Router,
@@ -207,10 +207,10 @@ export class ConversationAddComponent implements OnInit {
             ],
             adapter: '44a9df72-3d7a-4ece-94c5-98cf26307324'
         };
-
+        this.isModalLoaderShow = true;
         this.uciService.createLogic({data: reqData}).subscribe(
             (data: any) => {
-                this.isModalLoaderShow = true;
+                this.isModalLoaderShow = false;
                 this.selectedLogic.push({
                     id: data.data.id,
                     isOpenDropdown: false,
@@ -220,5 +220,26 @@ export class ConversationAddComponent implements OnInit {
                 this.isModalLoaderShow = false;
             }
         );
+    }
+    getOpenDropdown(item) {
+        if (this.selectedLogic && this.selectedLogic.length) {
+            this.selectedLogic.forEach(val => {
+                if (item.id === val.id) {
+                    val.isOpenDropdown = !item['isOpenDropdown'];
+                } else {
+                    val.isOpenDropdown = false;
+                }
+            });
+        }
+        // console.log('--->>', this.selectedLogic);
+
+    }
+
+    getEditLogicData(item) {
+        if (item.id) {
+            this.selectedLogicItemId = item.id;
+            this.logicForm.patchValue({name: item.name, description: item.description});
+            // console.log('-->>', this.selectedLogicItemId,  this.logicForm.value);
+        }
     }
 }

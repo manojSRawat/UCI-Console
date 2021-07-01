@@ -56,20 +56,19 @@
             <td>{{content?.description}}</td>
             <td>{{content?.segments}}</td>
             <td class="center aligned">{{content?.userCount}}</td>
-            <td class="center aligned">
-                <div class="ui dropdown">
-                    <i class="ellipsis vertical icon ellipsis-icon dropdown"></i>
-                    <div class="menu">
-                        <div class="item">New</div>
-                        <div class="item">
-                            Edit
-                        </div>
-                        <div class="item">
-                            Disable
-                        </div>
+            <td class="center aligned" style="position: relative">
+                <i class="ellipsis vertical icon ellipsis-icon"
+                   (click)="getOpenDropdown(content)"
+                ></i>
+                <div class="menu ui card action-dropdown"
+                     *ngIf="content['isOpenDropdown']">
+                    <div class="item">
+                        Edit
+                    </div>
+                    <div class="item">
+                        Delete
                     </div>
                 </div>
-
             </td>
         </tr>
         </tbody>

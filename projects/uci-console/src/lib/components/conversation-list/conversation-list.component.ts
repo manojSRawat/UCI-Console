@@ -59,6 +59,7 @@ export class ConversationListComponent implements OnInit {
     parseConversations(data) {
         this.chatBots = [];
         data.data.forEach(bot => {
+            bot.isOpenDropdown = false;
             const obj = {...bot, userCount: 0};
             bot.userSegments.forEach(userSegment => {
                 obj.userCount += (userSegment.count || 0);
@@ -74,6 +75,8 @@ export class ConversationListComponent implements OnInit {
             this.pager.pages.push(i);
             i++;
         }
+
+        console.log('___>>chatbots', this.chatBots);
     }
 
     sortColumns(column) {
@@ -110,5 +113,19 @@ export class ConversationListComponent implements OnInit {
                 this.chatBots[index].status = 'Live';
             }
         );
+    }
+
+    getOpenDropdown(item) {
+        if (this.chatBots && this.chatBots.length) {
+            this.chatBots.forEach(val => {
+                if (item.id === val.id) {
+                    val.isOpenDropdown = !item.isOpenDropdown;
+                } else {
+                    val.isOpenDropdown = false;
+                }
+            });
+        }
+        // console.log('--->>', this.chatBots);
+
     }
 }
