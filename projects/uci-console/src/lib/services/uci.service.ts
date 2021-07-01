@@ -24,6 +24,10 @@ export class UciService extends BaseService {
         return this.getRequest(this.BASE_URL + 'bot/get', params);
     }
 
+    searchChatBots(params): Observable<any> {
+        return this.getRequest(this.BASE_URL + 'bot/search', params);
+    }
+
     toggleBotStatus(botId): Observable<any> {
         return this.getRequest(this.BASE_URL + 'bot/get', {});
     }

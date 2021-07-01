@@ -26,6 +26,7 @@ export class ConversationListComponent implements OnInit {
     reverse = false;
     queryParams: any;
     search;
+
     constructor(
         private uciService: UciService,
         private route: Router
@@ -37,36 +38,42 @@ export class ConversationListComponent implements OnInit {
     }
 
     getAllChatBots() {
-        const param = {
+        const param: any = {
             page: this.pager.currentPage,
             perPage: this.pager.pageSize
         };
 
         if (this.search) {
-            // param['search'] = this.search;
+            param.search = this.search;
+            this.uciService.searchChatBots(param).subscribe(
+                data => this.parseConversations(data)
+            );
+        } else {
+            this.uciService.fetchAllChatBots(param).subscribe(
+                data => this.parseConversations(data)
+            );
         }
-        this.uciService.fetchAllChatBots(param).subscribe(
-            data => {
-                this.chatBots = [];
-                data.data.forEach(bot => {
-                    const obj = {...bot, userCount: 0};
-                    bot.userSegments.forEach(userSegment => {
-                        obj.userCount += (userSegment.count || 0);
-                    });
 
-                    this.chatBots.push(obj);
-                });
-                this.pager.totalItems = data.total;
-                this.pager.totalPages = Math.ceil(data.total / this.pager.pageSize);
-                this.pager.pages = [];
-                let i = 1;
-                while (i <= Math.ceil(data.total / this.pager.pageSize)) {
-                    this.pager.pages.push(i);
-                    i++;
-                }
-                console.log(this.pager);
-            }
-        );
+    }
+
+    parseConversations(data) {
+        this.chatBots = [];
+        data.data.forEach(bot => {
+            const obj = {...bot, userCount: 0};
+            bot.userSegments.forEach(userSegment => {
+                obj.userCount += (userSegment.count || 0);
+            });
+
+            this.chatBots.push(obj);
+        });
+        this.pager.totalItems = data.total;
+        this.pager.totalPages = Math.ceil(data.total / this.pager.pageSize);
+        this.pager.pages = [];
+        let i = 1;
+        while (i <= Math.ceil(data.total / this.pager.pageSize)) {
+            this.pager.pages.push(i);
+            i++;
+        }
     }
 
     sortColumns(column) {

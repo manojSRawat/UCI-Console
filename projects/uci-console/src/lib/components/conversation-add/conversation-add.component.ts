@@ -31,6 +31,7 @@ export class ConversationAddComponent implements OnInit {
     isCheckedTermCondition: boolean = false;
     conversationForm: FormGroup;
     logicForm: FormGroup;
+
     constructor(
         private uciService: UciService,
         private router: Router,
@@ -44,6 +45,7 @@ export class ConversationAddComponent implements OnInit {
         this.conversationForm = this.fb.group({
             name: ['', Validators.required],
             description: [''],
+            purpose: [''],
             startingMessage: ['', Validators.required],
             startDate: [''],
             endDate: ['']
@@ -88,6 +90,7 @@ export class ConversationAddComponent implements OnInit {
 
         this.getLogicForm();
     }
+
     backToStepOne() {
         if (this.stepIndex === 2) {
             this.stepIndex = 1;
@@ -169,7 +172,6 @@ export class ConversationAddComponent implements OnInit {
             this.formResponse.logic.push(logic.id);
         });
         Object.assign(this.formResponse, this.conversationForm.value);
-        console.log('--->>>this.formResponse', this.formResponse);
 
         this.isLoaderShow = true;
         this.uciService.botCreate({data: this.formResponse}).subscribe(
@@ -188,15 +190,35 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onLogicAdd() {
-        console.log('--->>>logicForm', this.logicForm.value);
-        this.selectedLogic.push({name: 'Test ' + (this.selectedLogic.length + 1), step: 1, description: 'test'});
-        // this.uciService.createLogic({data: this.logicFormRequest}).subscribe(
-        //     data => {
-        //         this.isModalLoaderShow = true;
-        //         this.selectedLogic.push(data);
-        //     }, error => {
-        //         this.isModalLoaderShow = false;
-        //     }
-        // );
+        this.createLogic('ss_form_mpc');
+    }
+
+    createLogic(odkFormId) {
+        const reqData = {
+            ...this.logicForm.value,
+            transformers: [
+                {
+                    id: 'bbf56981-b8c9-40e9-8067-468c2c753659',
+                    meta: {
+                        form: 'https://hosted.my.form.here.com',
+                        formID: odkFormId
+                    }
+                }
+            ],
+            adapter: '44a9df72-3d7a-4ece-94c5-98cf26307324'
+        };
+
+        this.uciService.createLogic({data: reqData}).subscribe(
+            (data: any) => {
+                this.isModalLoaderShow = true;
+                this.selectedLogic.push({
+                    id: data.data.id,
+                    isOpenDropdown: false,
+                    ...this.logicForm.value,
+                });
+            }, error => {
+                this.isModalLoaderShow = false;
+            }
+        );
     }
 }
