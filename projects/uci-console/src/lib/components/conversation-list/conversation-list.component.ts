@@ -29,7 +29,7 @@ export class ConversationListComponent implements OnInit {
 
     constructor(
         private uciService: UciService,
-        private route: Router
+        private router: Router
     ) {
     }
 
@@ -44,12 +44,12 @@ export class ConversationListComponent implements OnInit {
         };
 
         if (this.search) {
-            param.search = this.search;
-            this.uciService.searchChatBots(param).subscribe(
+            param.name = this.search;
+            this.uciService.searchConversation(param).subscribe(
                 data => this.parseConversations(data)
             );
         } else {
-            this.uciService.fetchAllChatBots(param).subscribe(
+            this.uciService.fetchConversation(param).subscribe(
                 data => this.parseConversations(data)
             );
         }
@@ -60,10 +60,13 @@ export class ConversationListComponent implements OnInit {
         this.chatBots = [];
         data.data.forEach(bot => {
             bot.isOpenDropdown = false;
-            const obj = {...bot, userCount: 0};
+            const obj = {...bot, segmentText: '', userCount: 0};
+            const segmentNames = [];
             bot.userSegments.forEach(userSegment => {
+                segmentNames.push(userSegment.name);
                 obj.userCount += (userSegment.count || 0);
             });
+            obj.segmentText = segmentNames.join(', ');
 
             this.chatBots.push(obj);
         });
@@ -100,17 +103,25 @@ export class ConversationListComponent implements OnInit {
     }
 
     onAddNew() {
-        this.route.navigateByUrl('uci/add');
+        this.router.navigateByUrl('uci/add');
     }
 
-    onEdit() {
-
+    onEdit(conversation) {
+        this.router.navigateByUrl(`uci/${conversation.id}/edit`);
     }
 
-    onStatus(botId, index) {
-        this.uciService.toggleBotStatus(botId).subscribe(
+    onStatusChange(conversation, index) {
+        this.uciService.toggleConversationStatus(conversation.id).subscribe(
             data => {
                 this.chatBots[index].status = 'Live';
+            }
+        );
+    }
+
+    onDelete(conversation, index) {
+        this.uciService.deleteConversation(conversation.id).subscribe(
+            data => {
+                this.chatBots.splice(index, 1);
             }
         );
     }
@@ -125,7 +136,5 @@ export class ConversationListComponent implements OnInit {
                 }
             });
         }
-        // console.log('--->>', this.chatBots);
-
     }
 }

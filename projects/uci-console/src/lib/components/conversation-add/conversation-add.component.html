@@ -1,8 +1,8 @@
 <ng-container [ngSwitch]="currentViewState">
 
     <lib-user-segment-add *ngSwitchCase="'ADD_SEGMENT'"
-                     (cancel)="onUserSegmentCancel()"
-                     (add)="onUserSegmentCreate($event)">
+                          (cancel)="onUserSegmentCancel()"
+                          (add)="onUserSegmentCreate($event)">
     </lib-user-segment-add>
 
     <lib-user-segment-list *ngSwitchCase="'SELECT_SEGMENT'"
@@ -13,8 +13,8 @@
 
     <div *ngSwitchCase="'ADD_CONVERSATION'" class="uci-add-container">
         <div class="ui grid">
-            <div class="five wide column pr-0">
-                <div class="d-flex font-0-75" style="justify-content: flex-end;align-items: baseline;">
+            <div class="six wide column pr-0">
+                <div class="d-flex font-0-75" style="align-items: baseline;">
                     <div style="width: 30px">
                         <button class="circular ui icon button" style="width: 100%; font-size: 0.75rem"
                                 (click)="backToStepOne()"
@@ -23,19 +23,16 @@
                         </button>
                     </div>
                     <div class="px-5 pt-10">Conversation setup</div>
-                    <div class="line mt-20"></div>
-                </div>
-            </div>
-            <div class="three wide column pl-0">
-                <div class="d-flex font-0-75" style="justify-content: center;align-items: baseline;">
+                    <div class="line mt-20 ml-20 mr-20"></div>
                     <div style="width: 30px">
                         <button class="circular ui icon button" style="width: 100%; font-size: 0.75rem"
-                                [ngClass]="{'blue-bg-white-text': stepIndex === 2}">2</button>
+                                [ngClass]="{'blue-bg-white-text': stepIndex === 2}">2
+                        </button>
                     </div>
                     <div class="px-5 pt-10 font-weight-bold">Conversation flow</div>
                 </div>
             </div>
-            <div class="four wide column">
+            <div class="six wide column">
                 <ng-container *ngIf="stepIndex === 1; else stp2_btn">
                     <div class="right-floated pt-0">
                         <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onAddCancel()">
@@ -60,7 +57,8 @@
                                     </button>
                                 </ng-container>
                                 <ng-template #submitBtn>
-                                    <button class="sb-btn sb-btn-normal sb-btn-primary" [disabled]="!isCheckedTermCondition"
+                                    <button class="sb-btn sb-btn-normal sb-btn-primary"
+                                            [disabled]="!isCheckedTermCondition"
                                             (click)="onSubmit()"> Submit
                                     </button>
                                 </ng-template>
@@ -71,7 +69,7 @@
                                 <div class="ui checkbox">
                                     <input type="checkbox" name="example"
                                            [(ngModel)]="isCheckedTermCondition">
-                                    <label class="font-weight-normal"> I agree the terms and conditions</label>
+                                    <label class="font-weight-normal"> I agree to the required terms and conditions </label>
                                 </div>
                             </div>
                         </div>
@@ -86,25 +84,24 @@
                     Add new conversation
                 </div>
                 <div class="ten wide column pt-0">
-<!--                    <sb-dynamic-form *ngIf="conversationFormFieldProperties" [config]="conversationFormFieldProperties"-->
-<!--                                     (statusChanges)="onStatusChanges($event)"-->
-<!--                                     (valueChanges)="valueChanges($event)"></sb-dynamic-form>-->
                     <form [formGroup]="conversationForm" class="ui form">
                         <div class="field">
-                            <label>Conversation name  <sup><i class="asterisk icon asterisk-color"></i></sup></label>
+                            <label>Conversation name <sup><i class="asterisk icon asterisk-color"></i></sup></label>
                             <input type="text" name="name" placeholder="Enter name" formControlName="name">
                         </div>
                         <div class="field">
                             <label>Conversation description</label>
-                            <textarea rows="5" name="description" placeholder="Enter description" formControlName="description"></textarea>
+                            <textarea rows="5" name="description" placeholder="Enter description"
+                                      formControlName="description"></textarea>
                         </div>
                         <div class="field">
-                            <label>Purpose</label>
+                            <label>Purpose of the conversation <sup><i class="asterisk icon asterisk-color"></i></sup></label>
                             <input type="text" name="name" placeholder="Enter purpose" formControlName="purpose">
                         </div>
                         <div class="field">
                             <label>Starting message <sup><i class="asterisk icon asterisk-color"></i></sup></label>
-                            <input type="text" name="startingMessage" placeholder="Enter message" formControlName="startingMessage">
+                            <input type="text" name="startingMessage" placeholder="Enter message"
+                                   formControlName="startingMessage">
                         </div>
                         <div class="two fields">
                             <div class="field">
@@ -141,10 +138,11 @@
             <div class="ui grid">
                 <ng-container *ngIf="userSegments && userSegments.length">
                     <div class="ui three column grid">
-                        <div class="column"  *ngFor="let userSegment of userSegments; let i = index">
+                        <div class="column" *ngFor="let userSegment of userSegments; let i = index">
                             <div class="ui fluid card">
                                 <div class="content">
-                                    <i class="right floated icon trash delete-icon" (click)="onUserSegmentDelete(i)"></i>
+                                    <i class="right floated icon trash delete-icon"
+                                       (click)="onUserSegmentDelete(i)"></i>
                                     {{userSegment.name}}
                                     <div class="meta">User count {{userSegment.count}}</div>
                                 </div>
@@ -162,7 +160,8 @@
                     Conversation flow
                 </div>
                 <div class="two wide column right aligned">
-                    <button class="sb-btn sb-btn-normal sb-btn-outline-primary" *ngIf="selectedLogic && selectedLogic.length"
+                    <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
+                            *ngIf="selectedLogic && selectedLogic.length"
                             (click)="openModel()">
                         Add Logic
                     </button>
@@ -175,12 +174,13 @@
                             <div class="w-25-per text-center" style="margin: auto; padding: 2rem;">
                                 <div class="text-center">
                                     <div class="text-center">
-                                        <img alt="Search Icon" src="assets/images/empty.svg">
+                                        <img alt="Search Icon" src="assets/uci-console/images/empty.svg">
                                     </div>
-                                    No logic Added
+                                    <div class="text-center mt-20">
+                                        No logic Added
+                                    </div>
                                 </div>
-
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary" (click)="openModel()">
+                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mt-10" (click)="openModel()">
                                     Add logic
                                 </button>
                             </div>
@@ -192,10 +192,11 @@
                         <table class="ui table" style="width: 100%">
                             <thead>
                             <tr>
-                                <th (click)="sortColumns('name')" class="one wide center aligned UpReviewTableHeader sorted bl-0"
+                                <th (click)="sortColumns('name')"
+                                    class="one wide center aligned UpReviewTableHeader sorted bl-0"
                                     [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
-                                    Steps
+                                    Step
                                 </th>
                                 <th (click)="sortColumns('name')" class="three wide UpReviewTableHeader sorted bl-0"
                                     [ngClass]="{'ascending':sortDirection === 'asc' &&
@@ -207,7 +208,8 @@
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                                     Description
                                 </th>
-                                <th (click)="sortColumns('name')" class="one wide center aligned UpReviewTableHeader sorted bl-0"
+                                <th (click)="sortColumns('name')"
+                                    class="one wide center aligned UpReviewTableHeader sorted bl-0"
                                     [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                                     Action
@@ -216,20 +218,20 @@
                             </thead>
                             <tbody>
                             <tr class="UpForReviewListHover"
-                                *ngFor="let content of selectedLogic; let i = index;">
+                                *ngFor="let logic of selectedLogic; let i = index;">
                                 <td class="center aligned">{{i + 1}}</td>
-                                <td>{{content?.name}}</td>
-                                <td>{{content?.description}}</td>
+                                <td>{{logic?.name}}</td>
+                                <td>{{logic?.description}}</td>
                                 <td class="center aligned" style="position: relative">
                                     <i class="ellipsis vertical icon ellipsis-icon"
-                                       (click)="getOpenDropdown(content)"
+                                       (click)="getOpenDropdown(logic)"
                                     ></i>
-                                    <div class="menu ui card action-dropdown"
-                                         *ngIf="content['isOpenDropdown']">
-                                        <div class="item" (click)="openModel(); getEditLogicData(content); content['isOpenDropdown'] = false">
+                                    <div class="menu ui card action-dropdown" *ngIf="logic['isOpenDropdown']">
+                                        <div class="item"
+                                             (click)="openModel(); getEditLogicData(logic); logic['isOpenDropdown'] = false">
                                             Edit
                                         </div>
-                                        <div class="item">
+                                        <div class="item" (click)="onDelete(logic, i); logic['isOpenDropdown'] = false">
                                             Delete
                                         </div>
                                     </div>
@@ -245,15 +247,13 @@
     </div>
 </ng-container>
 
-<sui-modal *ngIf="collectionListModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0" [size]="'normal'"
+<sui-modal *ngIf="collectionListModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0"
+           [size]="'normal'"
            class="sb-modal" (dismissed)="this.collectionListModal = false" #modal>
     <div class="sb-modal-header">
         Add Conversation Logic
     </div>
     <div class="sb-modal-content">
-<!--        <sb-dynamic-form *ngIf="logicFormFieldProperties" [config]="logicFormFieldProperties"-->
-<!--                         (statusChanges)="onStatusChanges($event)"-->
-<!--                         (valueChanges)="logicValueChanges($event)"></sb-dynamic-form>-->
         <form [formGroup]="logicForm" class="ui form">
             <div class="field">
                 <label>Name</label>
@@ -261,12 +261,13 @@
             </div>
             <div class="field">
                 <label>Description</label>
-                <textarea rows="3" name="description" placeholder="Enter description" formControlName="description"></textarea>
+                <textarea rows="3" name="description" placeholder="Enter description"
+                          formControlName="description"></textarea>
             </div>
             <div class="field">
                 <label>Upload Form (.xml)</label>
-                <input type="file" name="file" placeholder="Browse..." formControlName="file"
-                       accept=".xlsx,.xls">
+                <input type="file" name="file" placeholder="Browse..."
+                       (change)="onFileUpload($event)" accept=".xlsx,.xls">
             </div>
         </form>
     </div>
@@ -281,7 +282,8 @@
                 Add
             </button>
         </ng-template>
-        <button class="sb-btn sb-btn-normal sb-btn-outline-primary" (click)="modal.deny('denied');isModalLoaderShow = false;">
+        <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
+                (click)="modal.deny('denied');isModalLoaderShow = false;">
             Cancel
         </button>
     </div>

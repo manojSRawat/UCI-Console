@@ -5,7 +5,7 @@
                 <div class="input-div relative" id="search-input-container">
                     <img alt="Search Icon" class="search icon" src="assets/images/search-icon.svg">
                     <input class="sb-search-input disabled ng-untouched ng-pristine" id="keyword" name="filter_search"
-                           type="text" placeholder="Search">
+                           [(ngModel)]="search" type="text" placeholder="Search">
                 </div>
                 <button class="sb-btn sb-btn-normal disabled" (click)="getSearch()">Search</button>
             </div>
@@ -54,19 +54,20 @@
             <td>{{content.name}}</td>
             <td [ngClass]="'status-' + (content.status ? content.status.toLowerCase(): '')">{{content?.status}}</td>
             <td>{{content?.description}}</td>
-            <td>{{content?.segments}}</td>
-            <td class="center aligned">{{content?.userCount}}</td>
+            <td>{{content.segmentText}}</td>
+            <td class="center aligned">{{content.userCount}}</td>
             <td class="center aligned" style="position: relative">
                 <i class="ellipsis vertical icon ellipsis-icon"
-                   (click)="getOpenDropdown(content)"
-                ></i>
-                <div class="menu ui card action-dropdown"
-                     *ngIf="content['isOpenDropdown']">
-                    <div class="item">
+                   (click)="getOpenDropdown(content)"></i>
+                <div class="menu ui card action-dropdown" *ngIf="content['isOpenDropdown']">
+                    <div class="item" (click)="onEdit(content)">
                         Edit
                     </div>
-                    <div class="item">
+                    <div class="item" (click)="onDelete(content, i)">
                         Delete
+                    </div>
+                    <div class="item" (click)="onStatusChange(content, i)">
+                        Disable
                     </div>
                 </div>
             </td>
@@ -78,11 +79,16 @@
         <div class="ten wide column">
             <div class="pb-10">
                 <div class="ui pagination menu mt-10 right-floated pt-0" *ngIf="pager.pages">
-                    <a [ngClass]="{disabled:pager.currentPage===1 }" class="item " (click)="navigateToPage(1) ">First</a>
-                    <a [ngClass]="{disabled:pager.currentPage===1 }" class="item " (click)="navigateToPage(pager.currentPage - 1)">Previous</a>
-                    <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage===page}" (click)="navigateToPage(page)" class="item">{{page}}</a>
-                    <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}" (click)="navigateToPage(pager.currentPage + 1)" class="item">Next</a>
-                    <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}" (click)="navigateToPage(pager.totalPages)" class="item ">Last</a>
+                    <a [ngClass]="{disabled:pager.currentPage===1 }" class="item "
+                       (click)="navigateToPage(1) ">First</a>
+                    <a [ngClass]="{disabled:pager.currentPage===1 }" class="item "
+                       (click)="navigateToPage(pager.currentPage - 1)">Previous</a>
+                    <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage===page}"
+                       (click)="navigateToPage(page)" class="item">{{page}}</a>
+                    <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}"
+                       (click)="navigateToPage(pager.currentPage + 1)" class="item">Next</a>
+                    <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}"
+                       (click)="navigateToPage(pager.totalPages)" class="item ">Last</a>
                 </div>
             </div>
         </div>

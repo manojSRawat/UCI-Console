@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BaseService} from './base.service';
 import {Observable} from 'rxjs';
 
@@ -20,20 +20,28 @@ export class UciService extends BaseService {
         super(http);
     }
 
-    fetchAllChatBots(params): Observable<any> {
+    fetchConversation(params): Observable<any> {
         return this.getRequest(this.BASE_URL + 'bot/get', params);
     }
 
-    searchChatBots(params): Observable<any> {
+    searchConversation(params): Observable<any> {
         return this.getRequest(this.BASE_URL + 'bot/search', params);
     }
 
-    toggleBotStatus(botId): Observable<any> {
+    toggleConversationStatus(botId): Observable<any> {
         return this.getRequest(this.BASE_URL + 'bot/get', {});
+    }
+
+    deleteConversation(botId): Observable<any> {
+        return this.getRequest(this.BASE_URL + `bot/delete/${botId}`, {});
     }
 
     fetchUserSegment(params): Observable<any> {
         return this.getRequest(this.BASE_URL + 'userSegment/get', params);
+    }
+
+    searchUserSegment(params): Observable<any> {
+        return this.getRequest(this.BASE_URL + 'userSegment/search', params);
     }
 
     createUserSegment(data) {
@@ -51,4 +59,26 @@ export class UciService extends BaseService {
     readForm(data) {
         return this.postRequest(this.FORM_BASE_URL + 'api/data/v1/form/read', data);
     }
+
+    deleteLogic(id) {
+        return this.getRequest(this.BASE_URL + `conversationLogic/delete/${id}`);
+    }
+
+    uploadFile(obj): Observable<any> {
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type', 'multipart/form-data');
+
+        return this.http.post('http://68.183.81.222:8000/api/files', toFormData(obj), {headers});
+    }
+}
+
+export function toFormData<T>(formValue: T) {
+    const formData = new FormData();
+
+    for (const key of Object.keys(formValue)) {
+        const value = formValue[key];
+        formData.append(key, value);
+    }
+
+    return formData;
 }

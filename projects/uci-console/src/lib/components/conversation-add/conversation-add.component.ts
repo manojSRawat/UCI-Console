@@ -28,10 +28,10 @@ export class ConversationAddComponent implements OnInit {
     isLoaderShow = false;
     isModalLoaderShow = false;
     logicFormRequest = {};
-    isCheckedTermCondition: boolean = false;
+    isCheckedTermCondition = false;
     conversationForm: FormGroup;
     logicForm: FormGroup;
-    selectedLogicItemId;
+
     constructor(
         private uciService: UciService,
         private router: Router,
@@ -45,15 +45,16 @@ export class ConversationAddComponent implements OnInit {
         this.conversationForm = this.fb.group({
             name: ['', Validators.required],
             description: [''],
-            purpose: [''],
+            purpose: ['', Validators.required],
             startingMessage: ['', Validators.required],
             startDate: [''],
             endDate: ['']
         });
         this.logicForm = this.fb.group({
+            id: [null],
             name: [''],
             description: [''],
-            file: ['']
+            formId: ['']
         });
     }
 
@@ -190,10 +191,6 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onLogicAdd() {
-        this.createLogic('ss_form_mpc');
-    }
-
-    createLogic(odkFormId) {
         const reqData = {
             ...this.logicForm.value,
             transformers: [
@@ -201,31 +198,35 @@ export class ConversationAddComponent implements OnInit {
                     id: 'bbf56981-b8c9-40e9-8067-468c2c753659',
                     meta: {
                         form: 'https://hosted.my.form.here.com',
-                        formID: odkFormId
+                        formID: 'ss_form_mpc'
                     }
                 }
             ],
             adapter: '44a9df72-3d7a-4ece-94c5-98cf26307324'
         };
+
         this.isModalLoaderShow = true;
         this.uciService.createLogic({data: reqData}).subscribe(
             (data: any) => {
                 this.isModalLoaderShow = false;
+                const existingLogic = this.logicForm.value;
+                delete existingLogic.id;
                 this.selectedLogic.push({
                     id: data.data.id,
                     isOpenDropdown: false,
-                    ...this.logicForm.value,
+                    ...existingLogic,
                 });
             }, error => {
                 this.isModalLoaderShow = false;
             }
         );
     }
+
     getOpenDropdown(item) {
         if (this.selectedLogic && this.selectedLogic.length) {
             this.selectedLogic.forEach(val => {
                 if (item.id === val.id) {
-                    val.isOpenDropdown = !item['isOpenDropdown'];
+                    val.isOpenDropdown = !item.isOpenDropdown;
                 } else {
                     val.isOpenDropdown = false;
                 }
@@ -237,9 +238,34 @@ export class ConversationAddComponent implements OnInit {
 
     getEditLogicData(item) {
         if (item.id) {
-            this.selectedLogicItemId = item.id;
-            this.logicForm.patchValue({name: item.name, description: item.description});
+            this.logicForm.patchValue({id: item.id, name: item.name, description: item.description});
             // console.log('-->>', this.selectedLogicItemId,  this.logicForm.value);
         }
+    }
+
+    onFileUpload(event) {
+        console.log(event);
+        if (!event.target.files.length) {
+            return;
+        }
+        const file = event.target.files[0];
+        const obj = {
+            type: 'INFORMATION_SHARING',
+            fileType: 'Normal',
+            file
+        };
+        this.uciService.uploadFile(obj).subscribe((fileInfo: any) => {
+                console.log('file', fileInfo);
+                // this.logicForm.patchValue({formId: fileInfo.id});
+            }
+        );
+    }
+
+    onDelete(logic, index) {
+        this.uciService.deleteLogic(logic.id).subscribe(
+            file => {
+                this.selectedLogic.splice(index, 1);
+            }
+        );
     }
 }
