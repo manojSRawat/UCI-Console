@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UciService} from '../../services/uci.service';
-
-import {SuiModalService} from 'ng2-semantic-ui-v9';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import moment from 'moment/moment';
 
@@ -34,13 +32,13 @@ export class ConversationAddComponent implements OnInit {
     logicForm: FormGroup;
     termsAndConditionModal = false;
     userSegmentItemId;
+    selectedLogicIndex;
 
     constructor(
         private uciService: UciService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private fb: FormBuilder,
-        private modalService: SuiModalService
+        private fb: FormBuilder
     ) {
     }
 
@@ -61,8 +59,8 @@ export class ConversationAddComponent implements OnInit {
             formId: ['']
         });
 
+        // Edit case
         this.userSegmentItemId = this.activatedRoute.snapshot.paramMap.get('id');
-        console.log('-->> this.userSegmentItemId', this.userSegmentItemId);
         if (this.userSegmentItemId) {
             this.getUserSegmentDetail();
         }
@@ -97,7 +95,6 @@ export class ConversationAddComponent implements OnInit {
     nextStep() {
         if (this.stepIndex === 1 && this.conversationForm.valid) {
             this.stepIndex = 2;
-            this.getLogicForm();
         }
     }
 
@@ -133,36 +130,8 @@ export class ConversationAddComponent implements OnInit {
         );
     }
 
-    getLogicForm() {
-        this.uciService.readForm(
-            {
-                request: {
-                    type: 'conversationLogic',
-                    subType: 'global',
-                    action: 'menubar',
-                    framework: 'ekstep_ncert_k-12',
-                    rootOrgId: '*'
-                }
-            }
-        ).subscribe(
-            (data: any) => {
-                if (data.result && data.result.form && data.result.form.data) {
-                    this.logicFormFieldProperties = data.result.form.data.fields;
-                }
-            }
-        );
-    }
-
-    onStatusChanges(event) {
-        console.log('event', event);
-    }
-
     valueChanges(event) {
         this.formResponse = Object.assign(this.formResponse, event);
-    }
-
-    logicValueChanges(event) {
-        this.logicFormRequest = Object.assign(this.logicFormRequest, event);
     }
 
     onAddCancel() {
@@ -238,10 +207,7 @@ export class ConversationAddComponent implements OnInit {
                     this.isModalLoaderShow = false;
                     const existingLogic = this.logicForm.value;
                     delete existingLogic.id;
-                    this.selectedLogic.push({
-                        id: data.data.id,
-                        ...existingLogic,
-                    });
+                    this.selectedLogic[this.selectedLogicIndex] = Object.assign(this.selectedLogic[this.selectedLogicIndex], existingLogic);
                 }, error => {
                     this.isModalLoaderShow = false;
                 }
@@ -264,10 +230,10 @@ export class ConversationAddComponent implements OnInit {
 
     }
 
-    getEditLogicData(item) {
+    getEditLogicData(item, index) {
         if (item.id) {
+            this.selectedLogicIndex = index;
             this.logicForm.patchValue({id: item.id, name: item.name, description: item.description});
-            // console.log('-->>', this.selectedLogicItemId,  this.logicForm.value);
         }
     }
 
@@ -299,7 +265,6 @@ export class ConversationAddComponent implements OnInit {
 
     getUserSegmentDetail() {
         this.uciService.getBotUserDetails(this.userSegmentItemId).subscribe((val: any) => {
-            console.log('--->>>bot user details', val);
             if (val.data) {
                 this.conversationForm.patchValue({
                     name: val.data.name,
@@ -309,8 +274,13 @@ export class ConversationAddComponent implements OnInit {
                     startDate: val.data.startDate ? moment(val.data.startDate).format('YYYY-MM-DD') : '',
                     endDate: val.data.endDate ? moment(val.data.endDate).format('YYYY-MM-DD') : ''
                 });
+                if (val.data.userSegments) {
+                    this.userSegments = val.data.userSegments;
+                }
+                if (val.data.logic) {
+                    this.selectedLogic = val.data.logic;
+                }
             }
-
         });
     }
 }

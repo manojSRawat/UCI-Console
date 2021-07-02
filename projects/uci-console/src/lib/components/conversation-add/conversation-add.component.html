@@ -233,7 +233,7 @@
                                         <i class="ellipsis vertical icon ellipsis-icon dropdown"
                                         ></i>
                                         <div class="menu" suiDropdownMenu>
-                                            <div class="item" (click)="openModel(); getEditLogicData(logic)">Edit</div>
+                                            <div class="item" (click)="openModel(); getEditLogicData(logic, i)">Edit</div>
                                             <div class="item" (click)="onDelete(logic, i)">Delete</div>
                                         </div>
                                     </div>
@@ -249,7 +249,7 @@
 </ng-container>
 
 <sui-modal *ngIf="collectionListModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0"
-           [size]="'normal'"
+           [size]="'large'"
            class="sb-modal" (dismissed)="this.collectionListModal = false;" #modal>
     <div class="sb-modal-header">
         {{logicForm.get('id').value ? ' Update' : 'Add'}} Conversation Logic
@@ -291,7 +291,7 @@
 </sui-modal>
 
 <sui-modal *ngIf="termsAndConditionModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0"
-           [size]="'normal'"
+           [size]="'large'"
            class="sb-modal" (dismissed)="this.termsAndConditionModal = false" #modal>
     <div class="sb-modal-header">
         Terms and Conditions

@@ -77,8 +77,6 @@ export class ConversationListComponent implements OnInit {
             this.pager.pages.push(i);
             i++;
         }
-
-        console.log('___>>chatbots', this.chatBots);
     }
 
     sortColumns(column) {
@@ -94,7 +92,6 @@ export class ConversationListComponent implements OnInit {
         this.pageNumber = page;
         this.pager.currentPage = page;
         this.getAllChatBots();
-        // this.route.navigate(['u', this.pageNumber], {queryParams: this.queryParams});
     }
 
     getSearch() {
