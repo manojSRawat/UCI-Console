@@ -4,6 +4,7 @@ import {UciService} from '../../services/uci.service';
 
 import {SuiModalService} from 'ng2-semantic-ui-v9';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import moment from 'moment/moment';
 
 @Component({
     selector: 'lib-conversation-add',
@@ -183,14 +184,27 @@ export class ConversationAddComponent implements OnInit {
         Object.assign(this.formResponse, this.conversationForm.value);
 
         this.isLoaderShow = true;
-        this.uciService.botCreate({data: this.formResponse}).subscribe(
-            data => {
-                this.isLoaderShow = false;
-                this.router.navigate(['uci/success']);
-            }, error => {
-                this.isLoaderShow = false;
-            }
-        );
+
+        if (this.userSegmentItemId) {
+            this.uciService.botUpdate(this.userSegmentItemId, {data: this.formResponse}).subscribe(
+                data => {
+                    this.isLoaderShow = false;
+                    this.router.navigate(['uci/success']);
+                }, error => {
+                    this.isLoaderShow = false;
+                }
+            );
+        } else {
+            this.uciService.botCreate({data: this.formResponse}).subscribe(
+                data => {
+                    this.isLoaderShow = false;
+                    this.router.navigate(['uci/success']);
+                }, error => {
+                    this.isLoaderShow = false;
+                }
+            );
+        }
+
     }
 
     openModel() {
@@ -218,37 +232,35 @@ export class ConversationAddComponent implements OnInit {
         };
 
         this.isModalLoaderShow = true;
-        this.uciService.createLogic({data: reqData}).subscribe(
-            (data: any) => {
-                this.isModalLoaderShow = false;
-                const existingLogic = this.logicForm.value;
-                delete existingLogic.id;
-                this.selectedLogic.push({
-                    id: data.data.id,
-                    isOpenDropdown: false,
-                    ...existingLogic,
-                });
-            }, error => {
-                this.isModalLoaderShow = false;
-            }
-        );
-    }
-
-    onLogicUpdate() {
-
-    }
-
-    getOpenDropdown(item) {
-        if (this.selectedLogic && this.selectedLogic.length) {
-            this.selectedLogic.forEach(val => {
-                if (item.id === val.id) {
-                    val.isOpenDropdown = !item.isOpenDropdown;
-                } else {
-                    val.isOpenDropdown = false;
+        if (this.logicForm.get('id').value) {
+            this.uciService.updateLogic(this.logicForm.get('id').value, {data: reqData}).subscribe(
+                (data: any) => {
+                    this.isModalLoaderShow = false;
+                    const existingLogic = this.logicForm.value;
+                    delete existingLogic.id;
+                    this.selectedLogic.push({
+                        id: data.data.id,
+                        ...existingLogic,
+                    });
+                }, error => {
+                    this.isModalLoaderShow = false;
                 }
-            });
+            );
+        } else {
+            this.uciService.createLogic({data: reqData}).subscribe(
+                (data: any) => {
+                    this.isModalLoaderShow = false;
+                    const existingLogic = this.logicForm.value;
+                    delete existingLogic.id;
+                    this.selectedLogic.push({
+                        id: data.data.id,
+                        ...existingLogic,
+                    });
+                }, error => {
+                    this.isModalLoaderShow = false;
+                }
+            );
         }
-        // console.log('--->>', this.selectedLogic);
 
     }
 
@@ -294,8 +306,8 @@ export class ConversationAddComponent implements OnInit {
                     description: val.data.description,
                     purpose: val.data.purpose,
                     startingMessage: val.data.startingMessage,
-                    startDate: val.data.startDate,
-                    endDate: val.data.endDate
+                    startDate: val.data.startDate ? moment(val.data.startDate).format('YYYY-MM-DD') : '',
+                    endDate: val.data.endDate ? moment(val.data.endDate).format('YYYY-MM-DD') : ''
                 });
             }
 

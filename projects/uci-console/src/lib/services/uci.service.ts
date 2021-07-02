@@ -51,11 +51,15 @@ export class UciService extends BaseService {
     createLogic(data) {
         return this.postRequest(this.BASE_URL + 'conversationLogic/create', data);
     }
-
+    updateLogic(id, data) {
+        return this.postRequest(this.BASE_URL + `conversationLogic/update/${id}`, data);
+    }
     botCreate(data) {
         return this.postRequest(this.BASE_URL + 'bot/create', data);
     }
-
+    botUpdate(id, data) {
+        return this.postRequest(this.BASE_URL + `bot/update/${id}`, data);
+    }
     readForm(data) {
         return this.postRequest(this.FORM_BASE_URL + 'api/data/v1/form/read', data);
     }

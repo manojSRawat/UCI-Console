@@ -59,7 +59,6 @@ export class ConversationListComponent implements OnInit {
     parseConversations(data) {
         this.chatBots = [];
         data.data.forEach(bot => {
-            bot.isOpenDropdown = false;
             const obj = {...bot, segmentText: '', userCount: 0};
             const segmentNames = [];
             bot.userSegments.forEach(userSegment => {
@@ -126,15 +125,5 @@ export class ConversationListComponent implements OnInit {
         );
     }
 
-    getOpenDropdown(item) {
-        if (this.chatBots && this.chatBots.length) {
-            this.chatBots.forEach(val => {
-                if (item.id === val.id) {
-                    val.isOpenDropdown = !item.isOpenDropdown;
-                } else {
-                    val.isOpenDropdown = false;
-                }
-            });
-        }
-    }
+
 }

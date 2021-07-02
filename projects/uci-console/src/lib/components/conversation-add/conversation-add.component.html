@@ -61,7 +61,8 @@
                                 <ng-template #submitBtn>
                                     <button class="sb-btn sb-btn-normal sb-btn-primary"
                                             [disabled]="!isCheckedTermCondition"
-                                            (click)="onSubmit()"> Submit
+                                            (click)="onSubmit()">
+                                        {{userSegmentItemId ? 'Update' : 'Submit'}}
                                     </button>
                                 </ng-template>
                             </div>
@@ -227,20 +228,6 @@
                                 <td class="center aligned">{{i + 1}}</td>
                                 <td>{{logic?.name}}</td>
                                 <td>{{logic?.description}}</td>
-                                <!--                                <td class="center aligned" style="position: relative">-->
-                                <!--                                    <i class="ellipsis vertical icon ellipsis-icon"-->
-                                <!--                                       (click)="getOpenDropdown(logic)"-->
-                                <!--                                    ></i>-->
-                                <!--                                    <div class="menu ui card action-dropdown" *ngIf="logic['isOpenDropdown']">-->
-                                <!--                                        <div class="item"-->
-                                <!--                                             (click)="openModel(); getEditLogicData(logic); logic['isOpenDropdown'] = false">-->
-                                <!--                                            Edit-->
-                                <!--                                        </div>-->
-                                <!--                                        <div class="item" (click)="onDelete(logic, i); logic['isOpenDropdown'] = false">-->
-                                <!--                                            Delete-->
-                                <!--                                        </div>-->
-                                <!--                                    </div>-->
-                                <!--                                </td>-->
                                 <td class="center aligned">
                                     <div class="ui dropdown" suiDropdown>
                                         <i class="ellipsis vertical icon ellipsis-icon dropdown"
@@ -263,9 +250,9 @@
 
 <sui-modal *ngIf="collectionListModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0"
            [size]="'normal'"
-           class="sb-modal" (dismissed)="this.collectionListModal = false" #modal>
+           class="sb-modal" (dismissed)="this.collectionListModal = false;" #modal>
     <div class="sb-modal-header">
-        Add Conversation Logic
+        {{logicForm.get('id').value ? ' Update' : 'Add'}} Conversation Logic
     </div>
     <div class="sb-modal-content">
         <form [formGroup]="logicForm" class="ui form">
@@ -292,16 +279,9 @@
             </button>
         </ng-container>
         <ng-template #modalBtn>
-            <ng-container *ngIf="logicForm.get('id').value;else showAddBtn">
-                <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicUpdate();modal.deny('denied')">
-                    Update
-                </button>
-            </ng-container>
-            <ng-template #showAddBtn>
-                <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicAdd();modal.deny('denied')">
-                    Add
-                </button>
-            </ng-template>
+            <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicAdd();modal.deny('denied')">
+                {{logicForm.get('id').value ? ' Update' : 'Add'}}
+            </button>
         </ng-template>
         <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
                 (click)="modal.deny('denied');isModalLoaderShow = false;">
