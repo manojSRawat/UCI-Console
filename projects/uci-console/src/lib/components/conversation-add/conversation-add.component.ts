@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {UciService} from '../../services/uci.service';
 
 import {SuiModalService} from 'ng2-semantic-ui-v9';
@@ -32,9 +32,12 @@ export class ConversationAddComponent implements OnInit {
     conversationForm: FormGroup;
     logicForm: FormGroup;
     termsAndConditionModal = false;
+    userSegmentItemId;
+
     constructor(
         private uciService: UciService,
         private router: Router,
+        private activatedRoute: ActivatedRoute,
         private fb: FormBuilder,
         private modalService: SuiModalService
     ) {
@@ -56,6 +59,12 @@ export class ConversationAddComponent implements OnInit {
             description: [''],
             formId: ['']
         });
+
+        this.userSegmentItemId = this.activatedRoute.snapshot.paramMap.get('id');
+        console.log('-->> this.userSegmentItemId', this.userSegmentItemId);
+        if (this.userSegmentItemId) {
+            this.getUserSegmentDetail();
+        }
     }
 
     userSegment() {
@@ -188,9 +197,11 @@ export class ConversationAddComponent implements OnInit {
         this.logicFormRequest = {};
         this.collectionListModal = true;
     }
+
     openTermAndConditionModel() {
         this.termsAndConditionModal = true;
     }
+
     onLogicAdd() {
         const reqData = {
             ...this.logicForm.value,
@@ -221,6 +232,10 @@ export class ConversationAddComponent implements OnInit {
                 this.isModalLoaderShow = false;
             }
         );
+    }
+
+    onLogicUpdate() {
+
     }
 
     getOpenDropdown(item) {
@@ -268,5 +283,22 @@ export class ConversationAddComponent implements OnInit {
                 this.selectedLogic.splice(index, 1);
             }
         );
+    }
+
+    getUserSegmentDetail() {
+        this.uciService.getBotUserDetails(this.userSegmentItemId).subscribe((val: any) => {
+            console.log('--->>>bot user details', val);
+            if (val.data) {
+                this.conversationForm.patchValue({
+                    name: val.data.name,
+                    description: val.data.description,
+                    purpose: val.data.purpose,
+                    startingMessage: val.data.startingMessage,
+                    startDate: val.data.startDate,
+                    endDate: val.data.endDate
+                });
+            }
+
+        });
     }
 }

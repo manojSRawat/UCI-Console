@@ -70,6 +70,11 @@ export class UciService extends BaseService {
 
         return this.http.post('http://68.183.81.222:8000/api/files', toFormData(obj), {headers});
     }
+
+
+    getBotUserDetails(id) {
+        return this.getRequest(this.BASE_URL + `bot/get/${id}`);
+    }
 }
 
 export function toFormData<T>(formValue: T) {

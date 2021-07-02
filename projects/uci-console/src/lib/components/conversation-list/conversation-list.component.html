@@ -56,18 +56,28 @@
             <td>{{content?.description}}</td>
             <td>{{content.segmentText}}</td>
             <td class="center aligned">{{content.userCount}}</td>
-            <td class="center aligned" style="position: relative">
-                <i class="ellipsis vertical icon ellipsis-icon"
-                   (click)="getOpenDropdown(content)"></i>
-                <div class="menu ui card action-dropdown" *ngIf="content['isOpenDropdown']">
-                    <div class="item" (click)="onEdit(content)">
-                        Edit
-                    </div>
-                    <div class="item" (click)="onDelete(content, i)">
-                        Delete
-                    </div>
-                    <div class="item" (click)="onStatusChange(content, i)">
-                        Disable
+<!--            <td class="center aligned" style="position: relative">-->
+<!--                <i class="ellipsis vertical icon ellipsis-icon"-->
+<!--                   (click)="getOpenDropdown(content)"></i>-->
+<!--                <div class="menu ui card action-dropdown" *ngIf="content['isOpenDropdown']">-->
+<!--                    <div class="item" (click)="onEdit(content)">-->
+<!--                        Edit-->
+<!--                    </div>-->
+<!--                    <div class="item" (click)="onDelete(content, i)">-->
+<!--                        Delete-->
+<!--                    </div>-->
+<!--                    <div class="item" (click)="onStatusChange(content, i)">-->
+<!--                        Disable-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </td>-->
+            <td class="center aligned">
+                <div class="ui dropdown" suiDropdown>
+                    <i class="ellipsis vertical icon ellipsis-icon dropdown"></i>
+                    <div class="menu" suiDropdownMenu>
+                        <div class="item" (click)="onEdit(content)">Edit</div>
+                        <div class="item" (click)="onDelete(content, i)">Delete</div>
+                        <div class="item" (click)="onStatusChange(content, i)">Disable</div>
                     </div>
                 </div>
             </td>
