@@ -31,7 +31,7 @@ export class ConversationAddComponent implements OnInit {
     isCheckedTermCondition = false;
     conversationForm: FormGroup;
     logicForm: FormGroup;
-
+    termsAndConditionModal = false;
     constructor(
         private uciService: UciService,
         private router: Router,
@@ -85,11 +85,10 @@ export class ConversationAddComponent implements OnInit {
     }
 
     nextStep() {
-        if (this.stepIndex === 1) {
+        if (this.stepIndex === 1 && this.conversationForm.valid) {
             this.stepIndex = 2;
+            this.getLogicForm();
         }
-
-        this.getLogicForm();
     }
 
     backToStepOne() {
@@ -189,7 +188,9 @@ export class ConversationAddComponent implements OnInit {
         this.logicFormRequest = {};
         this.collectionListModal = true;
     }
-
+    openTermAndConditionModel() {
+        this.termsAndConditionModal = true;
+    }
     onLogicAdd() {
         const reqData = {
             ...this.logicForm.value,

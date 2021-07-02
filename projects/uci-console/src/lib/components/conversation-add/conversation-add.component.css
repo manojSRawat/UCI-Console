@@ -91,4 +91,17 @@ button:disabled{
 .asterisk-color{
     color: red;
 }
+.t-and-c-title{
+    cursor: pointer!important;
 
+}
+.t-and-c-title:hover{
+    color: #89CFF0!important;
+}
+.sb-modal.ui.modal{
+    box-shadow: none!important;
+}
+.sb-modal.ui.modal.normal {
+    max-width: 45rem;
+    height: 0!important;
+}

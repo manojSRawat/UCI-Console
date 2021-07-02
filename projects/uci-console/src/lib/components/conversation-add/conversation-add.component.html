@@ -38,7 +38,9 @@
                         <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onAddCancel()">
                             Cancel
                         </button>
-                        <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="nextStep()"> Next</button>
+                        <button class="sb-btn sb-btn-normal sb-btn-primary" [disabled]="this.conversationForm.invalid"
+                                (click)="nextStep()"> Next
+                        </button>
                     </div>
                 </ng-container>
                 <ng-template #stp2_btn>
@@ -46,7 +48,7 @@
                         <div class="twelve wide column">
                             <div class="right-floated pt-0">
                                 <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10"
-                                        (click)="onAddCancel()"> Cancel
+                                        (click)="backToStepOne()"> Back
                                 </button>
                                 <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onSave()">
                                     Save
@@ -69,7 +71,9 @@
                                 <div class="ui checkbox">
                                     <input type="checkbox" name="example"
                                            [(ngModel)]="isCheckedTermCondition">
-                                    <label class="font-weight-normal"> I agree to the required terms and conditions </label>
+                                    <label class="font-weight-normal t-and-c-title"
+                                           (click)="openTermAndConditionModel()"> I agree to the required terms and
+                                        conditions </label>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +99,8 @@
                                       formControlName="description"></textarea>
                         </div>
                         <div class="field">
-                            <label>Purpose of the conversation <sup><i class="asterisk icon asterisk-color"></i></sup></label>
+                            <label>Purpose of the conversation <sup><i
+                                    class="asterisk icon asterisk-color"></i></sup></label>
                             <input type="text" name="name" placeholder="Enter purpose" formControlName="purpose">
                         </div>
                         <div class="field">
@@ -236,12 +241,23 @@
                                         </div>
                                     </div>
                                 </td>
+                                <!--                                <td class="center aligned">-->
+                                <!--                                    <div class="ui dropdown" suiDropdown>-->
+                                <!--                                        <i class="ellipsis vertical icon ellipsis-icon dropdown"-->
+                                <!--                                           ></i>-->
+                                <!--                                        <div class="menu" suiDropdownMenu>-->
+                                <!--                                            <div class="item" (click)="getEditLogicData(logic)">Edit</div>-->
+                                <!--                                            <div class="item" (click)="onDelete(logic, i);>-->
+                                <!--                                                Delete-->
+                                <!--                                            </div>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                </td>-->
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </ng-template>
-
             </div>
         </div>
     </div>
@@ -284,6 +300,46 @@
         </ng-template>
         <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
                 (click)="modal.deny('denied');isModalLoaderShow = false;">
+            Cancel
+        </button>
+    </div>
+</sui-modal>
+
+<sui-modal *ngIf="termsAndConditionModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0"
+           [size]="'normal'"
+           class="sb-modal" (dismissed)="this.termsAndConditionModal = false" #modal>
+    <div class="sb-modal-header">
+        Terms and Conditions
+    </div>
+    <div class="sb-modal-content">
+        <sui-tabset>
+            <div class="ui pointing secondary menu">
+                <a class="item" suiTabHeader="1">Terms of Use</a>
+                <a class="item" suiTabHeader="2">Privacy Policy </a>
+            </div>
+            <div class="ui segment" suiTabContent="1">
+                <p>This website is designed, developed and maintained by the National Council for Educational Research
+                    and Training (NCERT) (Ministry of Education (MoE), Government of India) (together referred to as
+                    "GoI").</p>
+
+                <p>These terms of use, as amended, govern the usage of DIKSHA (Digital Infrastructure for Knowledge
+                    Sharing) by its Users (as defined below) ("Terms"). DIKSHA is an initiative of the GoI.</p>
+            </div>
+            <div class="ui segment" suiTabContent="2">
+                <p>
+                    DIKSHA (Digital Infrastructure for Knowledge Sharing ) is the National Platform for School Education
+                    for the benefit of teachers and learners across India. DIKSHA is an initiative of National Council
+                    for Educational Research and Training (NCERT) (Ministry of Education (MoE), Government of India).
+                    Users of DIKSHA can access content for learning on the web at https://diksha.gov.in, through the
+                    DIKSHA mobile application, and the desktop application.
+                </p>
+            </div>
+        </sui-tabset>
+
+    </div>
+    <div class="sb-modal-actions">
+        <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
+                (click)="modal.deny('denied');">
             Cancel
         </button>
     </div>
