@@ -193,7 +193,7 @@ export class ConversationAddComponent implements OnInit {
                     id: 'bbf56981-b8c9-40e9-8067-468c2c753659',
                     meta: {
                         form: 'https://hosted.my.form.here.com',
-                        formID: 'ss_form_mpc'
+                        formID: this.logicForm.value.formId
                     }
                 }
             ],
@@ -244,13 +244,12 @@ export class ConversationAddComponent implements OnInit {
         }
         const file = event.target.files[0];
         const obj = {
-            type: 'INFORMATION_SHARING',
-            fileType: 'Normal',
-            file
+            form: file
         };
         this.uciService.uploadFile(obj).subscribe((fileInfo: any) => {
-                console.log('file', fileInfo);
-                // this.logicForm.patchValue({formId: fileInfo.id});
+                if (fileInfo.formID) {
+                    this.logicForm.patchValue({formId: fileInfo.formID});
+                }
             }
         );
     }

@@ -51,15 +51,19 @@ export class UciService extends BaseService {
     createLogic(data) {
         return this.postRequest(this.BASE_URL + 'conversationLogic/create', data);
     }
+
     updateLogic(id, data) {
         return this.postRequest(this.BASE_URL + `conversationLogic/update/${id}`, data);
     }
+
     botCreate(data) {
         return this.postRequest(this.BASE_URL + 'bot/create', data);
     }
+
     botUpdate(id, data) {
         return this.postRequest(this.BASE_URL + `bot/update/${id}`, data);
     }
+
     readForm(data) {
         return this.postRequest(this.FORM_BASE_URL + 'api/data/v1/form/read', data);
     }
@@ -72,7 +76,7 @@ export class UciService extends BaseService {
         let headers = new HttpHeaders();
         headers = headers.set('Content-Type', 'multipart/form-data');
 
-        return this.http.post('http://68.183.81.222:8000/api/files', toFormData(obj), {headers});
+        return this.http.post(this.BASE_URL + 'forms/upload', toFormData(obj), {headers});
     }
 
 
