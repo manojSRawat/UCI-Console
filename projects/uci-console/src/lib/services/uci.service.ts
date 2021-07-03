@@ -28,8 +28,12 @@ export class UciService extends BaseService {
         return this.getRequest(this.BASE_URL + 'bot/search', params);
     }
 
-    toggleConversationStatus(botId): Observable<any> {
-        return this.getRequest(this.BASE_URL + 'bot/get', {});
+    pauseConversation(botId): Observable<any> {
+        return this.getRequest(this.BASE_URL + `bot/pause/${botId}`, {});
+    }
+
+    startConversation(botId): Observable<any> {
+        return this.getRequest(this.BASE_URL + `bot/start/${botId}`, {});
     }
 
     deleteConversation(botId): Observable<any> {

@@ -50,7 +50,7 @@
                                 <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10"
                                         (click)="backToStepOne()"> Back
                                 </button>
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onSave()">
+                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onSubmit()">
                                     Save
                                 </button>
                                 <ng-container *ngIf="isLoaderShow; else submitBtn">
@@ -61,7 +61,7 @@
                                 <ng-template #submitBtn>
                                     <button class="sb-btn sb-btn-normal sb-btn-primary"
                                             [disabled]="!isCheckedTermCondition"
-                                            (click)="onSubmit()">
+                                            (click)="onSubmit(true)">
                                         {{userSegmentItemId ? 'Update' : 'Submit'}}
                                     </button>
                                 </ng-template>

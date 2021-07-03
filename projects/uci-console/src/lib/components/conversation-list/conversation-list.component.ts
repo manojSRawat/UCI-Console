@@ -59,7 +59,8 @@ export class ConversationListComponent implements OnInit {
     parseConversations(data) {
         this.chatBots = [];
         data.data.forEach(bot => {
-            const obj = {...bot, segmentText: '', userCount: 0};
+            const obj = {...bot, segmentText: '', userCount: 0, status: bot.status || 'Draft'};
+            obj.status = bot.status === 'enabled' ? 'Live' : bot.status === 'disabled' ? 'Disable' : 'Draft';
             const segmentNames = [];
             bot.userSegments.forEach(userSegment => {
                 segmentNames.push(userSegment.name);
@@ -107,11 +108,19 @@ export class ConversationListComponent implements OnInit {
     }
 
     onStatusChange(conversation, index) {
-        this.uciService.toggleConversationStatus(conversation.id).subscribe(
-            data => {
-                this.chatBots[index].status = 'Live';
-            }
-        );
+        if (conversation.status === 'Live') {
+            this.uciService.pauseConversation(conversation.id).subscribe(
+                data => {
+                    this.chatBots[index].status = 'Disable';
+                }
+            );
+        } else {
+            this.uciService.startConversation(conversation.id).subscribe(
+                data => {
+                    this.chatBots[index].status = 'Live';
+                }
+            );
+        }
     }
 
     onDelete(conversation, index) {

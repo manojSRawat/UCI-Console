@@ -17,13 +17,7 @@ export class ConversationAddComponent implements OnInit {
     column = '';
     sortDirection = '';
     reverse = false;
-    conversationFormFieldProperties: Array<any>;
-    logicFormFieldProperties: Array<any>;
     collectionListModal = false;
-    formResponse = {
-        users: [],
-        logic: []
-    };
     isLoaderShow = false;
     isModalLoaderShow = false;
     logicFormRequest = {};
@@ -43,15 +37,16 @@ export class ConversationAddComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getConversationAddForm();
         this.conversationForm = this.fb.group({
             name: ['', Validators.required],
             description: [''],
             purpose: ['', Validators.required],
             startingMessage: ['', Validators.required],
             startDate: [''],
-            endDate: ['']
+            endDate: [''],
+            status: ['Draft']
         });
+
         this.logicForm = this.fb.group({
             id: [null],
             name: [''],
@@ -110,70 +105,57 @@ export class ConversationAddComponent implements OnInit {
         this.reverse = !this.reverse;
     }
 
-    getConversationAddForm() {
-        this.uciService.readForm(
-            {
-                request: {
-                    type: 'conversation',
-                    subType: 'global',
-                    action: 'menubar',
-                    framework: 'ekstep_ncert_k-12',
-                    rootOrgId: '*'
-                }
-            }
-        ).subscribe(
-            (data: any) => {
-                if (data.result && data.result.form && data.result.form.data) {
-                    this.conversationFormFieldProperties = data.result.form.data.fields;
-                }
-            }
-        );
-    }
-
-    valueChanges(event) {
-        this.formResponse = Object.assign(this.formResponse, event);
-    }
-
     onAddCancel() {
         this.router.navigate(['uci']);
     }
 
-    onSave() {
-    }
-
-    onSubmit() {
-        this.formResponse.users = [];
-        this.formResponse.logic = [];
+    onSubmit(isTriggerBot = false) {
+        const reqObj = {
+            ...this.conversationForm.value,
+            users: [],
+            logic: []
+        };
         this.userSegments.forEach(userSegment => {
-            this.formResponse.users.push(userSegment.id);
+            reqObj.users.push(userSegment.id);
         });
         this.selectedLogic.forEach(logic => {
-            this.formResponse.logic.push(logic.id);
+            reqObj.logic.push(logic.id);
         });
-        Object.assign(this.formResponse, this.conversationForm.value);
 
         this.isLoaderShow = true;
 
         if (this.userSegmentItemId) {
-            this.uciService.botUpdate(this.userSegmentItemId, {data: this.formResponse}).subscribe(
+            this.uciService.botUpdate(this.userSegmentItemId, {data: reqObj}).subscribe(
                 data => {
                     this.isLoaderShow = false;
-                    this.router.navigate(['uci/success']);
+                    this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage}});
                 }, error => {
                     this.isLoaderShow = false;
                 }
             );
         } else {
-            this.uciService.botCreate({data: this.formResponse}).subscribe(
-                data => {
-                    this.isLoaderShow = false;
-                    this.router.navigate(['uci/success']);
+            this.uciService.botCreate({data: reqObj}).subscribe(
+                (data: any) => {
+                    if (isTriggerBot) {
+                        this.startConversation(data.data);
+                    } else {
+                        this.isLoaderShow = false;
+                        this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage}});
+                    }
                 }, error => {
                     this.isLoaderShow = false;
                 }
             );
         }
+    }
 
+    startConversation(bot) {
+        this.uciService.startConversation(bot.id).subscribe(
+            data => {
+                this.isLoaderShow = false;
+                this.router.navigate(['uci/success'], {queryParams: {text: this.conversationForm.value.startingMessage}});
+            }
+        );
     }
 
     openModel() {

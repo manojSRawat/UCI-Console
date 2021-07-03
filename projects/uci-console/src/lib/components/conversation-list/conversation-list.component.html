@@ -52,7 +52,7 @@
         <tbody>
         <tr class="UpForReviewListHover" *ngFor="let content of chatBots; let i = index;">
             <td>{{content.name}}</td>
-            <td [ngClass]="'status-' + (content.status ? content.status.toLowerCase(): '')">{{content?.status}}</td>
+            <td [ngClass]="'status-' + (content.status ? content.status.toLowerCase(): '')">{{content.status}}</td>
             <td>{{content?.description}}</td>
             <td>{{content.segmentText}}</td>
             <td class="center aligned">{{content.userCount}}</td>
@@ -62,7 +62,7 @@
                     <div class="menu" suiDropdownMenu>
                         <div class="item" (click)="onEdit(content)">Edit</div>
                         <div class="item" (click)="onDelete(content, i)">Delete</div>
-                        <div class="item" (click)="onStatusChange(content, i)">Disable</div>
+                        <div class="item" (click)="onStatusChange(content, i)">{{content.status === 'Live' ? 'Disable' : 'Enable'}}</div>
                     </div>
                 </div>
             </td>
