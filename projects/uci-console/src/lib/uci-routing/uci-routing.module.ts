@@ -25,6 +25,11 @@ const routes: Routes = [
                 component: ConversationAddComponent,
             },
             {
+                path: ':id/edit',
+                pathMatch: 'full',
+                component: ConversationAddComponent,
+            },
+            {
                 path: 'user-segment',
                 pathMatch: 'full',
                 component: UserSegmentListComponent,

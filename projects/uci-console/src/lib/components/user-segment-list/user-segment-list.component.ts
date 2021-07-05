@@ -42,24 +42,33 @@ export class UserSegmentListComponent implements OnInit {
     }
 
     getUserSegment() {
-        const param = {
+        const param: any = {
             page: this.pager.currentPage,
             perPage: this.pager.pageSize
         };
 
-        this.uciService.fetchUserSegment(param).subscribe(
-            data => {
-                const selectedIds = [];
-                this.selectedUserSegments.forEach(selectedUserSegment => {
-                    selectedIds.push(selectedUserSegment.id);
-                });
-                this.userSegments = [];
-                data.data.forEach(segment => {
-                    segment.isSelected = selectedIds.indexOf(segment.id) !== -1;
-                    this.userSegments.push(segment);
-                });
-            }
-        );
+        if (this.search) {
+            param.name = this.search;
+            this.uciService.searchUserSegment(param).subscribe(
+                data => this.parseUserSegments(data)
+            );
+        } else {
+            this.uciService.fetchUserSegment(param).subscribe(
+                data => this.parseUserSegments(data)
+            );
+        }
+    }
+
+    parseUserSegments(data) {
+        const selectedIds = [];
+        this.selectedUserSegments.forEach(selectedUserSegment => {
+            selectedIds.push(selectedUserSegment.id);
+        });
+        this.userSegments = [];
+        data.data.forEach(segment => {
+            segment.isSelected = selectedIds.indexOf(segment.id) !== -1;
+            this.userSegments.push(segment);
+        });
     }
 
     sortColumns(column) {

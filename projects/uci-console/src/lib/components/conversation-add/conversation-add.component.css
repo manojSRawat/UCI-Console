@@ -21,6 +21,25 @@
     font-size: 1.2rem;
 }
 
+.ui.form .field > label {
+    font-weight: normal;
+}
+
+.action-dropdown {
+    top: 2px;
+    left: -56px;
+    z-index: 2;
+    position: absolute;
+}
+
+.action-dropdown .item {
+    cursor: pointer;
+}
+
+.action-dropdown .item:hover {
+    background-color: #f6f6f6;
+}
+
 .steps {
     width: 20px;
     height: 20px;
@@ -42,7 +61,7 @@
 
 .line {
     background-color: #777;
-    width: 38%;
+    width: 25%;
     height: 1px;
 }
 
@@ -69,4 +88,30 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+button:disabled {
+    background: #89CFF0;
+    border-color: #89CFF0;
+}
+
+.asterisk-color {
+    color: red;
+}
+
+.t-and-c-title {
+    cursor: pointer !important;
+}
+
+.t-and-c-title:hover {
+    color: #89CFF0 !important;
+}
+
+.sb-modal.ui.modal {
+    box-shadow: none !important;
+}
+
+.sb-modal.ui.modal.normal {
+    max-width: 45rem;
+    height: 0 !important;
 }

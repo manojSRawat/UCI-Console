@@ -26,9 +26,10 @@ export class ConversationListComponent implements OnInit {
     reverse = false;
     queryParams: any;
     search;
+
     constructor(
         private uciService: UciService,
-        private route: Router
+        private router: Router
     ) {
     }
 
@@ -37,36 +38,46 @@ export class ConversationListComponent implements OnInit {
     }
 
     getAllChatBots() {
-        const param = {
+        const param: any = {
             page: this.pager.currentPage,
             perPage: this.pager.pageSize
         };
 
         if (this.search) {
-            // param['search'] = this.search;
+            param.name = this.search;
+            this.uciService.searchConversation(param).subscribe(
+                data => this.parseConversations(data)
+            );
+        } else {
+            this.uciService.fetchConversation(param).subscribe(
+                data => this.parseConversations(data)
+            );
         }
-        this.uciService.fetchAllChatBots(param).subscribe(
-            data => {
-                this.chatBots = [];
-                data.data.forEach(bot => {
-                    const obj = {...bot, userCount: 0};
-                    bot.userSegments.forEach(userSegment => {
-                        obj.userCount += (userSegment.count || 0);
-                    });
 
-                    this.chatBots.push(obj);
-                });
-                this.pager.totalItems = data.total;
-                this.pager.totalPages = Math.ceil(data.total / this.pager.pageSize);
-                this.pager.pages = [];
-                let i = 1;
-                while (i <= Math.ceil(data.total / this.pager.pageSize)) {
-                    this.pager.pages.push(i);
-                    i++;
-                }
-                console.log(this.pager);
-            }
-        );
+    }
+
+    parseConversations(data) {
+        this.chatBots = [];
+        data.data.forEach(bot => {
+            const obj = {...bot, segmentText: '', userCount: 0, status: bot.status || 'Draft'};
+            obj.status = bot.status === 'enabled' ? 'Live' : bot.status === 'disabled' ? 'Disable' : 'Draft';
+            const segmentNames = [];
+            bot.userSegments.forEach(userSegment => {
+                segmentNames.push(userSegment.name);
+                obj.userCount += (userSegment.count || 0);
+            });
+            obj.segmentText = segmentNames.join(', ');
+
+            this.chatBots.push(obj);
+        });
+        this.pager.totalItems = data.total;
+        this.pager.totalPages = Math.ceil(data.total / this.pager.pageSize);
+        this.pager.pages = [];
+        let i = 1;
+        while (i <= Math.ceil(data.total / this.pager.pageSize)) {
+            this.pager.pages.push(i);
+            i++;
+        }
     }
 
     sortColumns(column) {
@@ -82,7 +93,6 @@ export class ConversationListComponent implements OnInit {
         this.pageNumber = page;
         this.pager.currentPage = page;
         this.getAllChatBots();
-        // this.route.navigate(['u', this.pageNumber], {queryParams: this.queryParams});
     }
 
     getSearch() {
@@ -90,18 +100,36 @@ export class ConversationListComponent implements OnInit {
     }
 
     onAddNew() {
-        this.route.navigateByUrl('uci/add');
+        this.router.navigateByUrl('uci/add');
     }
 
-    onEdit() {
-
+    onEdit(conversation) {
+        this.router.navigateByUrl(`uci/${conversation.id}/edit`);
     }
 
-    onStatus(botId, index) {
-        this.uciService.toggleBotStatus(botId).subscribe(
+    onStatusChange(conversation, index) {
+        if (conversation.status === 'Live') {
+            this.uciService.pauseConversation(conversation.id).subscribe(
+                data => {
+                    this.chatBots[index].status = 'Disable';
+                }
+            );
+        } else {
+            this.uciService.startConversation(conversation.id).subscribe(
+                data => {
+                    this.chatBots[index].status = 'Live';
+                }
+            );
+        }
+    }
+
+    onDelete(conversation, index) {
+        this.uciService.deleteConversation(conversation.id).subscribe(
             data => {
-                this.chatBots[index].status = 'Live';
+                this.chatBots.splice(index, 1);
             }
         );
     }
+
+
 }

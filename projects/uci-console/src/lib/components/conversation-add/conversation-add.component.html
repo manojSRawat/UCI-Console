@@ -1,8 +1,8 @@
 <ng-container [ngSwitch]="currentViewState">
 
     <lib-user-segment-add *ngSwitchCase="'ADD_SEGMENT'"
-                     (cancel)="onUserSegmentCancel()"
-                     (add)="onUserSegmentCreate($event)">
+                          (cancel)="onUserSegmentCancel()"
+                          (add)="onUserSegmentCreate($event)">
     </lib-user-segment-add>
 
     <lib-user-segment-list *ngSwitchCase="'SELECT_SEGMENT'"
@@ -13,34 +13,34 @@
 
     <div *ngSwitchCase="'ADD_CONVERSATION'" class="uci-add-container">
         <div class="ui grid">
-            <div class="four wide column pr-0">
-                <div class="d-flex font-0-75">
-                    <div style="width: 40px">
-                        <button class="circular ui icon button" style="width: 100%"
+            <div class="six wide column pr-0">
+                <div class="d-flex font-0-75" style="align-items: baseline;">
+                    <div style="width: 30px">
+                        <button class="circular ui icon button" style="width: 100%; font-size: 0.75rem"
+                                (click)="backToStepOne()"
                                 [ngClass]="{'blue-bg-white-text': stepIndex === 1, 'green-bg-white-text': stepIndex === 2}">
                             1
                         </button>
                     </div>
                     <div class="px-5 pt-10">Conversation setup</div>
-                    <div class="line mt-20"></div>
-                </div>
-            </div>
-            <div class="four wide column pl-0">
-                <div class="d-flex font-0-75">
-                    <div style="width: 40px">
-                        <button class="circular ui icon button" style="width: 100%"
-                                [ngClass]="{'blue-bg-white-text': stepIndex === 2}">2</button>
+                    <div class="line mt-20 ml-20 mr-20"></div>
+                    <div style="width: 30px">
+                        <button class="circular ui icon button" style="width: 100%; font-size: 0.75rem"
+                                [ngClass]="{'blue-bg-white-text': stepIndex === 2}">2
+                        </button>
                     </div>
-                    <div class="px-5 pt-10">Conversation flow</div>
+                    <div class="px-5 pt-10 font-weight-bold">Conversation flow</div>
                 </div>
             </div>
-            <div class="four wide column">
+            <div class="six wide column">
                 <ng-container *ngIf="stepIndex === 1; else stp2_btn">
                     <div class="right-floated pt-0">
                         <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onAddCancel()">
                             Cancel
                         </button>
-                        <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="nextStep()"> Next</button>
+                        <button class="sb-btn sb-btn-normal sb-btn-primary" [disabled]="this.conversationForm.invalid"
+                                (click)="nextStep()"> Next
+                        </button>
                     </div>
                 </ng-container>
                 <ng-template #stp2_btn>
@@ -48,20 +48,33 @@
                         <div class="twelve wide column">
                             <div class="right-floated pt-0">
                                 <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10"
-                                        (click)="onAddCancel()"> Cancel
+                                        (click)="backToStepOne()"> Back
                                 </button>
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onSave()">
+                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onSubmit()">
                                     Save
                                 </button>
-                                <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onSubmit()"> Submit
-                                </button>
+                                <ng-container *ngIf="isLoaderShow; else submitBtn">
+                                    <button class="sb-btn sb-btn-normal sb-btn-primary p-0">
+                                        <div class="ui active tiny inline loader"></div>
+                                    </button>
+                                </ng-container>
+                                <ng-template #submitBtn>
+                                    <button class="sb-btn sb-btn-normal sb-btn-primary"
+                                            [disabled]="!isCheckedTermCondition"
+                                            (click)="onSubmit(true)">
+                                        {{userSegmentItemId ? 'Update' : 'Submit'}}
+                                    </button>
+                                </ng-template>
                             </div>
                         </div>
                         <div class="twelve wide column pt-0">
                             <div class="right-floated pt-0">
                                 <div class="ui checkbox">
-                                    <input type="checkbox" name="example">
-                                    <label> I agree the terms and conditions</label>
+                                    <input type="checkbox" name="example"
+                                           [(ngModel)]="isCheckedTermCondition">
+                                    <label class="font-weight-normal t-and-c-title"
+                                           (click)="openTermAndConditionModel()"> I agree to the required terms and
+                                        conditions </label>
                                 </div>
                             </div>
                         </div>
@@ -72,22 +85,51 @@
         </div>
         <div class="step1-wrapper" *ngIf="stepIndex === 1">
             <div class="ui grid">
-                <div class="ten wide column font-1-2">
+                <div class="ten wide column font-1-2 font-weight-bold">
                     Add new conversation
                 </div>
-                <div class="ten wide column font-1-2">
-                    <sb-dynamic-form *ngIf="formFieldProperties" [config]="formFieldProperties"
-                                     (statusChanges)="onStatusChanges($event)"
-                                     (valueChanges)="valueChanges($event)"></sb-dynamic-form>
+                <div class="ten wide column pt-0">
+                    <form [formGroup]="conversationForm" class="ui form">
+                        <div class="field">
+                            <label>Conversation name <sup><i class="asterisk icon asterisk-color"></i></sup></label>
+                            <input type="text" name="name" placeholder="Enter name" formControlName="name">
+                        </div>
+                        <div class="field">
+                            <label>Conversation description</label>
+                            <textarea rows="5" name="description" placeholder="Enter description"
+                                      formControlName="description"></textarea>
+                        </div>
+                        <div class="field">
+                            <label>Purpose of the conversation <sup><i
+                                    class="asterisk icon asterisk-color"></i></sup></label>
+                            <input type="text" name="name" placeholder="Enter purpose" formControlName="purpose">
+                        </div>
+                        <div class="field">
+                            <label>Starting message <sup><i class="asterisk icon asterisk-color"></i></sup></label>
+                            <input type="text" name="startingMessage" placeholder="Enter message"
+                                   formControlName="startingMessage">
+                        </div>
+                        <div class="two fields">
+                            <div class="field">
+                                <label>Start Date</label>
+                                <input type="date" name="startDate" formControlName="startDate">
+                            </div>
+                            <div class="field">
+                                <label>End Date</label>
+                                <input type="date" name="endDate" formControlName="endDate">
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
             </div>
             <div class="ui divider"></div>
             <div class="ui grid">
                 <div class="six wide column">
                     <h6>User segment</h6>
-                    <p>{{userSegments.length}} segment added</p>
+                    <p class="pt-10">{{userSegments.length}} segment added</p>
                 </div>
-                <div class="six wide column">
+                <div class="six wide column  right aligned">
                     <div class="pt-0">
                         <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10"
                                 (click)="onUserSegmentAddClick()">
@@ -102,10 +144,11 @@
             <div class="ui grid">
                 <ng-container *ngIf="userSegments && userSegments.length">
                     <div class="ui three column grid">
-                        <div class="column"  *ngFor="let userSegment of userSegments; let i = index">
+                        <div class="column" *ngFor="let userSegment of userSegments; let i = index">
                             <div class="ui fluid card">
                                 <div class="content">
-                                    <i class="right floated icon trash delete-icon" (click)="onUserSegmentDelete(i)"></i>
+                                    <i class="right floated icon trash delete-icon"
+                                       (click)="onUserSegmentDelete(i)"></i>
                                     {{userSegment.name}}
                                     <div class="meta">User count {{userSegment.count}}</div>
                                 </div>
@@ -119,27 +162,31 @@
 
         <div class="step2-wrapper" *ngIf="stepIndex === 2">
             <div class="ui grid">
-                <div class="ten wide column font-1-2">
+                <div class="ten wide column font-1-2 font-weight-bold">
                     Conversation flow
                 </div>
-                <div class="two wide column">
-                    <button class="sb-btn sb-btn-normal" *ngIf="conversationFLowList && conversationFLowList.length"
+                <div class="two wide column right aligned">
+                    <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
+                            *ngIf="selectedLogic && selectedLogic.length"
                             (click)="openModel()">
                         Add Logic
                     </button>
                 </div>
             </div>
             <div class="ui grid">
-                <ng-container *ngIf="conversationFLowList && conversationFLowList.length <= 0; else showTable">
-                    <div class="twelve wide column">
-                        <div class="pt-0 d-flex flex-row justify-content-center">
-                            <div class="w-25-per text-center" style="margin: auto; border: 1px solid; padding: 2rem;">
+                <ng-container *ngIf="selectedLogic && selectedLogic.length <= 0; else showTable">
+                    <div class="twelve wide column center aligned">
+                        <div class="pt-0">
+                            <div class="w-25-per text-center" style="margin: auto; padding: 2rem;">
                                 <div class="text-center">
-                                    <div class="text-center"><i class="plus circle icon font-1-2"></i></div>
-                                    No logic Added
+                                    <div class="text-center">
+                                        <img alt="Search Icon" src="assets/uci-console/images/empty.svg">
+                                    </div>
+                                    <div class="text-center mt-20">
+                                        No logic Added
+                                    </div>
                                 </div>
-
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary" (click)="openModel()">
+                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mt-10" (click)="openModel()">
                                     Add logic
                                 </button>
                             </div>
@@ -152,16 +199,12 @@
                             <thead>
                             <tr>
                                 <th (click)="sortColumns('name')"
-                                    class="five wide UpReviewTableHeader sorted bl-0 w-50-px" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
-
-                                </th>
-                                <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0"
+                                    class="one wide center aligned UpReviewTableHeader sorted bl-0"
                                     [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
-                                    Steps
+                                    Step
                                 </th>
-                                <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0"
+                                <th (click)="sortColumns('name')" class="three wide UpReviewTableHeader sorted bl-0"
                                     [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                                     Name
@@ -171,7 +214,8 @@
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                                     Description
                                 </th>
-                                <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0"
+                                <th (click)="sortColumns('name')"
+                                    class="one wide center aligned UpReviewTableHeader sorted bl-0"
                                     [ngClass]="{'ascending':sortDirection === 'asc' &&
       column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
                                     Action
@@ -180,39 +224,107 @@
                             </thead>
                             <tbody>
                             <tr class="UpForReviewListHover"
-                                *ngFor="let content of conversationFLowList; let i = index;">
-
-                                <td>
-                                    <input type="checkbox">
+                                *ngFor="let logic of selectedLogic; let i = index;">
+                                <td class="center aligned">{{i + 1}}</td>
+                                <td>{{logic?.name}}</td>
+                                <td>{{logic?.description}}</td>
+                                <td class="center aligned">
+                                    <div class="ui dropdown" suiDropdown>
+                                        <i class="ellipsis vertical icon ellipsis-icon dropdown"
+                                        ></i>
+                                        <div class="menu" suiDropdownMenu>
+                                            <div class="item" (click)="openModel(); getEditLogicData(logic, i)">Edit</div>
+                                            <div class="item" (click)="onDelete(logic, i)">Delete</div>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td>{{content.step}}</td>
-                                <td>{{content?.name}}</td>
-                                <td>{{content?.description}}</td>
-                                <td><i class="ellipsis vertical icon ellipsis-icon"></i></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </ng-template>
-
             </div>
         </div>
     </div>
 </ng-container>
 
-<sui-modal *ngIf="collectionListModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0" [size]="'large'"
-           class="sb-modal custom-lg-modal" (dismissed)="this.collectionListModal = false" #modal>
+<sui-modal *ngIf="collectionListModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0"
+           [size]="'large'"
+           class="sb-modal" (dismissed)="this.collectionListModal = false;" #modal>
     <div class="sb-modal-header">
-        Add Conversation Logic
+        {{logicForm.get('id').value ? ' Update' : 'Add'}} Conversation Logic
     </div>
     <div class="sb-modal-content">
+        <form [formGroup]="logicForm" class="ui form">
+            <div class="field">
+                <label>Name</label>
+                <input type="text" name="name" placeholder="Enter name" formControlName="name">
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea rows="3" name="description" placeholder="Enter description"
+                          formControlName="description"></textarea>
+            </div>
+            <div class="field">
+                <label>Upload Form (.xml)</label>
+                <input type="file" name="file" placeholder="Browse..."
+                       (change)="onFileUpload($event)" accept=".xml">
+            </div>
+        </form>
+    </div>
+    <div class="sb-modal-actions">
+        <ng-container *ngIf="isModalLoaderShow; else modalBtn">
+            <button class="sb-btn sb-btn-normal sb-btn-primary p-0">
+                <div class="ui active tiny inline loader"></div>
+            </button>
+        </ng-container>
+        <ng-template #modalBtn>
+            <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicAdd();modal.deny('denied')">
+                {{logicForm.get('id').value ? ' Update' : 'Add'}}
+            </button>
+        </ng-template>
+        <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
+                (click)="modal.deny('denied');isModalLoaderShow = false;">
+            Cancel
+        </button>
+    </div>
+</sui-modal>
+
+<sui-modal *ngIf="termsAndConditionModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0"
+           [size]="'large'"
+           class="sb-modal" (dismissed)="this.termsAndConditionModal = false" #modal>
+    <div class="sb-modal-header">
+        Terms and Conditions
+    </div>
+    <div class="sb-modal-content">
+        <sui-tabset>
+            <div class="ui pointing secondary menu">
+                <a class="item" suiTabHeader="1">Terms of Use</a>
+                <a class="item" suiTabHeader="2">Privacy Policy </a>
+            </div>
+            <div class="ui segment" suiTabContent="1">
+                <p>This website is designed, developed and maintained by the National Council for Educational Research
+                    and Training (NCERT) (Ministry of Education (MoE), Government of India) (together referred to as
+                    "GoI").</p>
+
+                <p>These terms of use, as amended, govern the usage of DIKSHA (Digital Infrastructure for Knowledge
+                    Sharing) by its Users (as defined below) ("Terms"). DIKSHA is an initiative of the GoI.</p>
+            </div>
+            <div class="ui segment" suiTabContent="2">
+                <p>
+                    DIKSHA (Digital Infrastructure for Knowledge Sharing ) is the National Platform for School Education
+                    for the benefit of teachers and learners across India. DIKSHA is an initiative of National Council
+                    for Educational Research and Training (NCERT) (Ministry of Education (MoE), Government of India).
+                    Users of DIKSHA can access content for learning on the web at https://diksha.gov.in, through the
+                    DIKSHA mobile application, and the desktop application.
+                </p>
+            </div>
+        </sui-tabset>
 
     </div>
     <div class="sb-modal-actions">
-        <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicAdd();modal.deny('denied')">
-            Add
-        </button>
-        <button class="sb-btn sb-btn-normal sb-btn-outline-primary" (click)="modal.deny('denied')">
+        <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
+                (click)="modal.deny('denied');">
             Cancel
         </button>
     </div>
