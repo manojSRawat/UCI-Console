@@ -11,10 +11,9 @@ export class UserSegmentAddComponent implements OnInit {
     @Output() cancel = new EventEmitter<boolean>();
     @Output() add = new EventEmitter<any>();
     formFieldProperties: Array<any>;
-    userSegment = {};
+    userSegment: any = {};
     isLoaderShow = false;
     districts = [];
-    blocks = [];
 
     constructor(private uciService: UciService,
                 private uciGraphQlService: UciGraphQlService) {
@@ -23,12 +22,13 @@ export class UserSegmentAddComponent implements OnInit {
     ngOnInit() {
         this.getUciDistrict();
         this.getForm();
-        this.getUciCluster();
-        this.getUciRole();
-        this.getUciBoard();
+        // this.getUciCluster();
+        // this.getUciRole();
+        // this.getUciBoard();
     }
 
     getForm() {
+        console.log('------> getting form');
         this.uciService.readForm(
             {
                 request: {
@@ -43,14 +43,8 @@ export class UserSegmentAddComponent implements OnInit {
             (data: any) => {
                 if (data.result && data.result.form && data.result.form.data) {
                     this.formFieldProperties = data.result.form.data.fields;
-                    if (this.formFieldProperties && this.formFieldProperties.length && this.districts && this.districts.length) {
-                        this.formFieldProperties.forEach(value => {
-                            if (value.code === 'district') {
-                                value.range = [];
-                                value.range = this.districts;
-                            }
-                        });
-                    }
+                    console.log('xxxxxxxxxxxxxxx', this.formFieldProperties);
+                    this.patchValues('district', this.districts);
                 }
             }
         );
@@ -63,11 +57,10 @@ export class UserSegmentAddComponent implements OnInit {
     valueChanges(event) {
         console.log('event value', event);
         const keys = ['district', 'block'];
-        for (let value of keys) {
+        for (const value of keys) {
             console.log(value);
-            // TODO something wrong here sir please check it
             if (value === 'district') {
-                if ((this.userSegment.hasOwnProperty('district') && this.userSegment['district'] !== event.district)) {
+                if (this.userSegment.district !== event.district && event.district) {
                     this.getUciBlock(event);
                 }
             }
@@ -102,6 +95,7 @@ export class UserSegmentAddComponent implements OnInit {
     }
 
     getUciDistrict() {
+        console.log('------> getting district');
         const params = {
             state: 'Haryana'
         };
@@ -111,8 +105,8 @@ export class UserSegmentAddComponent implements OnInit {
                 res.data.organisation.forEach(d => {
                     this.districts.push(d.district);
                 });
+                this.patchValues('district', this.districts);
             }
-            console.log('--->>>district', this.districts);
         });
     }
 
@@ -123,21 +117,17 @@ export class UserSegmentAddComponent implements OnInit {
         this.uciGraphQlService.getBlock(params).subscribe((res: any) => {
             console.log('--->>uci Block', res);
             if (res && res.data && res.data.organisation && res.data.organisation.length) {
-                this.blocks = [];
+                const blocks = [];
                 res.data.organisation.forEach(d => {
-                    this.blocks.push(d.block);
+                    blocks.push(d.block);
                 });
-                console.log('--->>>block', this.blocks);
+                console.log('--->>>block', blocks);
                 console.log('--->>>block this.formFieldProperties', this.formFieldProperties);
-                this.formFieldProperties.forEach(value => {
-                    if (value.code === 'block') {
-                        value.range = [];
-                        value.range = this.blocks;
-                    }
-                });
+                this.patchValues('block', blocks);
             }
         });
     }
+
     getUciCluster() {
         const params = {
             state: 'Haryana', district: 'Ambala', block: 'Saha'
@@ -146,6 +136,7 @@ export class UserSegmentAddComponent implements OnInit {
             console.log('--->>uci cluster', res);
         });
     }
+
     getUciSchoolDetails() {
         const params = {
             state: 'Haryana', district: 'Ambala', block: 'Saha'
@@ -154,14 +145,29 @@ export class UserSegmentAddComponent implements OnInit {
             console.log('--->>uci school details', res);
         });
     }
+
     getUciRole() {
         this.uciGraphQlService.getRole().subscribe((res: any) => {
             console.log('--->>uci Role', res);
         });
     }
+
     getUciBoard() {
         this.uciGraphQlService.getBoards().subscribe((res: any) => {
             console.log('--->>uci board', res);
         });
+    }
+
+    patchValues(key, values) {
+        console.log('===>', key, values);
+        if (this.formFieldProperties && this.formFieldProperties.length && this.districts && this.districts.length && values.length) {
+            console.log('===> Doing some changes', key, values);
+            this.formFieldProperties.forEach(value => {
+                if (value.code === key) {
+                    value.range = [];
+                    value.range = values;
+                }
+            });
+        }
     }
 }
