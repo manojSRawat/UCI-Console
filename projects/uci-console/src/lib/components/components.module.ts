@@ -16,6 +16,7 @@ import {CommonFormElementsModule} from 'common-form-elements';
 import {UserSegmentAddComponent} from './user-segment-add/user-segment-add.component';
 import {SuiModule} from 'ng2-semantic-ui-v9';
 import { ConversationSuccessComponent } from './conversation-success/conversation-success.component';
+import {UciGraphQlService} from '../services/uci-graph-ql.service';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,9 @@ import { ConversationSuccessComponent } from './conversation-success/conversatio
         SidePanelComponent,
     ],
     providers: [
-        UciService, ConfigService
+        UciService,
+        ConfigService,
+        UciGraphQlService
     ]
 })
 export class ComponentsModule {
