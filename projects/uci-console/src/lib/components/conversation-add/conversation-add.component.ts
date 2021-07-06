@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UciService} from '../../services/uci.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import moment from 'moment/moment';
+import {UciGraphQlService} from '../../services/uci-graph-ql.service';
 
 @Component({
     selector: 'lib-conversation-add',
