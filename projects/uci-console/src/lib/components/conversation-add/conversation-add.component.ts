@@ -229,7 +229,7 @@ export class ConversationAddComponent implements OnInit {
         const obj = {
             form: file
         };
-        this.logicForm.value.formId = null;
+        this.logicForm.patchValue({formId: ''});
         this.isModalLoaderShow = true;
         this.uciService.uploadFile(obj).subscribe((fileInfo: any) => {
                 if (fileInfo.formID) {

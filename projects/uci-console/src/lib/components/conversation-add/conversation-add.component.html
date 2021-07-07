@@ -284,7 +284,7 @@
             </button>
         </ng-template>
         <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
-                (click)="modal.deny('denied');isModalLoaderShow = false;">
+                (click)="modal.deny('denied');isModalLoaderShow = false;logicForm.patchValue({formId: ''});">
             Cancel
         </button>
     </div>
