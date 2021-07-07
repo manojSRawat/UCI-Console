@@ -248,7 +248,7 @@
     </div>
 </ng-container>
 
-<sui-modal *ngIf="collectionListModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0"
+<sui-modal *ngIf="collectionListModal" [mustScroll]="true" [isClosable]="false" [transitionDuration]="0"
            [size]="'large'"
            class="sb-modal" (dismissed)="this.collectionListModal = false;" #modal>
     <div class="sb-modal-header">
@@ -279,7 +279,7 @@
             </button>
         </ng-container>
         <ng-template #modalBtn>
-            <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicAdd();modal.deny('denied')">
+            <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicAdd();modal.deny('denied')" [disabled]="logicForm.invalid">
                 {{logicForm.get('id').value ? ' Update' : 'Add'}}
             </button>
         </ng-template>

@@ -50,9 +50,9 @@ export class ConversationAddComponent implements OnInit {
 
         this.logicForm = this.fb.group({
             id: [null],
-            name: [''],
+            name: ['', Validators.required],
             description: [''],
-            formId: ['']
+            formId: ['', Validators.required]
         });
 
         // Edit case
@@ -229,10 +229,15 @@ export class ConversationAddComponent implements OnInit {
         const obj = {
             form: file
         };
+        this.logicForm.value.formId = null;
+        this.isModalLoaderShow = true;
         this.uciService.uploadFile(obj).subscribe((fileInfo: any) => {
                 if (fileInfo.formID) {
                     this.logicForm.patchValue({formId: fileInfo.formID});
                 }
+                this.isModalLoaderShow = false;
+            }, error => {
+                this.isModalLoaderShow = false;
             }
         );
     }
