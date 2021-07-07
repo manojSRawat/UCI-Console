@@ -162,6 +162,7 @@ export class ConversationAddComponent implements OnInit {
     openModel() {
         this.logicFormRequest = {};
         this.collectionListModal = true;
+        this.logicForm.reset();
     }
 
     openTermAndConditionModel() {
