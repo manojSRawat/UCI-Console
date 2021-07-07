@@ -50,9 +50,9 @@ export class ConversationAddComponent implements OnInit {
 
         this.logicForm = this.fb.group({
             id: [null],
-            name: [''],
+            name: ['', Validators.required],
             description: [''],
-            formId: ['']
+            formId: ['', Validators.required]
         });
 
         // Edit case
@@ -162,6 +162,7 @@ export class ConversationAddComponent implements OnInit {
     openModel() {
         this.logicFormRequest = {};
         this.collectionListModal = true;
+        this.logicForm.reset();
     }
 
     openTermAndConditionModel() {
@@ -229,10 +230,15 @@ export class ConversationAddComponent implements OnInit {
         const obj = {
             form: file
         };
+        this.logicForm.patchValue({formId: ''});
+        this.isModalLoaderShow = true;
         this.uciService.uploadFile(obj).subscribe((fileInfo: any) => {
                 if (fileInfo.formID) {
                     this.logicForm.patchValue({formId: fileInfo.formID});
                 }
+                this.isModalLoaderShow = false;
+            }, error => {
+                this.isModalLoaderShow = false;
             }
         );
     }
