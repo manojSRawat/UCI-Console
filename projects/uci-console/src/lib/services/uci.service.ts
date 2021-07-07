@@ -13,7 +13,7 @@ export const CONTEXT_PROPS = {
     providedIn: 'root'
 })
 export class UciService extends BaseService {
-    BASE_URL = 'http://uci-dev6.ngrok.samagra.io/admin/v1/';
+    BASE_URL = 'https://9473ce34f5dd.ngrok.io/admin/v1/';
     FORM_BASE_URL = 'https://dev.sunbirded.org/';
 
     constructor(public http: HttpClient) {
