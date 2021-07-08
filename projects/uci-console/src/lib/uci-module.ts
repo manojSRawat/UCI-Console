@@ -21,7 +21,10 @@ export function provideCsModule() {
         UciRoutingModule,
         ElementsModule
     ],
-    exports: [ComponentsModule],
+    exports: [
+        LibEntryComponent,
+        ComponentsModule
+    ],
     providers: [UciEventsService, TelemetryUtilsService, {provide: 'CsModule', useFactory: provideCsModule}]
 })
 export class UciModule {
