@@ -23,8 +23,109 @@
     </div>
 
     <div class="ten wide column font-1-2">
-        <sb-dynamic-form *ngIf="formFieldProperties" [config]="formFieldProperties"
-                         (statusChanges)="onStatusChanges($event)"
-                         (valueChanges)="valueChanges($event)"></sb-dynamic-form>
+<!--        <sb-dynamic-form *ngIf="formFieldProperties" [config]="formFieldProperties"-->
+<!--                         (statusChanges)="onStatusChanges($event)"-->
+<!--                         (valueChanges)="valueChanges($event)"></sb-dynamic-form>-->
+
+
+        <form class="ui form user-segment-form" [formGroup]="userSegmentForm">
+            <div class="field">
+                <label>Name</label>
+                <input type="text" name="name" placeholder="Name" formControlName="name">
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea  name="description" formControlName="description" placeholder="Enter description"></textarea>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>District</label>
+                    <select name="district" formControlName="district" class="form-control">
+                        <option value="" disabled>Select District</option>
+                        <ng-container *ngFor="let district of districts">
+                            <option [value]="district.district">{{district?.district}}
+                            </option>
+                        </ng-container>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Block</label>
+                    <select name="block" formControlName="block" class="form-control">
+                        <option value="" disabled>Select Blocks</option>
+                        <ng-container *ngFor="let block of blocks">
+                            <option [value]="block.block">{{block?.block}}
+                            </option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Cluster</label>
+                    <select name="cluster" formControlName="cluster" class="form-control">
+                        <option value="" disabled>Select Cluster</option>
+                        <ng-container *ngFor="let cluster of clusters">
+                            <option [value]="cluster.cluster">{{cluster?.cluster}}
+                            </option>
+                        </ng-container>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>School</label>
+                    <select name="school" formControlName="school" class="form-control">
+                        <option value="" disabled>Select School</option>
+                        <ng-container *ngFor="let school of schools">
+                            <option [value]="school.school_code">{{school.school}}
+                            </option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Role</label>
+                    <select name="role" formControlName="role" class="form-control">
+                        <option value="" disabled>Select Role</option>
+                        <ng-container *ngFor="let role of roles">
+                            <option [value]="role.name">{{role.name}}
+                            </option>
+                        </ng-container>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Board</label>
+                    <select name="brand" formControlName="board" class="form-control">
+                        <option value="" disabled>Select Board</option>
+                        <ng-container *ngFor="let board of boards">
+                            <option [value]="board.name">{{board.name}}
+                            </option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Grade</label>
+                    <select name="grade" formControlName="grade" class="form-control">
+                        <option value="" disabled>Select Grade</option>
+                        <ng-container *ngFor="let gradeItem of grade">
+                            <option [value]="gradeItem">{{gradeItem}}
+                            </option>
+                        </ng-container>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Subject</label>
+                    <select name="subject" formControlName="subject" class="form-control">
+                        <option value="" disabled>Select Subject</option>
+                        <ng-container *ngFor="let subject of subjects">
+                            <option [value]="subject.subject">{{subject?.subject}}
+                            </option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+
+        </form>
     </div>
 </div>
