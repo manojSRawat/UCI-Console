@@ -87,7 +87,6 @@ export class UserSegmentAddComponent implements OnInit {
                 if (data.result && data.result.form && data.result.form.data) {
                     this.formFieldProperties = data.result.form.data.fields;
                     console.log('xxxxxxxxxxxxxxx', this.formFieldProperties);
-                    // this.patchValues('district', this.districts);
                 }
             }
         );
@@ -97,19 +96,19 @@ export class UserSegmentAddComponent implements OnInit {
         console.log('event', event);
     }
 
-    valueChanges(event) {
-        console.log('event value', event);
-        const keys = ['district', 'block'];
-        for (const value of keys) {
-            console.log(value);
-            if (value === 'district') {
-                if (this.userSegment.district !== event.district && event.district) {
-                    // this.getUciBlock();
-                }
-            }
-        }
-        this.userSegment = Object.assign(this.userSegment, event);
-    }
+    // valueChanges(event) {
+    //     console.log('event value', event);
+    //     const keys = ['district', 'block'];
+    //     for (const value of keys) {
+    //         console.log(value);
+    //         if (value === 'district') {
+    //             if (this.userSegment.district !== event.district && event.district) {
+    //                 // this.getUciBlock();
+    //             }
+    //         }
+    //     }
+    //     this.userSegment = Object.assign(this.userSegment, event);
+    // }
 
     onCancel() {
         this.cancel.emit(false);
@@ -143,24 +142,26 @@ export class UserSegmentAddComponent implements OnInit {
                 }
             }
         };
-        console.log('--->>>add segment', param);
+        // console.log('--->>>add segment', param);
         this.uciService.userSegmentQueryBuilder(param).subscribe(response => {
-            console.log('-->>>response', response);
+            // console.log('-->>>response', response);
             if (response) {
                 const items = {
+                    ...response,
                     name: formValue.name,
-                    description: formValue.descripton,
-                    // response: response
+                    description: formValue.description
                 };
                 this.uciService.createUserSegment({data: items}).subscribe(
-                    data => {
+                    (data: any) => {
                         this.isLoaderShow = false;
-                        this.afterAdd(data);
+                        this.afterAdd(data.data);
                     }, err => {
                         this.isLoaderShow = false;
                     }
                 );
             }
+        }, error => {
+            this.isLoaderShow = false;
         });
     }
 
@@ -175,7 +176,6 @@ export class UserSegmentAddComponent implements OnInit {
     }
 
     getUciDistrict() {
-        console.log('------> getting district');
         const params = {
             state: 'Haryana'
         };
@@ -183,7 +183,6 @@ export class UserSegmentAddComponent implements OnInit {
             if (res && res.data && res.data.organisation && res.data.organisation.length) {
                 this.districts = [];
                 this.districts = res.data.organisation;
-                console.log('--->>>district object list', res.data.organisation);
             }
         });
     }
@@ -197,7 +196,6 @@ export class UserSegmentAddComponent implements OnInit {
             if (res && res.data && res.data.organisation && res.data.organisation.length) {
                 this.blocks = [];
                 this.blocks = res.data.organisation;
-                console.log('-->>block list', this.blocks);
             }
         });
     }
@@ -210,7 +208,6 @@ export class UserSegmentAddComponent implements OnInit {
         this.uciGraphQlService.getClusters(params).subscribe((res: any) => {
             if (res && res.data && res.data.organisation && res.data.organisation.length) {
                 this.clusters = res.data.organisation;
-                console.log('--->>uci school details', this.clusters);
             }
         });
     }
@@ -224,7 +221,6 @@ export class UserSegmentAddComponent implements OnInit {
             if (res && res.data && res.data.organisation && res.data.organisation.length) {
                 this.schools = res.data.organisation;
             }
-            console.log('--->>uci school details', this.schools);
         });
     }
 
@@ -233,7 +229,6 @@ export class UserSegmentAddComponent implements OnInit {
             if (res && res.data && res.data.role && res.data.role.length) {
                 this.roles = res.data.role;
             }
-            console.log('--->>uci Role', this.roles);
         });
     }
 
@@ -241,21 +236,7 @@ export class UserSegmentAddComponent implements OnInit {
         this.uciGraphQlService.getBoards().subscribe((res: any) => {
             if (res && res.data && res.data.board && res.data.board.length) {
                 this.boards = res.data.board;
-                console.log('--->>uci board', this.boards);
             }
         });
     }
-
-    // patchValues(key, values) {
-    //     console.log('===>', key, values);
-    //     if (this.formFieldProperties && this.formFieldProperties.length && this.districts && this.districts.length && values.length) {
-    //         console.log('===> Doing some changes', key, values);
-    //         this.formFieldProperties.forEach(value => {
-    //             if (value.code === key) {
-    //                 value.range = [];
-    //                 value.range = values;
-    //             }
-    //         });
-    //     }
-    // }
 }
