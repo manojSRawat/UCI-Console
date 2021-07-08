@@ -77,7 +77,7 @@ export class UciGraphQlService extends BaseService {
     }
 
     private baseRequest(body) {
-        const headers = {'x-hasura-admin-secret': ''};
+        const headers = {'x-hasura-admin-secret': '4GeEB2JCU5rBdLvQ4AbeqqrPGu7kk9SZDhJUZm7A'};
         return this.http.post(this.BASE_URL, body, {
             headers
         });

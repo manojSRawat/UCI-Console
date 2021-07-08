@@ -51,6 +51,9 @@ export class UciService extends BaseService {
     createUserSegment(data) {
         return this.postRequest(this.BASE_URL + 'userSegment/create', data);
     }
+    userSegmentQueryBuilder(data) {
+        return this.postRequest(this.BASE_URL + 'userSegment/queryBuilder', data);
+    }
 
     createLogic(data) {
         return this.postRequest(this.BASE_URL + 'conversationLogic/create', data);
