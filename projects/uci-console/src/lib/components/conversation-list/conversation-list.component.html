@@ -20,31 +20,25 @@
         </div>
     </div>
 
-    <table class="ui single line sortable upForReviewTable table">
+    <table class="ui single line upForReviewTable table">
         <thead>
         <tr>
-            <th (click)="sortColumns('name')" class="three wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="three wide UpReviewTableHeader sorted bl-0">
                 Name
             </th>
-            <th (click)="sortColumns('name')" class="two wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="two wide UpReviewTableHeader sorted bl-0">
                 Status
             </th>
-            <th (click)="sortColumns('name')" class="four wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="four wide UpReviewTableHeader sorted bl-0">
                 Description
             </th>
-            <th (click)="sortColumns('name')" class="two wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="two wide UpReviewTableHeader sorted bl-0">
                 Segments
             </th>
-            <th (click)="sortColumns('name')" class="one wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="one wide UpReviewTableHeader sorted bl-0">
                 Users
             </th>
-            <th (click)="sortColumns('name')" class="one wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="one wide UpReviewTableHeader sorted bl-0">
                 Action
             </th>
         </tr>

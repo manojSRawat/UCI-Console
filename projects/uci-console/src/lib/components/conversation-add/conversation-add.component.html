@@ -199,26 +199,17 @@
                         <table class="ui table" style="width: 100%">
                             <thead>
                             <tr>
-                                <th (click)="sortColumns('name')"
-                                    class="one wide center aligned UpReviewTableHeader sorted bl-0"
-                                    [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                                <th
+                                    class="one wide center aligned UpReviewTableHeader sorted bl-0">
                                     Step
                                 </th>
-                                <th (click)="sortColumns('name')" class="three wide UpReviewTableHeader sorted bl-0"
-                                    [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                                <th class="three wide UpReviewTableHeader sorted bl-0">
                                     Name
                                 </th>
-                                <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0"
-                                    [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                                <th class="five wide UpReviewTableHeader sorted bl-0">
                                     Description
                                 </th>
-                                <th (click)="sortColumns('name')"
-                                    class="one wide center aligned UpReviewTableHeader sorted bl-0"
-                                    [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                                <th class="one wide center aligned UpReviewTableHeader sorted bl-0">
                                     Action
                                 </th>
                             </tr>

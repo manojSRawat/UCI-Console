@@ -22,27 +22,22 @@
             </div>
         </div>
     </div>
-    <table class="ui single line sortable upForReviewTable table">
+    <table class="ui single line upForReviewTable table">
         <thead>
         <tr>
-            <th (click)="sortColumns('name')" class="one wide UpReviewTableHeader sorted bl-0 w-50-px" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="one wide UpReviewTableHeader sorted bl-0 w-50-px">
 
             </th>
-            <th (click)="sortColumns('name')" class="four wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="four wide UpReviewTableHeader sorted bl-0">
                 Name
             </th>
-            <th (click)="sortColumns('name')" class="four wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="four wide UpReviewTableHeader sorted bl-0">
                 Category
             </th>
-            <th (click)="sortColumns('name')" class="two wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="two wide UpReviewTableHeader sorted bl-0">
                 Total members
             </th>
-            <th (click)="sortColumns('name')" class="two wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="two wide UpReviewTableHeader sorted bl-0">
                 Last Updated On
             </th>
         </tr>
@@ -59,5 +54,24 @@
         </tr>
         </tbody>
     </table>
+    <div class="ui grid">
+        <div class="two wide column"></div>
+        <div class="ten wide column">
+            <div class="pb-10">
+                <div class="ui pagination menu mt-10 right-floated pt-0" *ngIf="pager.pages">
+                    <a [ngClass]="{disabled:pager.currentPage===1 }" class="item "
+                       (click)="navigateToPage(1) ">First</a>
+                    <a [ngClass]="{disabled:pager.currentPage===1 }" class="item "
+                       (click)="navigateToPage(pager.currentPage - 1)">Previous</a>
+                    <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage===page}"
+                       (click)="navigateToPage(page)" class="item">{{page}}</a>
+                    <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}"
+                       (click)="navigateToPage(pager.currentPage + 1)" class="item">Next</a>
+                    <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}"
+                       (click)="navigateToPage(pager.totalPages)" class="item ">Last</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

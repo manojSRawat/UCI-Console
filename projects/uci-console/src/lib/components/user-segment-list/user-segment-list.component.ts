@@ -69,6 +69,14 @@ export class UserSegmentListComponent implements OnInit {
             segment.isSelected = selectedIds.indexOf(segment.id) !== -1;
             this.userSegments.push(segment);
         });
+        this.pager.totalItems = data.total;
+        this.pager.totalPages = Math.ceil(data.total / this.pager.pageSize);
+        this.pager.pages = [];
+        let i = 1;
+        while (i <= Math.ceil(data.total / this.pager.pageSize)) {
+            this.pager.pages.push(i);
+            i++;
+        }
     }
 
     sortColumns(column) {
@@ -82,7 +90,8 @@ export class UserSegmentListComponent implements OnInit {
             return;
         }
         this.pageNumber = page;
-        this.route.navigate(['u', this.pageNumber], {queryParams: this.queryParams});
+        this.pager.currentPage = page;
+        this.getUserSegment();
     }
 
     getSearch() {

@@ -75,7 +75,14 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onUserSegmentAdd(segments) {
-        this.userSegments = segments;
+        if (segments && segments.length) {
+            for (const segment of segments) {
+                if (this.userSegments.map(val => val.id).indexOf(segment.id) === -1) {
+                    this.userSegments.push(segment);
+                }
+
+            }
+        }
         this.currentViewState = 'ADD_CONVERSATION';
     }
 
