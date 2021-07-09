@@ -59,7 +59,7 @@
                     </select>
                 </div>
             </div>
-            <div class="two fields">
+            <div class="two fields" *ngIf="clusters.length">
                 <div class="field">
                     <label>Cluster</label>
                     <select name="cluster" formControlName="cluster" class="form-control">
@@ -114,7 +114,7 @@
                         </ng-container>
                     </select>
                 </div>
-                <div class="field">
+                <!--<div class="field">
                     <label>Subject</label>
                     <select name="subject" formControlName="subject" class="form-control">
                         <option value="" disabled>Select Subject</option>
@@ -123,7 +123,7 @@
                             </option>
                         </ng-container>
                     </select>
-                </div>
+                </div>-->
             </div>
 
         </form>

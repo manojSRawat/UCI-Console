@@ -8,16 +8,18 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class ConversationSuccessComponent implements OnInit {
     text = '';
+    botId = '';
 
     constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit(): void {
         this.text = this.activatedRoute.snapshot.queryParams.text || '';
+        this.botId = this.activatedRoute.snapshot.queryParams.botId || '';
     }
 
-    onCopy() {
-        const val = document.getElementById('copyUrl').innerText;
+    onCopy(id) {
+        const val = document.getElementById(id).innerText;
         const selBox = document.createElement('textarea');
         selBox.style.position = 'fixed';
         selBox.style.left = '0';

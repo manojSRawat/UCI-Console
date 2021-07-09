@@ -26,7 +26,7 @@ export class ConversationAddComponent implements OnInit {
     conversationForm: FormGroup;
     logicForm: FormGroup;
     termsAndConditionModal = false;
-    userSegmentItemId;
+    conversationId;
     selectedLogicIndex;
 
     constructor(
@@ -56,8 +56,8 @@ export class ConversationAddComponent implements OnInit {
         });
 
         // Edit case
-        this.userSegmentItemId = this.activatedRoute.snapshot.paramMap.get('id');
-        if (this.userSegmentItemId) {
+        this.conversationId = this.activatedRoute.snapshot.paramMap.get('id');
+        if (this.conversationId) {
             this.getUserSegmentDetail();
         }
     }
@@ -125,11 +125,11 @@ export class ConversationAddComponent implements OnInit {
 
         this.isLoaderShow = true;
 
-        if (this.userSegmentItemId) {
-            this.uciService.botUpdate(this.userSegmentItemId, {data: reqObj}).subscribe(
+        if (this.conversationId) {
+            this.uciService.botUpdate(this.conversationId, {data: reqObj}).subscribe(
                 data => {
                     this.isLoaderShow = false;
-                    this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage}});
+                    this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage, botId: this.conversationId}});
                 }, error => {
                     this.isLoaderShow = false;
                 }
@@ -141,7 +141,7 @@ export class ConversationAddComponent implements OnInit {
                         this.startConversation(data.data);
                     } else {
                         this.isLoaderShow = false;
-                        this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage}});
+                        this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage, botId: data.data.id}});
                     }
                 }, error => {
                     this.isLoaderShow = false;
@@ -154,7 +154,7 @@ export class ConversationAddComponent implements OnInit {
         this.uciService.startConversation(bot.id).subscribe(
             data => {
                 this.isLoaderShow = false;
-                this.router.navigate(['uci/success'], {queryParams: {text: this.conversationForm.value.startingMessage}});
+                this.router.navigate(['uci/success'], {queryParams: {text: this.conversationForm.value.startingMessage, botId: bot.id}});
             }
         );
     }
@@ -252,7 +252,7 @@ export class ConversationAddComponent implements OnInit {
     }
 
     getUserSegmentDetail() {
-        this.uciService.getBotUserDetails(this.userSegmentItemId).subscribe((val: any) => {
+        this.uciService.getBotUserDetails(this.conversationId).subscribe((val: any) => {
             if (val.data) {
                 this.conversationForm.patchValue({
                     name: val.data.name,

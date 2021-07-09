@@ -207,7 +207,9 @@ export class UserSegmentAddComponent implements OnInit {
         };
         this.uciGraphQlService.getClusters(params).subscribe((res: any) => {
             if (res && res.data && res.data.organisation && res.data.organisation.length) {
-                this.clusters = res.data.organisation;
+                if (res.data.organisation[0].cluster) {
+                    this.clusters = res.data.organisation;
+                }
             }
         });
     }

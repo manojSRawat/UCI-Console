@@ -47,10 +47,11 @@
                     <div class="ui grid">
                         <div class="twelve wide column">
                             <div class="right-floated pt-0">
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10"
+                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" *ngIf="!isLoaderShow"
                                         (click)="backToStepOne()"> Back
                                 </button>
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onSubmit()">
+                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onSubmit()"
+                                        *ngIf="!isLoaderShow">
                                     Save
                                 </button>
                                 <ng-container *ngIf="isLoaderShow; else submitBtn">
@@ -62,7 +63,7 @@
                                     <button class="sb-btn sb-btn-normal sb-btn-primary"
                                             [disabled]="!isCheckedTermCondition"
                                             (click)="onSubmit(true)">
-                                        {{userSegmentItemId ? 'Update' : 'Submit'}}
+                                        {{conversationId ? 'Update' : 'Submit'}}
                                     </button>
                                 </ng-template>
                             </div>
@@ -233,7 +234,8 @@
                                         <i class="ellipsis vertical icon ellipsis-icon dropdown"
                                         ></i>
                                         <div class="menu" suiDropdownMenu>
-                                            <div class="item" (click)="openModel(); getEditLogicData(logic, i)">Edit</div>
+                                            <div class="item" (click)="openModel(); getEditLogicData(logic, i)">Edit
+                                            </div>
                                             <div class="item" (click)="onDelete(logic, i)">Delete</div>
                                         </div>
                                     </div>
@@ -279,7 +281,8 @@
             </button>
         </ng-container>
         <ng-template #modalBtn>
-            <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicAdd();modal.deny('denied')" [disabled]="logicForm.invalid">
+            <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicAdd();modal.deny('denied')"
+                    [disabled]="logicForm.invalid">
                 {{logicForm.get('id').value ? ' Update' : 'Add'}}
             </button>
         </ng-template>

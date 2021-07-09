@@ -7,7 +7,7 @@ import {BaseService} from './base.service';
     providedIn: 'root'
 })
 export class UciGraphQlService extends BaseService {
-    BASE_URL = 'http://uci-bot-db3.ngrok.samagra.io/v1/graphql';
+    BASE_URL = 'https://9473ce34f5dd.ngrok.io/v1/graphql';
 
     constructor(public http: HttpClient) {
         super(http);

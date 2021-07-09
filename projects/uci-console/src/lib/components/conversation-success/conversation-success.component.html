@@ -15,9 +15,17 @@
                     <span id="copyUrl">https://api.whatsapp.com/send?text={{text}}</span>
                 </div>
 
+                <div class="text-center" *ngIf="botId">
+                    or share the following ID with DiKSHA team
+                    <span id="copyId">{{botId}}</span>
+                </div>
+
                 <div class="mt-20">
-                    <button class="sb-btn sb-btn-normal sb-btn-primary mr-10" (click)="onCopy()">
-                        Copy Link
+                    <button class="sb-btn sb-btn-normal sb-btn-primary mr-10" (click)="onCopy('copyUrl')">
+                        Copy URL
+                    </button>
+                    <button class="sb-btn sb-btn-normal sb-btn-primary mr-10" (click)="onCopy('copyId')">
+                        Copy ID
                     </button>
                     <button class="sb-btn sb-btn-normal sb-btn-outline-primary" (click)="onClose()">
                         Close
