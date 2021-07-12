@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {UciService} from '../../services/uci.service';
 import {UciGraphQlService} from '../../services/uci-graph-ql.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'lib-user-segment-add',
@@ -35,15 +35,15 @@ export class UserSegmentAddComponent implements OnInit {
         this.getUciBoard();
         // this.getForm();
         this.userSegmentForm = this.fb.group({
-            name: [''],
+            name: ['', Validators.required],
             description: [''],
-            district: [''],
-            block: [''],
-            cluster: [''],
-            school: [''],
-            role: [''],
-            board: [''],
-            grade: [''],
+            district: ['', Validators.required],
+            block: ['', Validators.required],
+            cluster: ['', Validators.required],
+            school: ['', Validators.required],
+            role: ['', Validators.required],
+            board: ['', Validators.required],
+            grade: ['', Validators.required],
             subject: ['']
         });
 
@@ -115,6 +115,9 @@ export class UserSegmentAddComponent implements OnInit {
     }
 
     onAdd() {
+        if (this.userSegmentForm.invalid) {
+            return;
+        }
         this.isLoaderShow = true;
         const formValue = this.userSegmentForm.value;
         const temRole = [];

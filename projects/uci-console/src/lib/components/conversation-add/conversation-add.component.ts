@@ -28,6 +28,8 @@ export class ConversationAddComponent implements OnInit {
     termsAndConditionModal = false;
     conversationId;
     selectedLogicIndex;
+    minStartDate = moment().format('YYYY-MM-DD');
+    minEndDate;
 
     constructor(
         private uciService: UciService,
@@ -35,6 +37,7 @@ export class ConversationAddComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private fb: FormBuilder
     ) {
+        this.minEndDate = moment(this.minStartDate).add(1, 'days').format('YYYY-MM-DD');
     }
 
     ngOnInit() {
@@ -60,6 +63,13 @@ export class ConversationAddComponent implements OnInit {
         if (this.conversationId) {
             this.getUserSegmentDetail();
         }
+
+
+        // start date and end date value change
+        this.conversationForm.get('startDate').valueChanges.subscribe(val => {
+            this.conversationForm.get('endDate').patchValue('');
+            this.minEndDate = moment(val).add(1, 'days').format('YYYY-MM-DD');
+        });
     }
 
     userSegment() {

@@ -113,11 +113,12 @@
                         <div class="two fields">
                             <div class="field">
                                 <label>Start Date</label>
-                                <input type="date" name="startDate" formControlName="startDate">
+                                <input type="date" name="startDate"
+                                       formControlName="startDate" [min]="minStartDate">
                             </div>
                             <div class="field">
                                 <label>End Date</label>
-                                <input type="date" name="endDate" formControlName="endDate">
+                                <input type="date" name="endDate" formControlName="endDate" [min]="minEndDate">
                             </div>
                         </div>
 
@@ -250,7 +251,7 @@
     <div class="sb-modal-content">
         <form [formGroup]="logicForm" class="ui form">
             <div class="field">
-                <label>Name</label>
+                <label>Name <sup><i class="asterisk icon asterisk-color"></i></sup></label>
                 <input type="text" name="name" placeholder="Enter name" formControlName="name">
             </div>
             <div class="field">
@@ -259,7 +260,7 @@
                           formControlName="description"></textarea>
             </div>
             <div class="field">
-                <label>Upload Form (.xml)</label>
+                <label>Upload Form (.xml) <sup><i class="asterisk icon asterisk-color"></i></sup></label>
                 <input type="file" name="file" placeholder="Browse..."
                        (change)="onFileUpload($event)" accept=".xml">
             </div>
