@@ -45,7 +45,7 @@
         <tbody>
         <tr class="UpForReviewListHover" *ngFor="let content of userSegments; let i = index;">
             <td class="center aligned">
-                <input type="checkbox" [(ngModel)]="content.isSelected">
+                <input type="checkbox" [checked]="!!selectedUserSegmentMap[content.id]" (change)="onCheck($event, content)">
             </td>
             <td>{{content.name}}</td>
             <td>{{content?.category}}</td>
