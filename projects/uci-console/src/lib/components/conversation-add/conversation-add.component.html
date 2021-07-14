@@ -54,18 +54,19 @@
                                         *ngIf="!isLoaderShow">
                                     Save
                                 </button>
-                                <ng-container *ngIf="isLoaderShow; else submitBtn">
+                                <ng-container *ngIf="isLoaderShow; else submitBtn1">
                                     <button class="sb-btn sb-btn-normal sb-btn-primary p-0">
                                         <div class="ui active tiny inline loader"></div>
                                     </button>
                                 </ng-container>
-                                <ng-template #submitBtn>
+                                <ng-template #submitBtn1>
                                     <button class="sb-btn sb-btn-normal sb-btn-primary"
                                             [disabled]="!isCheckedTermCondition"
-                                            (click)="onSubmit(true)">
+                                            (click)="this.conversationId ? onSubmit(true) : openItemsVerifyModal()">
                                         {{conversationId ? 'Update' : 'Submit'}}
                                     </button>
                                 </ng-template>
+
                             </div>
                         </div>
                         <div class="twelve wide column pt-0">
@@ -201,7 +202,7 @@
                             <thead>
                             <tr>
                                 <th
-                                    class="one wide center aligned UpReviewTableHeader sorted bl-0">
+                                        class="one wide center aligned UpReviewTableHeader sorted bl-0">
                                     Step
                                 </th>
                                 <th class="three wide UpReviewTableHeader sorted bl-0">
@@ -321,6 +322,79 @@
         <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
                 (click)="modal.deny('denied');">
             Cancel
+        </button>
+    </div>
+</sui-modal>
+<sui-modal *ngIf="verifyAllItemsModal" [mustScroll]="true" [isClosable]="false" [transitionDuration]="0"
+           [size]="'large'"
+           class="sb-modal" (dismissed)="this.verifyAllItemsModal = false" #modal>
+    <div class="sb-modal-header">
+        <h4>
+            Please confirm that ALL the following items are verified (by ticking the check-boxes) before you can
+            publish:
+        </h4>
+    </div>
+    <div class="sb-modal-content">
+        <div class="ui grid">
+            <div class="four wide column">
+                <div class="mb-20">
+                    <h3>Appropriateness</h3>
+                </div>
+                <div class="ui grid" *ngFor="let list of Appropriateness; let i = index">
+                    <div class="two wide column pb-0">
+                        <input type="checkbox" [name]="'appropriateness' + i" [(ngModel)]="list.checks">
+                    </div>
+                    <div class="ten wide column pl-0 pb-0 line-height">
+                        {{list.text}}
+                    </div>
+                </div>
+            </div>
+            <div class="four wide column">
+                <div class="mb-20">
+                    <h3>Content Details</h3>
+                </div>
+                <div class="ui grid" *ngFor="let list of contentDetails; let i = index">
+                    <div class="two wide column pb-0">
+                        <input type="checkbox" [name]="'contentDetails' + i" [(ngModel)]="list.checks">
+                    </div>
+                    <div class="ten wide column pl-0 pb-0 line-height">
+                        {{list.text}}
+                    </div>
+                </div>
+            </div>
+            <div class="four wide column">
+                <div class="mb-20">
+                    <h3>Usability</h3>
+                </div>
+                <div class="ui grid" *ngFor="let list of usability; let i = index">
+                    <div class="two wide column pb-0">
+                        <input type="checkbox" [name]="'usability' + i" [(ngModel)]="list.checks">
+                    </div>
+                    <div class="ten wide column pl-0 pb-0 line-height">
+                        {{list.text}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sb-modal-actions">
+        <ng-container *ngIf="isLoaderShow; else submitBtn">
+            <button class="sb-btn sb-btn-normal sb-btn-primary p-0">
+                <div class="ui active tiny inline loader"></div>
+            </button>
+        </ng-container>
+        <ng-template #submitBtn>
+            <button class="sb-btn sb-btn-normal sb-btn-primary"
+                    (click)="onSubmit(true);">
+                Publish
+            </button>
+        </ng-template>
+        <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
+                (click)="allCheck(false); modal.deny('denied');">
+            Cancel
+        </button>
+        <button class="sb-btn sb-btn-normal sb-btn-primary allCheckBtn" (click)="allCheck(true)">
+            All Check
         </button>
     </div>
 </sui-modal>

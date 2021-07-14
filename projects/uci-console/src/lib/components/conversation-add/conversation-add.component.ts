@@ -26,10 +26,69 @@ export class ConversationAddComponent implements OnInit {
     conversationForm: FormGroup;
     logicForm: FormGroup;
     termsAndConditionModal = false;
+    verifyAllItemsModal = false;
     conversationId;
     selectedLogicIndex;
     minStartDate = moment().format('YYYY-MM-DD');
     minEndDate;
+    Appropriateness = [
+        {
+            text: 'No Hate speech, Abuse, Violence, Profanity',
+            checks: false
+        },
+        {
+            text: 'No Sexual content, Nudity or Vulgarity',
+            checks: false
+        },
+        {
+            text: 'No Discrimination or Defamation',
+            checks: false
+        },
+        {
+            text: 'Is suitable for children',
+            checks: false
+        }
+    ];
+    contentDetails = [
+        {
+            text: 'Appropriate Title, Description',
+            checks: false
+        },
+        {
+            text: 'Correct Board, Grade, Subject, Medium',
+            checks: false
+        },
+        {
+            text: 'Appropriate tags such as Resource Type, Concepts',
+            checks: false
+        },
+        {
+            text: 'Relevant keywords',
+            checks: false
+        }
+    ];
+    usability = [
+        {
+            text: 'Content plays correctly',
+            checks: false
+        },
+        {
+            text: 'Can see the content clearly on Desktop and App',
+            checks: false
+        },
+        {
+            text: 'Audio (if any) is clear and easy to understand',
+            checks: false
+        },
+        {
+            text: 'No spelling mistakes in the text',
+            checks: false
+        },
+        {
+            text: 'Language is simple to understand',
+            checks: false
+        }
+    ];
 
     constructor(
         private uciService: UciService,
@@ -160,6 +219,7 @@ export class ConversationAddComponent implements OnInit {
                         this.isLoaderShow = false;
                         this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage, botId: data.data.id}});
                     }
+                    this.verifyAllItemsModal = false;
                 }, error => {
                     this.isLoaderShow = false;
                 }
@@ -184,6 +244,10 @@ export class ConversationAddComponent implements OnInit {
 
     openTermAndConditionModel() {
         this.termsAndConditionModal = true;
+    }
+
+    openItemsVerifyModal() {
+        this.verifyAllItemsModal = true;
     }
 
     onLogicAdd() {
@@ -285,6 +349,33 @@ export class ConversationAddComponent implements OnInit {
                 if (val.data.logic) {
                     this.selectedLogic = val.data.logic;
                 }
+            }
+        });
+    }
+
+    allCheck(isAllCheck: boolean = false) {
+        // console.log('-->>Appropriateness', this.Appropriateness);
+        // console.log('-->>contentDetails', this.contentDetails);
+        // console.log('-->>usability', this.usability);
+        this.Appropriateness.forEach(val => {
+            if (isAllCheck) {
+                val.checks = true;
+            } else {
+                val.checks = false;
+            }
+        });
+        this.contentDetails.forEach(val => {
+            if (isAllCheck) {
+                val.checks = true;
+            } else {
+                val.checks = false;
+            }
+        });
+        this.usability.forEach(val => {
+            if (isAllCheck) {
+                val.checks = true;
+            } else {
+                val.checks = false;
             }
         });
     }
