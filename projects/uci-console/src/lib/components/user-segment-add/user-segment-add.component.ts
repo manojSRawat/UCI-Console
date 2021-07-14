@@ -23,6 +23,8 @@ export class UserSegmentAddComponent implements OnInit {
     grade = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12];
     subjects = [];
     userSegmentForm: FormGroup;
+    state = 'Haryana';
+
     constructor(private uciService: UciService,
                 private fb: FormBuilder,
                 private uciGraphQlService: UciGraphQlService) {
@@ -38,7 +40,7 @@ export class UserSegmentAddComponent implements OnInit {
             description: [''],
             district: ['', Validators.required],
             block: ['', Validators.required],
-            cluster: ['', Validators.required],
+            cluster: [''],
             school: ['', Validators.required],
             role: ['', Validators.required],
             board: ['', Validators.required],
@@ -69,32 +71,6 @@ export class UserSegmentAddComponent implements OnInit {
         });
     }
 
-    getForm() {
-        console.log('------> getting form');
-        this.uciService.readForm(
-            {
-                request: {
-                    type: 'userSegment',
-                    subType: 'global',
-                    action: 'menubar',
-                    framework: 'ekstep_ncert_k-12',
-                    rootOrgId: '*'
-                }
-            }
-        ).subscribe(
-            (data: any) => {
-                if (data.result && data.result.form && data.result.form.data) {
-                    this.formFieldProperties = data.result.form.data.fields;
-                    console.log('xxxxxxxxxxxxxxx', this.formFieldProperties);
-                }
-            }
-        );
-    }
-
-    onStatusChanges(event) {
-        console.log('event', event);
-    }
-
     onCancel() {
         this.cancel.emit(false);
     }
@@ -105,34 +81,41 @@ export class UserSegmentAddComponent implements OnInit {
         }
         this.isLoaderShow = true;
         const formValue = this.userSegmentForm.value;
-        const temRole = [];
-        const temBoard = [];
-        const temGrade = [];
-        temRole.push(String(formValue.role));
-        temBoard.push(String(formValue.board));
-        temGrade.push(formValue.grade);
+        const locationData = [];
+        const districtData = [];
+        for (const block of this.blocks) {
+            if (formValue.block.indexOf(block.block) !== -1) {
+                block.state = this.state;
+                locationData.push(block);
+                districtData.push(block.district);
+            }
+            if (locationData.length === formValue.block) {
+                break;
+            }
+        }
+        if (districtData.length < formValue.district.length) {
+            for (const district of this.districts) {
+                if (formValue.district.indexOf(district.district) !== -1 && districtData.indexOf(district.district) === -1) {
+                    district.state = this.state;
+                    locationData.push(district);
+                }
+            }
+        }
         const param = {
             data: {
-                userLocation: [
-                    {
-                        state: 'Haryana',
-                        district: formValue.district,
-                        block: formValue.block
-                    }
-                ],
-                roles: temRole,
+                userLocation: locationData,
+                roles: formValue.role,
                 userType: {
                     type: 'student'
                 },
                 framework: {
-                    board: temBoard,
-                    gradeLevel: temGrade
+                    board: formValue.board,
+                    gradeLevel: formValue.grade
                 }
             }
         };
-        console.log('--->>>add segment', param);
+
         this.uciService.userSegmentQueryBuilder(param).subscribe(response => {
-            // console.log('-->>>response', response);
             if (response) {
                 const items = {
                     ...response,
@@ -165,13 +148,12 @@ export class UserSegmentAddComponent implements OnInit {
 
     getUciDistrict() {
         const params = {
-            state: 'Haryana'
+            state: this.state
         };
         this.uciGraphQlService.getDistrict(params).subscribe((res: any) => {
             this.districts = [];
             if (res && res.data && res.data.organisation && res.data.organisation.length) {
                 this.districts = res.data.organisation;
-                console.log('-->>district', this.districts);
             }
         });
     }
@@ -179,13 +161,12 @@ export class UserSegmentAddComponent implements OnInit {
     getUciBlock() {
         const formVal = this.userSegmentForm.value;
         const params = {
-            state: 'Haryana', district: formVal.district
+            state: this.state, district: formVal.district
         };
         this.uciGraphQlService.getBlock(params).subscribe((res: any) => {
             this.blocks = [];
             if (res && res.data && res.data.blocks && res.data.blocks.length) {
                 this.blocks = res.data.blocks;
-                console.log('-->>block', this.blocks);
             }
         });
     }
@@ -193,13 +174,14 @@ export class UserSegmentAddComponent implements OnInit {
     getUciCluster() {
         const formVal = this.userSegmentForm.value;
         const params = {
-            state: 'Haryana', district: formVal.district, block: formVal.block
+            state: this.state, district: formVal.district, block: formVal.block
         };
         this.uciGraphQlService.getClusters(params).subscribe((res: any) => {
             this.clusters = [];
             if (res && res.data && res.data.clusters && res.data.clusters.length) {
-                this.clusters =  res.data.clusters;
-                console.log('-->>clusters', this.clusters);
+                if (res.data.clusters[0].cluster) {
+                    this.clusters = res.data.clusters;
+                }
             }
         });
     }
@@ -207,13 +189,12 @@ export class UserSegmentAddComponent implements OnInit {
     getUciSchoolDetails() {
         const formVal = this.userSegmentForm.value;
         const params = {
-            state: 'Haryana', district: formVal.district, block: formVal.block
+            state: this.state, district: formVal.district, block: formVal.block
         };
         this.uciGraphQlService.getSchoolDetails(params).subscribe((res: any) => {
             this.schools = [];
             if (res && res.data && res.data.schools && res.data.schools.length) {
                 this.schools = res.data.schools;
-                console.log('-->>schools', this.schools);
             }
         });
     }
@@ -222,7 +203,6 @@ export class UserSegmentAddComponent implements OnInit {
         this.uciGraphQlService.getRole().subscribe((res: any) => {
             if (res && res.data && res.data.role && res.data.role.length) {
                 this.roles = res.data.role;
-                console.log('-->>roles', this.roles);
             }
         });
     }
@@ -231,7 +211,6 @@ export class UserSegmentAddComponent implements OnInit {
         this.uciGraphQlService.getBoards().subscribe((res: any) => {
             if (res && res.data && res.data.board && res.data.board.length) {
                 this.boards = res.data.board;
-                console.log('-->>boards', this.boards);
             }
         });
     }

@@ -24,11 +24,6 @@
     </div>
 
     <div class="ten wide column font-1-2">
-        <!--        <sb-dynamic-form *ngIf="formFieldProperties" [config]="formFieldProperties"-->
-        <!--                         (statusChanges)="onStatusChanges($event)"-->
-        <!--                         (valueChanges)="valueChanges($event)"></sb-dynamic-form>-->
-
-
         <form class="ui form user-segment-form" [formGroup]="userSegmentForm">
             <div class="field">
                 <label>Name <sup><i class="asterisk icon asterisk-color"></i></sup></label>
@@ -42,14 +37,6 @@
             <div class="two fields">
                 <div class="field">
                     <label>District <sup><i class="asterisk icon asterisk-color"></i></sup></label>
-                    <!--                    <select name="district" formControlName="district" class="form-control">-->
-                    <!--                        <option value="" disabled>Select District</option>-->
-                    <!--                        <ng-container *ngFor="let district of districts">-->
-                    <!--                            <option [value]="district.district">{{district?.district}}-->
-                    <!--                            </option>-->
-                    <!--                        </ng-container>-->
-                    <!--                    </select>-->
-
                     <div class="ui segment p-0">
                         <sui-multi-select class="selection w-100"
                                           formControlName="district"
@@ -64,13 +51,6 @@
                 </div>
                 <div class="field">
                     <label>Block <sup><i class="asterisk icon asterisk-color"></i></sup></label>
-                    <!--                    <select name="block" formControlName="block" class="form-control">-->
-                    <!--                        <option value="" disabled>Select Blocks</option>-->
-                    <!--                        <ng-container *ngFor="let block of blocks">-->
-                    <!--                            <option [value]="block.block">{{block?.block}}-->
-                    <!--                            </option>-->
-                    <!--                        </ng-container>-->
-                    <!--                    </select>-->
                     <div class="ui segment p-0">
                         <sui-multi-select class="selection w-100"
                                           formControlName="block"
@@ -85,14 +65,7 @@
             </div>
             <div class="two fields">
                 <div class="field" *ngIf="clusters.length">
-                    <label>Cluster <sup><i class="asterisk icon asterisk-color"></i></sup></label>
-<!--                    <select name="cluster" formControlName="cluster" class="form-control">-->
-<!--                        <option value="" disabled>Select Cluster</option>-->
-<!--                        <ng-container *ngFor="let cluster of clusters">-->
-<!--                            <option [value]="cluster.cluster">{{cluster?.cluster}}-->
-<!--                            </option>-->
-<!--                        </ng-container>-->
-<!--                    </select>-->
+                    <label>Cluster</label>
                     <div class="ui segment p-0">
                         <sui-multi-select class="selection w-100"
                                           formControlName="cluster"
@@ -106,13 +79,6 @@
                 </div>
                 <div class="field">
                     <label>School <sup><i class="asterisk icon asterisk-color"></i></sup></label>
-<!--                    <select name="school" formControlName="school" class="form-control">-->
-<!--                        <option value="" disabled>Select School</option>-->
-<!--                        <ng-container *ngFor="let school of schools">-->
-<!--                            <option [value]="school.school_code">{{school.school}}-->
-<!--                            </option>-->
-<!--                        </ng-container>-->
-<!--                    </select>-->
                     <div class="ui segment p-0">
                         <sui-multi-select class="selection w-100"
                                           formControlName="school"

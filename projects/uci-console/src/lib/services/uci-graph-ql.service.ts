@@ -33,11 +33,11 @@ export class UciGraphQlService extends BaseService {
     getBlock(param) {
         return this.baseRequest({
             query: `query getListOfBlocksUnderDistrict($district:[String!],$state:String){
-  blocks: organisation(where:{state:{_eq:$state},district:{_in:$district}},distinct_on:block){
-    block
-    district
-  }
-}`,
+            blocks: organisation(where:{state:{_eq:$state},district:{_in:$district}},distinct_on:block){
+            block
+            district
+            }
+            }`,
             variables: param
         });
     }
@@ -45,12 +45,12 @@ export class UciGraphQlService extends BaseService {
     getSchoolDetails(param) {
         return this.baseRequest({
             query: `query getListOfSchoolsUnderBlocksAndDistrict($district:[String!],$state:String,$block:[String!]){
-  schools:organisation(where:{state:{_eq:$state},district:{_in:$district},block:{_in:$block}}){
-    school
-    school_code
-    block
-  }
-}`,
+            schools:organisation(where:{state:{_eq:$state},district:{_in:$district},block:{_in:$block}}){
+            school
+            school_code
+            block
+            }
+            }`,
             variables: param
         });
     }
@@ -58,10 +58,10 @@ export class UciGraphQlService extends BaseService {
     getClusters(param) {
         return this.baseRequest({
             query: `query getListOfClustersUnderBlockAndDistrict($block:[String!],$district:[String!],$state:String){
-  clusters:organisation(where:{state:{_eq:$state},district:{_in:$district},block:{_in:$block}},distinct_on:cluster){
-    cluster
-  }
-}`,
+            clusters:organisation(where:{state:{_eq:$state},district:{_in:$district},block:{_in:$block}},distinct_on:cluster){
+            cluster
+            }
+            }`,
             variables: param
         });
     }
