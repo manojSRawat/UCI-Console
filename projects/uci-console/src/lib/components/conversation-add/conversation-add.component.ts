@@ -189,6 +189,8 @@ export class ConversationAddComponent implements OnInit {
     onSubmit(isTriggerBot = false) {
         const reqObj = {
             ...this.conversationForm.value,
+            startDate: new Date(this.conversationForm.value.startDate),
+            endDate: new Date(this.conversationForm.value.endDate),
             users: [],
             logic: []
         };
