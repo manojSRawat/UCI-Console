@@ -23,7 +23,6 @@ export class UserSegmentAddComponent implements OnInit {
     grade = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12];
     subjects = [];
     userSegmentForm: FormGroup;
-
     constructor(private uciService: UciService,
                 private fb: FormBuilder,
                 private uciGraphQlService: UciGraphQlService) {
@@ -96,20 +95,6 @@ export class UserSegmentAddComponent implements OnInit {
         console.log('event', event);
     }
 
-    // valueChanges(event) {
-    //     console.log('event value', event);
-    //     const keys = ['district', 'block'];
-    //     for (const value of keys) {
-    //         console.log(value);
-    //         if (value === 'district') {
-    //             if (this.userSegment.district !== event.district && event.district) {
-    //                 // this.getUciBlock();
-    //             }
-    //         }
-    //     }
-    //     this.userSegment = Object.assign(this.userSegment, event);
-    // }
-
     onCancel() {
         this.cancel.emit(false);
     }
@@ -145,7 +130,7 @@ export class UserSegmentAddComponent implements OnInit {
                 }
             }
         };
-        // console.log('--->>>add segment', param);
+        console.log('--->>>add segment', param);
         this.uciService.userSegmentQueryBuilder(param).subscribe(response => {
             // console.log('-->>>response', response);
             if (response) {
@@ -183,9 +168,10 @@ export class UserSegmentAddComponent implements OnInit {
             state: 'Haryana'
         };
         this.uciGraphQlService.getDistrict(params).subscribe((res: any) => {
+            this.districts = [];
             if (res && res.data && res.data.organisation && res.data.organisation.length) {
-                this.districts = [];
                 this.districts = res.data.organisation;
+                console.log('-->>district', this.districts);
             }
         });
     }
@@ -196,9 +182,10 @@ export class UserSegmentAddComponent implements OnInit {
             state: 'Haryana', district: formVal.district
         };
         this.uciGraphQlService.getBlock(params).subscribe((res: any) => {
-            if (res && res.data && res.data.organisation && res.data.organisation.length) {
-                this.blocks = [];
-                this.blocks = res.data.organisation;
+            this.blocks = [];
+            if (res && res.data && res.data.blocks && res.data.blocks.length) {
+                this.blocks = res.data.blocks;
+                console.log('-->>block', this.blocks);
             }
         });
     }
@@ -209,10 +196,10 @@ export class UserSegmentAddComponent implements OnInit {
             state: 'Haryana', district: formVal.district, block: formVal.block
         };
         this.uciGraphQlService.getClusters(params).subscribe((res: any) => {
-            if (res && res.data && res.data.organisation && res.data.organisation.length) {
-                if (res.data.organisation[0].cluster) {
-                    this.clusters = res.data.organisation;
-                }
+            this.clusters = [];
+            if (res && res.data && res.data.clusters && res.data.clusters.length) {
+                this.clusters =  res.data.clusters;
+                console.log('-->>clusters', this.clusters);
             }
         });
     }
@@ -223,8 +210,10 @@ export class UserSegmentAddComponent implements OnInit {
             state: 'Haryana', district: formVal.district, block: formVal.block
         };
         this.uciGraphQlService.getSchoolDetails(params).subscribe((res: any) => {
-            if (res && res.data && res.data.organisation && res.data.organisation.length) {
-                this.schools = res.data.organisation;
+            this.schools = [];
+            if (res && res.data && res.data.schools && res.data.schools.length) {
+                this.schools = res.data.schools;
+                console.log('-->>schools', this.schools);
             }
         });
     }
@@ -233,6 +222,7 @@ export class UserSegmentAddComponent implements OnInit {
         this.uciGraphQlService.getRole().subscribe((res: any) => {
             if (res && res.data && res.data.role && res.data.role.length) {
                 this.roles = res.data.role;
+                console.log('-->>roles', this.roles);
             }
         });
     }
@@ -241,6 +231,7 @@ export class UserSegmentAddComponent implements OnInit {
         this.uciGraphQlService.getBoards().subscribe((res: any) => {
             if (res && res.data && res.data.board && res.data.board.length) {
                 this.boards = res.data.board;
+                console.log('-->>boards', this.boards);
             }
         });
     }
