@@ -1,6 +1,6 @@
 <div class="ui">
     <div class="relative position">
-        <div class="py-8 ua-btn-container ua-back-btn-container px-20">
+        <div class="py-8 ua-btn-container ua-back-btn-container px-20 z-index-2">
            <div class="mx-20">
                <!-- /* Back button */ -->
                <button (click)="goBack()" type="button" class="sb-btn sb-btn-normal sb-btn-outline-primary sb-left-icon mx-5">
@@ -14,10 +14,10 @@
     </div>
     <div class="uci-admin">
         <div class="uci-admin-content">
-            <div class="uci-admin-left-panel ua-side-content">
+            <div class="uci-admin-left-panel ua-side-content z-index-2">
                 <lib-side-panel></lib-side-panel>
             </div>
-                <div class="uci-admin-right-panel ua-main-content">
+                <div class="uci-admin-right-panel ua-main-content z-index-2">
                     <router-outlet></router-outlet>
                 </div>
         </div>

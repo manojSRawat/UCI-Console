@@ -350,8 +350,8 @@ export class ConversationAddComponent implements OnInit {
                     description: val.data.description,
                     purpose: val.data.purpose,
                     startingMessage: val.data.startingMessage,
-                    startDate: val.data.startDate ? new Date(moment(val.data.startDate).format('YYYY-MM-DD')) : '',
-                    endDate: val.data.endDate ? new Date(moment(val.data.endDate).format('YYYY-MM-DD')) : ''
+                    startDate: val.data.startDate ? new Date(val.data.startDate) : '',
+                    endDate: val.data.endDate ? new Date(val.data.endDate) : ''
                 });
                 if (val.data.userSegments) {
                     this.userSegments = val.data.userSegments;
@@ -364,9 +364,6 @@ export class ConversationAddComponent implements OnInit {
     }
 
     allCheck(isAllCheck: boolean = false) {
-        // console.log('-->>Appropriateness', this.Appropriateness);
-        // console.log('-->>contentDetails', this.contentDetails);
-        // console.log('-->>usability', this.usability);
         this.Appropriateness.forEach(val => {
             if (isAllCheck) {
                 val.checks = true;
