@@ -286,37 +286,14 @@
     </div>
 </sui-modal>
 
-<sui-modal *ngIf="termsAndConditionModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0"
+<sui-modal *ngIf="termsAndConditionModal" [mustScroll]="true" [isClosable]="false" [transitionDuration]="0"
            [size]="'large'"
            class="sb-modal" (dismissed)="this.termsAndConditionModal = false" #modal>
     <div class="sb-modal-header">
         Terms and Conditions
     </div>
     <div class="sb-modal-content">
-        <sui-tabset>
-            <div class="ui pointing secondary menu">
-                <a class="item" suiTabHeader="1">Terms of Use</a>
-                <a class="item" suiTabHeader="2">Privacy Policy </a>
-            </div>
-            <div class="ui segment" suiTabContent="1">
-                <p>This website is designed, developed and maintained by the National Council for Educational Research
-                    and Training (NCERT) (Ministry of Education (MoE), Government of India) (together referred to as
-                    "GoI").</p>
-
-                <p>These terms of use, as amended, govern the usage of DIKSHA (Digital Infrastructure for Knowledge
-                    Sharing) by its Users (as defined below) ("Terms"). DIKSHA is an initiative of the GoI.</p>
-            </div>
-            <div class="ui segment" suiTabContent="2">
-                <p>
-                    DIKSHA (Digital Infrastructure for Knowledge Sharing ) is the National Platform for School Education
-                    for the benefit of teachers and learners across India. DIKSHA is an initiative of National Council
-                    for Educational Research and Training (NCERT) (Ministry of Education (MoE), Government of India).
-                    Users of DIKSHA can access content for learning on the web at https://diksha.gov.in, through the
-                    DIKSHA mobile application, and the desktop application.
-                </p>
-            </div>
-        </sui-tabset>
-
+       <lib-terms-conditions></lib-terms-conditions>
     </div>
     <div class="sb-modal-actions">
         <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
