@@ -34,17 +34,16 @@ export class UserSegmentAddComponent implements OnInit {
         this.getUciDistrict();
         this.getUciRole();
         this.getUciBoard();
-        // this.getForm();
         this.userSegmentForm = this.fb.group({
             name: ['', Validators.required],
             description: [''],
-            district: ['', Validators.required],
-            block: ['', Validators.required],
+            district: [''],
+            block: [''],
             cluster: [''],
-            school: ['', Validators.required],
-            role: ['', Validators.required],
-            board: ['', Validators.required],
-            grade: ['', Validators.required],
+            school: [''],
+            role: [''],
+            board: [''],
+            grade: [''],
             subject: ['']
         });
 

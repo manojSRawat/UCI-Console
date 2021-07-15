@@ -38,7 +38,7 @@
                         <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onAddCancel()">
                             Cancel
                         </button>
-                        <button class="sb-btn sb-btn-normal sb-btn-primary" [disabled]="this.conversationForm.invalid"
+                        <button class="sb-btn sb-btn-normal sb-btn-primary" [disabled]="conversationForm.invalid"
                                 (click)="nextStep()"> Next
                         </button>
                     </div>
@@ -113,28 +113,28 @@
                         </div>
                         <div class="two fields">
                             <div class="field">
-                                <label>Start Date</label>
+                                <label>Start Date And Time</label>
                                 <div class="ui left icon input">
                                     <i class="calendar icon"></i>
                                     <input suiDatepicker
                                            formControlName="startDate"
                                            [pickerMode]="'datetime'"
-                                           [pickerMinDate] = "startMinDate"
+                                           [pickerMinDate]="startMinDate"
                                            [pickerUseNativeOnMobile]="false">
                                 </div>
                             </div>
                             <div class="field">
-                                <label>End Date</label>
+                                <label>End Date And Time</label>
                                 <div class="ui left icon input">
                                     <i class="calendar icon"></i>
                                     <input suiDatepicker
                                            formControlName="endDate"
                                            [pickerMode]="'datetime'"
-                                           [pickerMinDate] = "endMinDate"
+                                           [pickerMinDate]="endMinDate"
                                            [pickerUseNativeOnMobile]="false">
                                 </div>
                             </div>
-                            </div>
+                        </div>
 
                     </form>
                 </div>
@@ -142,8 +142,8 @@
             <div class="ui divider"></div>
             <div class="ui grid">
                 <div class="six wide column">
-                    <h6>User segment</h6>
-                    <p class="pt-10">{{userSegments.length}} segment added</p>
+                    <h6>User segments</h6>
+                    <p class="pt-10">{{userSegments.length}} segments added</p>
                 </div>
                 <div class="six wide column  right aligned">
                     <div class="pt-0">
@@ -214,8 +214,7 @@
                         <table class="ui table" style="width: 100%">
                             <thead>
                             <tr>
-                                <th
-                                        class="one wide center aligned UpReviewTableHeader sorted bl-0">
+                                <th class="one wide center aligned UpReviewTableHeader sorted bl-0">
                                     Step
                                 </th>
                                 <th class="three wide UpReviewTableHeader sorted bl-0">
@@ -274,7 +273,7 @@
                           formControlName="description"></textarea>
             </div>
             <div class="field">
-                <label>Upload Form (.xml) <sup><i class="asterisk icon asterisk-color"></i></sup></label>
+                <label>Upload ODK Form (.xml) <sup><i class="asterisk icon asterisk-color"></i></sup></label>
                 <input type="file" name="file" placeholder="Browse..."
                        (change)="onFileUpload($event)" accept=".xml">
             </div>
@@ -306,7 +305,7 @@
         Terms and Conditions
     </div>
     <div class="sb-modal-content">
-       <lib-terms-conditions></lib-terms-conditions>
+        <lib-terms-conditions></lib-terms-conditions>
     </div>
     <div class="sb-modal-actions">
         <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
@@ -320,15 +319,15 @@
            class="sb-modal" (dismissed)="this.verifyAllItemsModal = false" #modal>
     <div class="sb-modal-header">
         <h4>
-            Please confirm that ALL the following items are verified (by ticking the check-boxes) before you can
-            publish:
+            Please confirm that ALL the following items are verified (by ticking the check-boxes) before you can submit:
         </h4>
     </div>
     <div class="sb-modal-content">
         <div class="ui grid">
             <div class="four wide column">
                 <div class="mb-20">
-                    <h3>Appropriateness</h3>
+                    <h4>Appropriateness</h4>
+                    <div class="ui divider"></div>
                 </div>
                 <div class="ui grid" *ngFor="let list of Appropriateness; let i = index">
                     <div class="two wide column pb-0">
@@ -341,7 +340,8 @@
             </div>
             <div class="four wide column">
                 <div class="mb-20">
-                    <h3>Content Details</h3>
+                    <h4>Content Details</h4>
+                    <div class="ui divider"></div>
                 </div>
                 <div class="ui grid" *ngFor="let list of contentDetails; let i = index">
                     <div class="two wide column pb-0">
@@ -354,7 +354,8 @@
             </div>
             <div class="four wide column">
                 <div class="mb-20">
-                    <h3>Usability</h3>
+                    <h4>Usability</h4>
+                    <div class="ui divider"></div>
                 </div>
                 <div class="ui grid" *ngFor="let list of usability; let i = index">
                     <div class="two wide column pb-0">
@@ -376,7 +377,7 @@
         <ng-template #submitBtn>
             <button class="sb-btn sb-btn-normal sb-btn-primary"
                     (click)="onSubmit(true);">
-                Publish
+                Submit
             </button>
         </ng-template>
         <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
@@ -384,7 +385,7 @@
             Cancel
         </button>
         <button class="sb-btn sb-btn-normal sb-btn-primary allCheckBtn" (click)="allCheck(true)">
-            All Check
+            Confirm All
         </button>
     </div>
 </sui-modal>

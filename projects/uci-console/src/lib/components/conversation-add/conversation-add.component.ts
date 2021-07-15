@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UciService} from '../../services/uci.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import moment from 'moment/moment';
-import {UciGraphQlService} from '../../services/uci-graph-ql.service';
 
 @Component({
     selector: 'lib-conversation-add',
@@ -31,8 +30,6 @@ export class ConversationAddComponent implements OnInit {
     selectedLogicIndex;
     startMinDate = new Date();
     endMinDate;
-    // minStartDate = moment().format('YYYY-MM-DD');
-    // minEndDate;
     Appropriateness = [
         {
             text: 'No Hate speech, Abuse, Violence, Profanity',
@@ -98,8 +95,7 @@ export class ConversationAddComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private fb: FormBuilder
     ) {
-
-        const tempDate = moment(new Date()).add(1, 'days').format('YYYY-MM-DD');
+        const tempDate = moment().add(1, 'days').format('YYYY-MM-DD');
         this.endMinDate = new Date(tempDate);
     }
 
@@ -109,8 +105,8 @@ export class ConversationAddComponent implements OnInit {
             description: [''],
             purpose: ['', Validators.required],
             startingMessage: ['', Validators.required],
-            startDate: [''],
-            endDate: [''],
+            startDate: [null],
+            endDate: [null],
             status: ['Draft']
         });
 
@@ -127,15 +123,11 @@ export class ConversationAddComponent implements OnInit {
             this.getUserSegmentDetail();
         }
 
-
         // start date and end date value change
-
         this.conversationForm.get('startDate').valueChanges.subscribe(val => {
             this.conversationForm.get('endDate').patchValue('');
             const tempDate = moment(val).add(1, 'days').format('YYYY-MM-DD');
             this.endMinDate = new Date(tempDate);
-            console.log('-->>>endDAte', this.endMinDate);
-            console.log('-->>>startDAte', val);
         });
     }
 
@@ -152,14 +144,7 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onUserSegmentAdd(segments) {
-        if (segments && segments.length) {
-            for (const segment of segments) {
-                if (this.userSegments.map(val => val.id).indexOf(segment.id) === -1) {
-                    this.userSegments.push(segment);
-                }
-
-            }
-        }
+        this.userSegments = segments;
         this.currentViewState = 'ADD_CONVERSATION';
     }
 
@@ -184,12 +169,6 @@ export class ConversationAddComponent implements OnInit {
         }
     }
 
-    sortColumns(column) {
-        this.column = column;
-        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-        this.reverse = !this.reverse;
-    }
-
     onAddCancel() {
         this.router.navigate(['uci']);
     }
@@ -197,8 +176,6 @@ export class ConversationAddComponent implements OnInit {
     onSubmit(isTriggerBot = false) {
         const reqObj = {
             ...this.conversationForm.value,
-            // startDate: new Date(this.conversationForm.value.startDate),
-            // endDate: new Date(this.conversationForm.value.endDate),
             users: [],
             logic: []
         };
@@ -313,7 +290,6 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onFileUpload(event) {
-        console.log(event);
         if (!event.target.files.length) {
             return;
         }
@@ -365,25 +341,13 @@ export class ConversationAddComponent implements OnInit {
 
     allCheck(isAllCheck: boolean = false) {
         this.Appropriateness.forEach(val => {
-            if (isAllCheck) {
-                val.checks = true;
-            } else {
-                val.checks = false;
-            }
+            val.checks = isAllCheck;
         });
         this.contentDetails.forEach(val => {
-            if (isAllCheck) {
-                val.checks = true;
-            } else {
-                val.checks = false;
-            }
+            val.checks = isAllCheck;
         });
         this.usability.forEach(val => {
-            if (isAllCheck) {
-                val.checks = true;
-            } else {
-                val.checks = false;
-            }
+            val.checks = isAllCheck;
         });
     }
 }

@@ -2,22 +2,22 @@
     <div class="twelve wide column center aligned mt-80">
         <div class="pt-0 d-flex flex-row justify-content-center">
             <div class="w-25-per text-center" style="margin: auto;">
-                <div class="text-center">
+                <div class="text-center mb-20">
                     <img alt="Search Icon" src="assets/uci-console/images/success.svg">
                 </div>
 
-                <div class="text-center">
-                    Congratulation! You have successfully defined a new conversation
+                <div class="text-center p-5">
+                    Congratulations! You have successfully created a new conversation
                 </div>
 
-                <div class="text-center">
+                <div class="text-center p-5">
                     Use the following URL to use DIKSHA bot:
-                    <span id="copyUrl">https://api.whatsapp.com/send?text={{text}}</span>
+                    <strong><span id="copyUrl">https://api.whatsapp.com/send?text={{text}}&phone=+912249757677</span></strong>
                 </div>
 
-                <div class="text-center" *ngIf="botId">
-                    or share the following ID with DiKSHA team
-                    <span id="copyId">{{botId}}</span>
+                <div class="text-center p-5" *ngIf="botId">
+                    or share the following ID with DiKSHA team:
+                    <strong><span id="copyId">{{botId}}</span></strong>
                 </div>
 
                 <div class="mt-20">

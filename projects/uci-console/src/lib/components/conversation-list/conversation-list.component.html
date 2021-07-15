@@ -26,19 +26,19 @@
             <th class="three wide UpReviewTableHeader sorted bl-0">
                 Name
             </th>
-            <th class="two wide UpReviewTableHeader sorted bl-0">
+            <th class="one wide UpReviewTableHeader sorted bl-0">
                 Status
             </th>
             <th class="four wide UpReviewTableHeader sorted bl-0">
                 Description
             </th>
             <th class="two wide UpReviewTableHeader sorted bl-0">
-                Segments
+                Starting Message
             </th>
             <th class="one wide UpReviewTableHeader sorted bl-0">
-                Users
+                User Count
             </th>
-            <th class="one wide UpReviewTableHeader sorted bl-0">
+            <th class="one wide UpReviewTableHeader sorted bl-0 center aligned">
                 Action
             </th>
         </tr>
@@ -48,7 +48,7 @@
             <td>{{content.name}}</td>
             <td [ngClass]="'status-' + (content.status ? content.status.toLowerCase(): '')">{{content.status}}</td>
             <td>{{content?.description}}</td>
-            <td>{{content.segmentText}}</td>
+            <td>{{content.startingMessage}}</td>
             <td class="center aligned">{{content.userCount}}</td>
             <td class="center aligned">
                 <div class="ui dropdown" suiDropdown>

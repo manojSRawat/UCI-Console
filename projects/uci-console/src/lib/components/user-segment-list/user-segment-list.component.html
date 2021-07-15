@@ -34,10 +34,10 @@
             <th class="four wide UpReviewTableHeader sorted bl-0">
                 Category
             </th>
-            <th class="two wide UpReviewTableHeader sorted bl-0">
+            <th class="two wide UpReviewTableHeader sorted bl-0 center aligned">
                 Total members
             </th>
-            <th class="two wide UpReviewTableHeader sorted bl-0">
+            <th class="two wide UpReviewTableHeader sorted bl-0 center aligned">
                 Last Updated On
             </th>
         </tr>
@@ -50,7 +50,7 @@
             <td>{{content.name}}</td>
             <td>{{content?.category}}</td>
             <td class="center aligned">{{content?.count}}</td>
-            <td>{{content?.updated_at | date}}</td>
+            <td class="center aligned">{{content?.updated_at | date}}</td>
         </tr>
         </tbody>
     </table>
