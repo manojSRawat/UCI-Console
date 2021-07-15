@@ -114,14 +114,27 @@
                         <div class="two fields">
                             <div class="field">
                                 <label>Start Date</label>
-                                <input type="date" name="startDate"
-                                       formControlName="startDate" [min]="minStartDate">
+                                <div class="ui left icon input">
+                                    <i class="calendar icon"></i>
+                                    <input suiDatepicker
+                                           formControlName="startDate"
+                                           [pickerMode]="'datetime'"
+                                           [pickerMinDate] = "startMinDate"
+                                           [pickerUseNativeOnMobile]="false">
+                                </div>
                             </div>
                             <div class="field">
                                 <label>End Date</label>
-                                <input type="date" name="endDate" formControlName="endDate" [min]="minEndDate">
+                                <div class="ui left icon input">
+                                    <i class="calendar icon"></i>
+                                    <input suiDatepicker
+                                           formControlName="endDate"
+                                           [pickerMode]="'datetime'"
+                                           [pickerMinDate] = "endMinDate"
+                                           [pickerUseNativeOnMobile]="false">
+                                </div>
                             </div>
-                        </div>
+                            </div>
 
                     </form>
                 </div>

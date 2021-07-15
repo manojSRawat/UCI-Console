@@ -29,8 +29,10 @@ export class ConversationAddComponent implements OnInit {
     verifyAllItemsModal = false;
     conversationId;
     selectedLogicIndex;
-    minStartDate = moment().format('YYYY-MM-DD');
-    minEndDate;
+    startMinDate = new Date();
+    endMinDate;
+    // minStartDate = moment().format('YYYY-MM-DD');
+    // minEndDate;
     Appropriateness = [
         {
             text: 'No Hate speech, Abuse, Violence, Profanity',
@@ -96,7 +98,9 @@ export class ConversationAddComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private fb: FormBuilder
     ) {
-        this.minEndDate = moment(this.minStartDate).add(1, 'days').format('YYYY-MM-DD');
+
+        const tempDate = moment(new Date()).add(1, 'days').format('YYYY-MM-DD');
+        this.endMinDate = new Date(tempDate);
     }
 
     ngOnInit() {
@@ -125,9 +129,13 @@ export class ConversationAddComponent implements OnInit {
 
 
         // start date and end date value change
+
         this.conversationForm.get('startDate').valueChanges.subscribe(val => {
             this.conversationForm.get('endDate').patchValue('');
-            this.minEndDate = moment(val).add(1, 'days').format('YYYY-MM-DD');
+            const tempDate = moment(val).add(1, 'days').format('YYYY-MM-DD');
+            this.endMinDate = new Date(tempDate);
+            console.log('-->>>endDAte', this.endMinDate);
+            console.log('-->>>startDAte', val);
         });
     }
 
@@ -189,8 +197,8 @@ export class ConversationAddComponent implements OnInit {
     onSubmit(isTriggerBot = false) {
         const reqObj = {
             ...this.conversationForm.value,
-            startDate: new Date(this.conversationForm.value.startDate),
-            endDate: new Date(this.conversationForm.value.endDate),
+            // startDate: new Date(this.conversationForm.value.startDate),
+            // endDate: new Date(this.conversationForm.value.endDate),
             users: [],
             logic: []
         };
@@ -342,8 +350,8 @@ export class ConversationAddComponent implements OnInit {
                     description: val.data.description,
                     purpose: val.data.purpose,
                     startingMessage: val.data.startingMessage,
-                    startDate: val.data.startDate ? moment(val.data.startDate).format('YYYY-MM-DD') : '',
-                    endDate: val.data.endDate ? moment(val.data.endDate).format('YYYY-MM-DD') : ''
+                    startDate: val.data.startDate ? new Date(moment(val.data.startDate).format('YYYY-MM-DD')) : '',
+                    endDate: val.data.endDate ? new Date(moment(val.data.endDate).format('YYYY-MM-DD')) : ''
                 });
                 if (val.data.userSegments) {
                     this.userSegments = val.data.userSegments;
