@@ -125,7 +125,7 @@ export class ConversationAddComponent implements OnInit {
 
         // start date and end date value change
         this.conversationForm.get('startDate').valueChanges.subscribe(val => {
-            this.conversationForm.get('endDate').patchValue('');
+            this.conversationForm.get('endDate').patchValue(null);
             const tempDate = moment(val).add(1, 'days').format('YYYY-MM-DD');
             this.endMinDate = new Date(tempDate);
         });
