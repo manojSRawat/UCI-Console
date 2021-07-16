@@ -122,3 +122,10 @@ button:disabled {
     position: absolute;
     left: 1rem;
 }
+.sample-download{
+    text-decoration: underline!important;
+    cursor: pointer!important;
+}
+.text-danger{
+    color: red!important;
+}

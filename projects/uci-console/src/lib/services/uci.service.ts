@@ -90,6 +90,10 @@ export class UciService extends BaseService {
     getBotUserDetails(id) {
         return this.getRequest(this.BASE_URL + `bot/get/${id}`);
     }
+
+    getCheckStartingMessage(param) {
+        return this.getRequest(this.BASE_URL + `bot/getByParam`, param);
+    }
 }
 
 export function toFormData<T>(formValue: T) {
