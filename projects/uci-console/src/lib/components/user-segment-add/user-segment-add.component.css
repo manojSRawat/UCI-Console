@@ -4,3 +4,10 @@
 .user-segment-form label{
     font-weight: normal!important;
 }
+.asterisk-color {
+    color: red;
+}
+button:disabled {
+    background: #89CFF0;
+    border-color: #89CFF0;
+}

@@ -7,7 +7,7 @@ import {BaseService} from './base.service';
     providedIn: 'root'
 })
 export class UciGraphQlService extends BaseService {
-    BASE_URL = 'http://uci-bot-db3.ngrok.samagra.io/v1/graphql';
+    BASE_URL = 'https://uci-server.ngrok.samagra.io/v1/graphql';
 
     constructor(public http: HttpClient) {
         super(http);
@@ -32,28 +32,36 @@ export class UciGraphQlService extends BaseService {
 
     getBlock(param) {
         return this.baseRequest({
-            query: `query getListOfBlocksUnderDistrict($district:String,$state:String){
-            organisation(where:{state:{_eq:$state},district:{_eq:$district}},distinct_on:block){
-            block}}`,
+            query: `query getListOfBlocksUnderDistrict($district:[String!],$state:String){
+            blocks: organisation(where:{state:{_eq:$state},district:{_in:$district}},distinct_on:block){
+            block
+            district
+            }
+            }`,
             variables: param
         });
     }
 
     getSchoolDetails(param) {
         return this.baseRequest({
-            query: `query getListOfBlocksUnderDistrict($district:String,$state:String,$block:String){
-  organisation(where:{state:{_eq:$state},district:{_eq:$district},block:{_eq:$block}}){
-    school
-    school_code}}`,
+            query: `query getListOfSchoolsUnderBlocksAndDistrict($district:[String!],$state:String,$block:[String!]){
+            schools:organisation(where:{state:{_eq:$state},district:{_in:$district},block:{_in:$block}}){
+            school
+            school_code
+            block
+            }
+            }`,
             variables: param
         });
     }
 
     getClusters(param) {
         return this.baseRequest({
-            query: `query getListOfClustersUnderBlockAndDistrict($block:String,$district:String,$state:String){
-             organisation(where:{state:{_eq:$state},district:{_eq:$district},block:{_eq:$block}},distinct_on:cluster){
-             cluster}}`,
+            query: `query getListOfClustersUnderBlockAndDistrict($block:[String!],$district:[String!],$state:String){
+            clusters:organisation(where:{state:{_eq:$state},district:{_in:$district},block:{_in:$block}},distinct_on:cluster){
+            cluster
+            }
+            }`,
             variables: param
         });
     }
@@ -61,25 +69,24 @@ export class UciGraphQlService extends BaseService {
     getRole() {
         return this.baseRequest({
             query: `query fetchListOfRoles{
-            role{
-            id
-            name}}`
+                   role{
+                   id
+                   name
+                   }
+                   }`
         });
     }
 
     getBoards() {
         return this.baseRequest({
             query: `query listOfBoards{
-            board{
-              id
-             name}}`
+                  board{
+                  id
+                  name}}`
         });
     }
 
     private baseRequest(body) {
-        const headers = {'x-hasura-admin-secret': ''};
-        return this.http.post(this.BASE_URL, body, {
-            headers
-        });
+        return this.http.post(this.BASE_URL, body, {});
     }
 }

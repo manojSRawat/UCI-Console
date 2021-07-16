@@ -590,7 +590,7 @@
   "MENUOPTIONS":[
     {
       "route": "uci",
-      "label": "Unified communication interface",
+      "label": "Conversations",
       "enable": true
     }
   ]

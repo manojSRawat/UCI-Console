@@ -20,31 +20,25 @@
         </div>
     </div>
 
-    <table class="ui single line sortable upForReviewTable table">
+    <table class="ui single line upForReviewTable table">
         <thead>
         <tr>
-            <th (click)="sortColumns('name')" class="three wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="three wide UpReviewTableHeader sorted bl-0">
                 Name
             </th>
-            <th (click)="sortColumns('name')" class="two wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="one wide UpReviewTableHeader sorted bl-0">
                 Status
             </th>
-            <th (click)="sortColumns('name')" class="four wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="four wide UpReviewTableHeader sorted bl-0">
                 Description
             </th>
-            <th (click)="sortColumns('name')" class="two wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
-                Segments
+            <th class="two wide UpReviewTableHeader sorted bl-0">
+                Starting Message
             </th>
-            <th (click)="sortColumns('name')" class="one wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
-                Users
+            <th class="one wide UpReviewTableHeader sorted bl-0">
+                User Count
             </th>
-            <th (click)="sortColumns('name')" class="one wide UpReviewTableHeader sorted bl-0" [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+            <th class="one wide UpReviewTableHeader sorted bl-0 center aligned">
                 Action
             </th>
         </tr>
@@ -54,7 +48,7 @@
             <td>{{content.name}}</td>
             <td [ngClass]="'status-' + (content.status ? content.status.toLowerCase(): '')">{{content.status}}</td>
             <td>{{content?.description}}</td>
-            <td>{{content.segmentText}}</td>
+            <td>{{content.startingMessage}}</td>
             <td class="center aligned">{{content.userCount}}</td>
             <td class="center aligned">
                 <div class="ui dropdown" suiDropdown>

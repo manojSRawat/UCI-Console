@@ -60,6 +60,12 @@
 .font-1-2 {
   font-size: 1.2rem;
 }
+.asterisk-color {
+  color: red;
+}
+.z-index-2{
+  z-index: 2!important;
+}
   @media screen and (min-width: 376px) and (max-width: 768px){
     .uci-admin-content {
         grid-template-columns: 1fr;  

@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UciService} from '../../services/uci.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import moment from 'moment/moment';
-import {UciGraphQlService} from '../../services/uci-graph-ql.service';
 
 @Component({
     selector: 'lib-conversation-add',
@@ -26,8 +25,69 @@ export class ConversationAddComponent implements OnInit {
     conversationForm: FormGroup;
     logicForm: FormGroup;
     termsAndConditionModal = false;
-    userSegmentItemId;
+    verifyAllItemsModal = false;
+    conversationId;
     selectedLogicIndex;
+    startMinDate = new Date();
+    endMinDate;
+    Appropriateness = [
+        {
+            text: 'No Hate speech, Abuse, Violence, Profanity',
+            checks: false
+        },
+        {
+            text: 'No Sexual content, Nudity or Vulgarity',
+            checks: false
+        },
+        {
+            text: 'No Discrimination or Defamation',
+            checks: false
+        },
+        {
+            text: 'Is suitable for children',
+            checks: false
+        }
+    ];
+    contentDetails = [
+        {
+            text: 'Appropriate Title, Description',
+            checks: false
+        },
+        {
+            text: 'Correct Board, Grade, Subject, Medium',
+            checks: false
+        },
+        {
+            text: 'Appropriate tags such as Resource Type, Concepts',
+            checks: false
+        },
+        {
+            text: 'Relevant keywords',
+            checks: false
+        }
+    ];
+    usability = [
+        {
+            text: 'Content plays correctly',
+            checks: false
+        },
+        {
+            text: 'Can see the content clearly on Desktop and App',
+            checks: false
+        },
+        {
+            text: 'Audio (if any) is clear and easy to understand',
+            checks: false
+        },
+        {
+            text: 'No spelling mistakes in the text',
+            checks: false
+        },
+        {
+            text: 'Language is simple to understand',
+            checks: false
+        }
+    ];
 
     constructor(
         private uciService: UciService,
@@ -35,6 +95,8 @@ export class ConversationAddComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private fb: FormBuilder
     ) {
+        const tempDate = moment().add(1, 'days').format('YYYY-MM-DD');
+        this.endMinDate = new Date(tempDate);
     }
 
     ngOnInit() {
@@ -43,8 +105,8 @@ export class ConversationAddComponent implements OnInit {
             description: [''],
             purpose: ['', Validators.required],
             startingMessage: ['', Validators.required],
-            startDate: [''],
-            endDate: [''],
+            startDate: [null],
+            endDate: [null],
             status: ['Draft']
         });
 
@@ -56,10 +118,17 @@ export class ConversationAddComponent implements OnInit {
         });
 
         // Edit case
-        this.userSegmentItemId = this.activatedRoute.snapshot.paramMap.get('id');
-        if (this.userSegmentItemId) {
+        this.conversationId = this.activatedRoute.snapshot.paramMap.get('id');
+        if (this.conversationId) {
             this.getUserSegmentDetail();
         }
+
+        // start date and end date value change
+        this.conversationForm.get('startDate').valueChanges.subscribe(val => {
+            this.conversationForm.get('endDate').patchValue('');
+            const tempDate = moment(val).add(1, 'days').format('YYYY-MM-DD');
+            this.endMinDate = new Date(tempDate);
+        });
     }
 
     userSegment() {
@@ -100,12 +169,6 @@ export class ConversationAddComponent implements OnInit {
         }
     }
 
-    sortColumns(column) {
-        this.column = column;
-        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-        this.reverse = !this.reverse;
-    }
-
     onAddCancel() {
         this.router.navigate(['uci']);
     }
@@ -125,11 +188,11 @@ export class ConversationAddComponent implements OnInit {
 
         this.isLoaderShow = true;
 
-        if (this.userSegmentItemId) {
-            this.uciService.botUpdate(this.userSegmentItemId, {data: reqObj}).subscribe(
+        if (this.conversationId) {
+            this.uciService.botUpdate(this.conversationId, {data: reqObj}).subscribe(
                 data => {
                     this.isLoaderShow = false;
-                    this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage}});
+                    this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage, botId: this.conversationId}});
                 }, error => {
                     this.isLoaderShow = false;
                 }
@@ -141,8 +204,9 @@ export class ConversationAddComponent implements OnInit {
                         this.startConversation(data.data);
                     } else {
                         this.isLoaderShow = false;
-                        this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage}});
+                        this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage, botId: data.data.id}});
                     }
+                    this.verifyAllItemsModal = false;
                 }, error => {
                     this.isLoaderShow = false;
                 }
@@ -154,7 +218,7 @@ export class ConversationAddComponent implements OnInit {
         this.uciService.startConversation(bot.id).subscribe(
             data => {
                 this.isLoaderShow = false;
-                this.router.navigate(['uci/success'], {queryParams: {text: this.conversationForm.value.startingMessage}});
+                this.router.navigate(['uci/success'], {queryParams: {text: this.conversationForm.value.startingMessage, botId: bot.id}});
             }
         );
     }
@@ -167,6 +231,10 @@ export class ConversationAddComponent implements OnInit {
 
     openTermAndConditionModel() {
         this.termsAndConditionModal = true;
+    }
+
+    openItemsVerifyModal() {
+        this.verifyAllItemsModal = true;
     }
 
     onLogicAdd() {
@@ -222,7 +290,6 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onFileUpload(event) {
-        console.log(event);
         if (!event.target.files.length) {
             return;
         }
@@ -252,15 +319,15 @@ export class ConversationAddComponent implements OnInit {
     }
 
     getUserSegmentDetail() {
-        this.uciService.getBotUserDetails(this.userSegmentItemId).subscribe((val: any) => {
+        this.uciService.getBotUserDetails(this.conversationId).subscribe((val: any) => {
             if (val.data) {
                 this.conversationForm.patchValue({
                     name: val.data.name,
                     description: val.data.description,
                     purpose: val.data.purpose,
                     startingMessage: val.data.startingMessage,
-                    startDate: val.data.startDate ? moment(val.data.startDate).format('YYYY-MM-DD') : '',
-                    endDate: val.data.endDate ? moment(val.data.endDate).format('YYYY-MM-DD') : ''
+                    startDate: val.data.startDate ? new Date(val.data.startDate) : '',
+                    endDate: val.data.endDate ? new Date(val.data.endDate) : ''
                 });
                 if (val.data.userSegments) {
                     this.userSegments = val.data.userSegments;
@@ -269,6 +336,18 @@ export class ConversationAddComponent implements OnInit {
                     this.selectedLogic = val.data.logic;
                 }
             }
+        });
+    }
+
+    allCheck(isAllCheck: boolean = false) {
+        this.Appropriateness.forEach(val => {
+            val.checks = isAllCheck;
+        });
+        this.contentDetails.forEach(val => {
+            val.checks = isAllCheck;
+        });
+        this.usability.forEach(val => {
+            val.checks = isAllCheck;
         });
     }
 }

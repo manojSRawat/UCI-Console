@@ -17,6 +17,7 @@ import {UserSegmentAddComponent} from './user-segment-add/user-segment-add.compo
 import {SuiModule} from 'ng2-semantic-ui-v9';
 import { ConversationSuccessComponent } from './conversation-success/conversation-success.component';
 import {UciGraphQlService} from '../services/uci-graph-ql.service';
+import {TermsConditionsComponent} from './terms-conditions/terms-conditions.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import {UciGraphQlService} from '../services/uci-graph-ql.service';
         ConversationAddComponent,
         UserSegmentListComponent,
         UserSegmentAddComponent,
+        TermsConditionsComponent,
         ConversationSuccessComponent
     ],
     imports: [

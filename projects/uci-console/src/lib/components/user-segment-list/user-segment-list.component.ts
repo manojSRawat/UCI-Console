@@ -13,6 +13,7 @@ export class UserSegmentListComponent implements OnInit {
     @Input() selectedUserSegments = [];
 
     userSegments = [];
+    selectedUserSegmentMap = {};
     pager: any = {
         totalItems: 0,
         currentPage: 1,
@@ -26,7 +27,6 @@ export class UserSegmentListComponent implements OnInit {
     };
     pageNumber = 1;
     column = '';
-    sortDirection = '';
     reverse = false;
     queryParams: any;
     search;
@@ -38,6 +38,10 @@ export class UserSegmentListComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.selectedUserSegments.forEach(selectedUserSegment => {
+            this.selectedUserSegmentMap[selectedUserSegment.id] = selectedUserSegment;
+        });
+
         this.getUserSegment();
     }
 
@@ -60,21 +64,15 @@ export class UserSegmentListComponent implements OnInit {
     }
 
     parseUserSegments(data) {
-        const selectedIds = [];
-        this.selectedUserSegments.forEach(selectedUserSegment => {
-            selectedIds.push(selectedUserSegment.id);
-        });
-        this.userSegments = [];
-        data.data.forEach(segment => {
-            segment.isSelected = selectedIds.indexOf(segment.id) !== -1;
-            this.userSegments.push(segment);
-        });
-    }
-
-    sortColumns(column) {
-        this.column = column;
-        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-        this.reverse = !this.reverse;
+        this.userSegments = data.data;
+        this.pager.totalItems = data.total;
+        this.pager.totalPages = Math.ceil(data.total / this.pager.pageSize);
+        this.pager.pages = [];
+        let i = 1;
+        while (i <= Math.ceil(data.total / this.pager.pageSize)) {
+            this.pager.pages.push(i);
+            i++;
+        }
     }
 
     navigateToPage(page: number): undefined | void {
@@ -82,11 +80,11 @@ export class UserSegmentListComponent implements OnInit {
             return;
         }
         this.pageNumber = page;
-        this.route.navigate(['u', this.pageNumber], {queryParams: this.queryParams});
+        this.pager.currentPage = page;
+        this.getUserSegment();
     }
 
     getSearch() {
-        // console.log('--->>>search', this.search);
         this.getUserSegment();
     }
 
@@ -94,14 +92,15 @@ export class UserSegmentListComponent implements OnInit {
         this.cancel.emit(false);
     }
 
-    onAdd() {
-        const selectedSegments = [];
-        this.userSegments.forEach(userSegment => {
-            if (userSegment.isSelected) {
-                selectedSegments.push(userSegment);
-            }
-        });
+    onCheck(event, userSegment) {
+        if (event.target.checked) {
+            this.selectedUserSegmentMap[userSegment.id] = userSegment;
+        } else {
+            delete this.selectedUserSegmentMap[userSegment.id];
+        }
+    }
 
-        this.add.emit(selectedSegments);
+    onAdd() {
+        this.add.emit(Object.values(this.selectedUserSegmentMap));
     }
 }

@@ -38,7 +38,7 @@
                         <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onAddCancel()">
                             Cancel
                         </button>
-                        <button class="sb-btn sb-btn-normal sb-btn-primary" [disabled]="this.conversationForm.invalid"
+                        <button class="sb-btn sb-btn-normal sb-btn-primary" [disabled]="conversationForm.invalid"
                                 (click)="nextStep()"> Next
                         </button>
                     </div>
@@ -47,24 +47,26 @@
                     <div class="ui grid">
                         <div class="twelve wide column">
                             <div class="right-floated pt-0">
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10"
+                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" *ngIf="!isLoaderShow"
                                         (click)="backToStepOne()"> Back
                                 </button>
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onSubmit()">
+                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onSubmit()"
+                                        *ngIf="!isLoaderShow">
                                     Save
                                 </button>
-                                <ng-container *ngIf="isLoaderShow; else submitBtn">
+                                <ng-container *ngIf="isLoaderShow; else submitBtn1">
                                     <button class="sb-btn sb-btn-normal sb-btn-primary p-0">
                                         <div class="ui active tiny inline loader"></div>
                                     </button>
                                 </ng-container>
-                                <ng-template #submitBtn>
+                                <ng-template #submitBtn1>
                                     <button class="sb-btn sb-btn-normal sb-btn-primary"
                                             [disabled]="!isCheckedTermCondition"
-                                            (click)="onSubmit(true)">
-                                        {{userSegmentItemId ? 'Update' : 'Submit'}}
+                                            (click)="this.conversationId ? onSubmit(true) : openItemsVerifyModal()">
+                                        {{conversationId ? 'Update' : 'Submit'}}
                                     </button>
                                 </ng-template>
+
                             </div>
                         </div>
                         <div class="twelve wide column pt-0">
@@ -111,12 +113,26 @@
                         </div>
                         <div class="two fields">
                             <div class="field">
-                                <label>Start Date</label>
-                                <input type="date" name="startDate" formControlName="startDate">
+                                <label>Start Date And Time</label>
+                                <div class="ui left icon input">
+                                    <i class="calendar icon"></i>
+                                    <input suiDatepicker
+                                           formControlName="startDate"
+                                           [pickerMode]="'datetime'"
+                                           [pickerMinDate]="startMinDate"
+                                           [pickerUseNativeOnMobile]="false">
+                                </div>
                             </div>
                             <div class="field">
-                                <label>End Date</label>
-                                <input type="date" name="endDate" formControlName="endDate">
+                                <label>End Date And Time</label>
+                                <div class="ui left icon input">
+                                    <i class="calendar icon"></i>
+                                    <input suiDatepicker
+                                           formControlName="endDate"
+                                           [pickerMode]="'datetime'"
+                                           [pickerMinDate]="endMinDate"
+                                           [pickerUseNativeOnMobile]="false">
+                                </div>
                             </div>
                         </div>
 
@@ -126,8 +142,8 @@
             <div class="ui divider"></div>
             <div class="ui grid">
                 <div class="six wide column">
-                    <h6>User segment</h6>
-                    <p class="pt-10">{{userSegments.length}} segment added</p>
+                    <h6>User segments</h6>
+                    <p class="pt-10">{{userSegments.length}} segments added</p>
                 </div>
                 <div class="six wide column  right aligned">
                     <div class="pt-0">
@@ -198,26 +214,16 @@
                         <table class="ui table" style="width: 100%">
                             <thead>
                             <tr>
-                                <th (click)="sortColumns('name')"
-                                    class="one wide center aligned UpReviewTableHeader sorted bl-0"
-                                    [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                                <th class="one wide center aligned UpReviewTableHeader sorted bl-0">
                                     Step
                                 </th>
-                                <th (click)="sortColumns('name')" class="three wide UpReviewTableHeader sorted bl-0"
-                                    [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                                <th class="three wide UpReviewTableHeader sorted bl-0">
                                     Name
                                 </th>
-                                <th (click)="sortColumns('name')" class="five wide UpReviewTableHeader sorted bl-0"
-                                    [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                                <th class="five wide UpReviewTableHeader sorted bl-0">
                                     Description
                                 </th>
-                                <th (click)="sortColumns('name')"
-                                    class="one wide center aligned UpReviewTableHeader sorted bl-0"
-                                    [ngClass]="{'ascending':sortDirection === 'asc' &&
-      column === 'name','descending':sortDirection === 'desc' && column === 'name'}">
+                                <th class="one wide center aligned UpReviewTableHeader sorted bl-0">
                                     Action
                                 </th>
                             </tr>
@@ -233,7 +239,8 @@
                                         <i class="ellipsis vertical icon ellipsis-icon dropdown"
                                         ></i>
                                         <div class="menu" suiDropdownMenu>
-                                            <div class="item" (click)="openModel(); getEditLogicData(logic, i)">Edit</div>
+                                            <div class="item" (click)="openModel(); getEditLogicData(logic, i)">Edit
+                                            </div>
                                             <div class="item" (click)="onDelete(logic, i)">Delete</div>
                                         </div>
                                     </div>
@@ -257,7 +264,7 @@
     <div class="sb-modal-content">
         <form [formGroup]="logicForm" class="ui form">
             <div class="field">
-                <label>Name</label>
+                <label>Name <sup><i class="asterisk icon asterisk-color"></i></sup></label>
                 <input type="text" name="name" placeholder="Enter name" formControlName="name">
             </div>
             <div class="field">
@@ -266,7 +273,7 @@
                           formControlName="description"></textarea>
             </div>
             <div class="field">
-                <label>Upload Form (.xml)</label>
+                <label>Upload ODK Form (.xml) <sup><i class="asterisk icon asterisk-color"></i></sup></label>
                 <input type="file" name="file" placeholder="Browse..."
                        (change)="onFileUpload($event)" accept=".xml">
             </div>
@@ -279,7 +286,8 @@
             </button>
         </ng-container>
         <ng-template #modalBtn>
-            <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicAdd();modal.deny('denied')" [disabled]="logicForm.invalid">
+            <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicAdd();modal.deny('denied')"
+                    [disabled]="logicForm.invalid">
                 {{logicForm.get('id').value ? ' Update' : 'Add'}}
             </button>
         </ng-template>
@@ -290,42 +298,94 @@
     </div>
 </sui-modal>
 
-<sui-modal *ngIf="termsAndConditionModal" [mustScroll]="true" [isClosable]="true" [transitionDuration]="0"
+<sui-modal *ngIf="termsAndConditionModal" [mustScroll]="true" [isClosable]="false" [transitionDuration]="0"
            [size]="'large'"
            class="sb-modal" (dismissed)="this.termsAndConditionModal = false" #modal>
     <div class="sb-modal-header">
         Terms and Conditions
     </div>
     <div class="sb-modal-content">
-        <sui-tabset>
-            <div class="ui pointing secondary menu">
-                <a class="item" suiTabHeader="1">Terms of Use</a>
-                <a class="item" suiTabHeader="2">Privacy Policy </a>
-            </div>
-            <div class="ui segment" suiTabContent="1">
-                <p>This website is designed, developed and maintained by the National Council for Educational Research
-                    and Training (NCERT) (Ministry of Education (MoE), Government of India) (together referred to as
-                    "GoI").</p>
-
-                <p>These terms of use, as amended, govern the usage of DIKSHA (Digital Infrastructure for Knowledge
-                    Sharing) by its Users (as defined below) ("Terms"). DIKSHA is an initiative of the GoI.</p>
-            </div>
-            <div class="ui segment" suiTabContent="2">
-                <p>
-                    DIKSHA (Digital Infrastructure for Knowledge Sharing ) is the National Platform for School Education
-                    for the benefit of teachers and learners across India. DIKSHA is an initiative of National Council
-                    for Educational Research and Training (NCERT) (Ministry of Education (MoE), Government of India).
-                    Users of DIKSHA can access content for learning on the web at https://diksha.gov.in, through the
-                    DIKSHA mobile application, and the desktop application.
-                </p>
-            </div>
-        </sui-tabset>
-
+        <lib-terms-conditions></lib-terms-conditions>
     </div>
     <div class="sb-modal-actions">
         <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
                 (click)="modal.deny('denied');">
             Cancel
+        </button>
+    </div>
+</sui-modal>
+<sui-modal *ngIf="verifyAllItemsModal" [mustScroll]="true" [isClosable]="false" [transitionDuration]="0"
+           [size]="'large'"
+           class="sb-modal" (dismissed)="this.verifyAllItemsModal = false" #modal>
+    <div class="sb-modal-header">
+        <h4>
+            Please confirm that ALL the following items are verified (by ticking the check-boxes) before you can submit:
+        </h4>
+    </div>
+    <div class="sb-modal-content">
+        <div class="ui grid">
+            <div class="four wide column">
+                <div class="mb-20">
+                    <h4>Appropriateness</h4>
+                    <div class="ui divider"></div>
+                </div>
+                <div class="ui grid" *ngFor="let list of Appropriateness; let i = index">
+                    <div class="two wide column pb-0">
+                        <input type="checkbox" [name]="'appropriateness' + i" [(ngModel)]="list.checks">
+                    </div>
+                    <div class="ten wide column pl-0 pb-0 line-height">
+                        {{list.text}}
+                    </div>
+                </div>
+            </div>
+            <div class="four wide column">
+                <div class="mb-20">
+                    <h4>Content Details</h4>
+                    <div class="ui divider"></div>
+                </div>
+                <div class="ui grid" *ngFor="let list of contentDetails; let i = index">
+                    <div class="two wide column pb-0">
+                        <input type="checkbox" [name]="'contentDetails' + i" [(ngModel)]="list.checks">
+                    </div>
+                    <div class="ten wide column pl-0 pb-0 line-height">
+                        {{list.text}}
+                    </div>
+                </div>
+            </div>
+            <div class="four wide column">
+                <div class="mb-20">
+                    <h4>Usability</h4>
+                    <div class="ui divider"></div>
+                </div>
+                <div class="ui grid" *ngFor="let list of usability; let i = index">
+                    <div class="two wide column pb-0">
+                        <input type="checkbox" [name]="'usability' + i" [(ngModel)]="list.checks">
+                    </div>
+                    <div class="ten wide column pl-0 pb-0 line-height">
+                        {{list.text}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sb-modal-actions">
+        <ng-container *ngIf="isLoaderShow; else submitBtn">
+            <button class="sb-btn sb-btn-normal sb-btn-primary p-0">
+                <div class="ui active tiny inline loader"></div>
+            </button>
+        </ng-container>
+        <ng-template #submitBtn>
+            <button class="sb-btn sb-btn-normal sb-btn-primary"
+                    (click)="onSubmit(true);">
+                Submit
+            </button>
+        </ng-template>
+        <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
+                (click)="allCheck(false); modal.deny('denied');">
+            Cancel
+        </button>
+        <button class="sb-btn sb-btn-normal sb-btn-primary allCheckBtn" (click)="allCheck(true)">
+            Confirm All
         </button>
     </div>
 </sui-modal>
