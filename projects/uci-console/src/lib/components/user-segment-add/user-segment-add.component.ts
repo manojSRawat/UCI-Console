@@ -81,21 +81,35 @@ export class UserSegmentAddComponent implements OnInit {
         this.isLoaderShow = true;
         const formValue = this.userSegmentForm.value;
         const locationData = [];
+        const blockData = [];
         const districtData = [];
-        for (const block of this.blocks) {
-            if (formValue.block.indexOf(block.block) !== -1) {
-                block.state = this.state;
-                locationData.push(block);
-                districtData.push(block.district);
+        for (const school of this.schools) {
+            if (formValue.school.indexOf(school.school) !== -1) {
+                locationData.push(school);
+                if (blockData.indexOf(school.block) === -1) {
+                    blockData.push(school.block);
+                    districtData.push(school.district);
+                }
             }
-            if (locationData.length === formValue.block) {
+            if (locationData.length === formValue.school) {
                 break;
+            }
+        }
+        if (blockData.length < formValue.block.length) {
+            for (const block of this.blocks) {
+                if (formValue.block.indexOf(block.block) !== -1 && blockData.indexOf(block.block) === -1) {
+                    locationData.push(block);
+                    blockData.push(block.block);
+                    districtData.push(block.district);
+                }
+                if (blockData.length === formValue.block) {
+                    break;
+                }
             }
         }
         if (districtData.length < formValue.district.length) {
             for (const district of this.districts) {
                 if (formValue.district.indexOf(district.district) !== -1 && districtData.indexOf(district.district) === -1) {
-                    district.state = this.state;
                     locationData.push(district);
                 }
             }

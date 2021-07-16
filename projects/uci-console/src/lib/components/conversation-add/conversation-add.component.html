@@ -110,7 +110,7 @@
                             <label>Starting message <sup><i class="asterisk icon asterisk-color"></i></sup></label>
                             <input type="text" name="startingMessage" placeholder="Enter message"
                                    formControlName="startingMessage" (keyup)="onKeyStarringMessage($event)">
-                            <small *ngIf="isStartingMessageExist" class="text-danger">Already exist</small>
+                            <small *ngIf="isStartingMessageExist" class="text-danger">This starting message has already been taken</small>
                         </div>
                         <div class="two fields">
                             <div class="field">
