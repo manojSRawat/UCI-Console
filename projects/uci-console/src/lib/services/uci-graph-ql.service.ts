@@ -25,6 +25,7 @@ export class UciGraphQlService extends BaseService {
         return this.baseRequest({
             query: `query getListOfDistrictInState($state:String){
             organisation(where:{state:{_eq:$state}},  distinct_on:district){
+            state
             district}}`,
             variables: param
         });
@@ -36,6 +37,7 @@ export class UciGraphQlService extends BaseService {
             blocks: organisation(where:{state:{_eq:$state},district:{_in:$district}},distinct_on:block){
             block
             district
+            state
             }
             }`,
             variables: param
@@ -49,6 +51,8 @@ export class UciGraphQlService extends BaseService {
             school
             school_code
             block
+            district
+            state
             }
             }`,
             variables: param
