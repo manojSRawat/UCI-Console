@@ -28,7 +28,7 @@ export class LibEntryComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log('user log', this.user);
+        console.log('user log is here', this.user);
     }
 
     goBack(): void {
