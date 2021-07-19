@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BaseService} from './base.service';
+import {GlobalService} from './global.service';
 
 
 @Injectable({
@@ -9,8 +10,8 @@ import {BaseService} from './base.service';
 export class UciGraphQlService extends BaseService {
     BASE_URL = 'https://uci-server.ngrok.samagra.io/v1/graphql';
 
-    constructor(public http: HttpClient) {
-        super(http);
+    constructor(public http: HttpClient, public globalService: GlobalService) {
+        super(http, globalService);
     }
 
     getState() {

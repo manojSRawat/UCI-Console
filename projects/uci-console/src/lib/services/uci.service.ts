@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BaseService} from './base.service';
 import {Observable} from 'rxjs';
+import {GlobalService} from './global.service';
 
 @Injectable({
     providedIn: 'root'
@@ -10,8 +11,8 @@ export class UciService extends BaseService {
     BASE_URL = 'https://uci-server.ngrok.samagra.io/admin/v1/';
     FORM_BASE_URL = 'https://dev.sunbirded.org/';
 
-    constructor(public http: HttpClient) {
-        super(http);
+    constructor(public http: HttpClient, public globalService: GlobalService) {
+        super(http, globalService);
     }
 
     fetchConversation(params): Observable<any> {
