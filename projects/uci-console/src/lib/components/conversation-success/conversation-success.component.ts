@@ -34,7 +34,7 @@ export class ConversationSuccessComponent implements OnInit {
     }
 
     onClose() {
-        this.router.navigate(['/uci']);
+        this.router.navigate(['/uci-admin']);
     }
 
 }

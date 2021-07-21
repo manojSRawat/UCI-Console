@@ -101,11 +101,11 @@ export class ConversationListComponent implements OnInit {
     }
 
     onAddNew() {
-        this.router.navigateByUrl('uci/add');
+        this.router.navigateByUrl('uci-admin/add');
     }
 
     onEdit(conversation) {
-        this.router.navigateByUrl(`uci/${conversation.id}/edit`);
+        this.router.navigateByUrl(`uci-admin/${conversation.id}/edit`);
     }
 
     onStatusChange(conversation, index) {

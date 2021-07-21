@@ -73,7 +73,7 @@ export class SidePanelComponent implements OnInit, OnDestroy {
         if (event) {
             this.telemetryUtils.logInteract(event, NSDiscussData.IPageName.HOME);
         }
-        this.router.navigate([`uci`], {queryParamsHandling: 'merge'});
+        this.router.navigate([`uci-admin`], {queryParamsHandling: 'merge'});
         this.closeNav();
     }
 

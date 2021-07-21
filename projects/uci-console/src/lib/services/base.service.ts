@@ -13,16 +13,17 @@ export class BaseService {
 
     public getRequest(url, params: any = {}, headers: any = {}) {
         const user = this.globalService.getUser();
-        if (user  && user.id) {
+        if (user && user.id) {
             headers.ownerID = user.id;
         }
-        if (user  && user.rootOrgId) {
+        if (user && user.rootOrgId) {
             headers.ownerID = user.rootOrgId;
         }
 
         return this.http.get(url, {params, headers}).pipe(
             map(res => {
-                return res;
+                // console.log('-->>res.result', res['result']);
+                return res['result'];
             }),
             catchError(err => {
                 return this.handleError(err);
@@ -32,15 +33,15 @@ export class BaseService {
 
     public postRequest(url, data = {}, headers: any = {}) {
         const user = this.globalService.getUser();
-        if (user  && user.id) {
+        if (user && user.id) {
             headers.ownerID = user.id;
         }
-        if (user  && user.rootOrgId) {
+        if (user && user.rootOrgId) {
             headers.ownerID = user.rootOrgId;
         }
         return this.http.post(url, data).pipe(
             map(res => {
-                return res;
+                return res['result'];
             }),
             catchError(err => {
                 return this.handleError(err);

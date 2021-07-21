@@ -174,7 +174,7 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onAddCancel() {
-        this.router.navigate(['uci']);
+        this.router.navigate(['uci-admin']);
     }
 
     onSubmit(isTriggerBot = false) {
@@ -195,10 +195,12 @@ export class ConversationAddComponent implements OnInit {
         if (this.conversationId) {
             this.uciService.botUpdate(this.conversationId, {data: reqObj}).subscribe(
                 data => {
+                    this.verifyAllItemsModal = false;
                     this.isLoaderShow = false;
-                    this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage, botId: this.conversationId}});
+                    this.router.navigate(['uci-admin/success'], {queryParams: {text: reqObj.startingMessage, botId: this.conversationId}});
                 }, error => {
                     this.isLoaderShow = false;
+                    this.verifyAllItemsModal = true;
                 }
             );
         } else {
@@ -207,12 +209,14 @@ export class ConversationAddComponent implements OnInit {
                     if (isTriggerBot) {
                         this.startConversation(data.data);
                     } else {
+                        this.verifyAllItemsModal = false;
                         this.isLoaderShow = false;
-                        this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage, botId: data.data.id}});
+                        this.router.navigate(['uci-admin/success'], {queryParams: {text: reqObj.startingMessage, botId: data.data.id}});
                     }
-                    this.verifyAllItemsModal = false;
+
                 }, error => {
                     this.isLoaderShow = false;
+                    this.verifyAllItemsModal = true;
                 }
             );
         }
@@ -222,7 +226,16 @@ export class ConversationAddComponent implements OnInit {
         this.uciService.startConversation(bot.id).subscribe(
             data => {
                 this.isLoaderShow = false;
-                this.router.navigate(['uci/success'], {queryParams: {text: this.conversationForm.value.startingMessage, botId: bot.id}});
+                this.verifyAllItemsModal = false;
+                this.router.navigate(['uci-admin/success'], {
+                    queryParams: {
+                        text: this.conversationForm.value.startingMessage,
+                        botId: bot.id
+                    }
+                });
+            }, error => {
+                this.verifyAllItemsModal = true;
+                this.isLoaderShow = false;
             }
         );
     }
