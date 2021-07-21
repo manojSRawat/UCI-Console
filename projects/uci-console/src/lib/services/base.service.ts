@@ -41,6 +41,7 @@ export class BaseService {
         }
         return this.http.post(url, data).pipe(
             map(res => {
+                // console.log('-->>res', res['result']);
                 return res['result'];
             }),
             catchError(err => {

@@ -138,7 +138,7 @@ export class UserSegmentAddComponent implements OnInit {
                 this.uciService.createUserSegment({data: items}).subscribe(
                     (data: any) => {
                         this.isLoaderShow = false;
-                        this.afterAdd(data.data);
+                        this.afterAdd(data.inserted);
                     }, err => {
                         this.isLoaderShow = false;
                     }
