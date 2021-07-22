@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BaseService} from './base.service';
+import {GlobalService} from './global.service';
 
 
 @Injectable({
@@ -9,8 +10,8 @@ import {BaseService} from './base.service';
 export class UciGraphQlService extends BaseService {
     BASE_URL = 'https://uci-server.ngrok.samagra.io/v1/graphql';
 
-    constructor(public http: HttpClient) {
-        super(http);
+    constructor(public http: HttpClient, public globalService: GlobalService) {
+        super(http, globalService);
     }
 
     getState() {
@@ -25,6 +26,7 @@ export class UciGraphQlService extends BaseService {
         return this.baseRequest({
             query: `query getListOfDistrictInState($state:String){
             organisation(where:{state:{_eq:$state}},  distinct_on:district){
+            state
             district}}`,
             variables: param
         });
@@ -36,6 +38,7 @@ export class UciGraphQlService extends BaseService {
             blocks: organisation(where:{state:{_eq:$state},district:{_in:$district}},distinct_on:block){
             block
             district
+            state
             }
             }`,
             variables: param
@@ -49,6 +52,8 @@ export class UciGraphQlService extends BaseService {
             school
             school_code
             block
+            district
+            state
             }
             }`,
             variables: param

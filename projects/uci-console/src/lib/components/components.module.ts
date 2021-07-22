@@ -12,10 +12,10 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {ConversationListComponent} from './conversation-list/conversation-list.component';
 import {ConversationAddComponent} from './conversation-add/conversation-add.component';
 import {UserSegmentListComponent} from './user-segment-list/user-segment-list.component';
-import {CommonFormElementsModule} from 'common-form-elements';
+import {CommonFormElementsModule} from 'common-form-elements-v9';
 import {UserSegmentAddComponent} from './user-segment-add/user-segment-add.component';
 import {SuiModule} from 'ng2-semantic-ui-v9';
-import { ConversationSuccessComponent } from './conversation-success/conversation-success.component';
+import {ConversationSuccessComponent} from './conversation-success/conversation-success.component';
 import {UciGraphQlService} from '../services/uci-graph-ql.service';
 import {TermsConditionsComponent} from './terms-conditions/terms-conditions.component';
 

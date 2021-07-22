@@ -88,6 +88,10 @@ export class ConversationAddComponent implements OnInit {
             checks: false
         }
     ];
+    isSubmit: boolean;
+    odkFileAlreadyExist: boolean = false;
+    isStartingMessageExist = false;
+    fileErrorStatus;
 
     constructor(
         private uciService: UciService,
@@ -125,7 +129,7 @@ export class ConversationAddComponent implements OnInit {
 
         // start date and end date value change
         this.conversationForm.get('startDate').valueChanges.subscribe(val => {
-            this.conversationForm.get('endDate').patchValue('');
+            this.conversationForm.get('endDate').patchValue(null);
             const tempDate = moment(val).add(1, 'days').format('YYYY-MM-DD');
             this.endMinDate = new Date(tempDate);
         });
@@ -170,7 +174,7 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onAddCancel() {
-        this.router.navigate(['uci']);
+        this.router.navigate(['uci-admin']);
     }
 
     onSubmit(isTriggerBot = false) {
@@ -191,10 +195,12 @@ export class ConversationAddComponent implements OnInit {
         if (this.conversationId) {
             this.uciService.botUpdate(this.conversationId, {data: reqObj}).subscribe(
                 data => {
+                    this.verifyAllItemsModal = false;
                     this.isLoaderShow = false;
-                    this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage, botId: this.conversationId}});
+                    this.router.navigate(['uci-admin/success'], {queryParams: {text: reqObj.startingMessage, botId: this.conversationId}});
                 }, error => {
                     this.isLoaderShow = false;
+                    this.verifyAllItemsModal = true;
                 }
             );
         } else {
@@ -203,12 +209,14 @@ export class ConversationAddComponent implements OnInit {
                     if (isTriggerBot) {
                         this.startConversation(data.data);
                     } else {
+                        this.verifyAllItemsModal = false;
                         this.isLoaderShow = false;
-                        this.router.navigate(['uci/success'], {queryParams: {text: reqObj.startingMessage, botId: data.data.id}});
+                        this.router.navigate(['uci-admin/success'], {queryParams: {text: reqObj.startingMessage, botId: data.data.id}});
                     }
-                    this.verifyAllItemsModal = false;
+
                 }, error => {
                     this.isLoaderShow = false;
+                    this.verifyAllItemsModal = true;
                 }
             );
         }
@@ -218,7 +226,16 @@ export class ConversationAddComponent implements OnInit {
         this.uciService.startConversation(bot.id).subscribe(
             data => {
                 this.isLoaderShow = false;
-                this.router.navigate(['uci/success'], {queryParams: {text: this.conversationForm.value.startingMessage, botId: bot.id}});
+                this.verifyAllItemsModal = false;
+                this.router.navigate(['uci-admin/success'], {
+                    queryParams: {
+                        text: this.conversationForm.value.startingMessage,
+                        botId: bot.id
+                    }
+                });
+            }, error => {
+                this.verifyAllItemsModal = true;
+                this.isLoaderShow = false;
             }
         );
     }
@@ -227,14 +244,17 @@ export class ConversationAddComponent implements OnInit {
         this.logicFormRequest = {};
         this.collectionListModal = true;
         this.logicForm.reset();
+        this.fileErrorStatus = null;
+        this.isStartingMessageExist = false;
     }
 
     openTermAndConditionModel() {
         this.termsAndConditionModal = true;
     }
 
-    openItemsVerifyModal() {
+    openItemsVerifyModal(isSubmitBtn: boolean) {
         this.verifyAllItemsModal = true;
+        this.isSubmit = isSubmitBtn;
     }
 
     onLogicAdd() {
@@ -257,7 +277,7 @@ export class ConversationAddComponent implements OnInit {
             this.uciService.updateLogic(this.logicForm.get('id').value, {data: reqData}).subscribe(
                 (data: any) => {
                     this.isModalLoaderShow = false;
-                    const existingLogic = this.logicForm.value;
+                    const existingLogic = reqData;
                     delete existingLogic.id;
                     this.selectedLogic[this.selectedLogicIndex] = Object.assign(this.selectedLogic[this.selectedLogicIndex], existingLogic);
                 }, error => {
@@ -268,7 +288,7 @@ export class ConversationAddComponent implements OnInit {
             this.uciService.createLogic({data: reqData}).subscribe(
                 (data: any) => {
                     this.isModalLoaderShow = false;
-                    const existingLogic = this.logicForm.value;
+                    const existingLogic = reqData;
                     delete existingLogic.id;
                     this.selectedLogic.push({
                         id: data.data.id,
@@ -285,7 +305,14 @@ export class ConversationAddComponent implements OnInit {
     getEditLogicData(item, index) {
         if (item.id) {
             this.selectedLogicIndex = index;
-            this.logicForm.patchValue({id: item.id, name: item.name, description: item.description});
+            this.logicForm.patchValue(
+                {
+                    id: item.id,
+                    name: item.name,
+                    description: item.description,
+                    formId: item.transformers[0].meta.formID
+                }
+            );
         }
     }
 
@@ -304,8 +331,11 @@ export class ConversationAddComponent implements OnInit {
                     this.logicForm.patchValue({formId: fileInfo.formID});
                 }
                 this.isModalLoaderShow = false;
+                this.odkFileAlreadyExist = false;
             }, error => {
                 this.isModalLoaderShow = false;
+                this.odkFileAlreadyExist = true;
+                this.fileErrorStatus = error.error.status;
             }
         );
     }
@@ -326,8 +356,8 @@ export class ConversationAddComponent implements OnInit {
                     description: val.data.description,
                     purpose: val.data.purpose,
                     startingMessage: val.data.startingMessage,
-                    startDate: val.data.startDate ? new Date(val.data.startDate) : '',
-                    endDate: val.data.endDate ? new Date(val.data.endDate) : ''
+                    startDate: val.data.startDate ? val.data.startDate : '',
+                    endDate: val.data.endDate ? val.data.endDate : ''
                 });
                 if (val.data.userSegments) {
                     this.userSegments = val.data.userSegments;
@@ -349,5 +379,14 @@ export class ConversationAddComponent implements OnInit {
         this.usability.forEach(val => {
             val.checks = isAllCheck;
         });
+    }
+
+    onKeyStarringMessage(event) {
+        this.uciService.getCheckStartingMessage({startingMessage: this.conversationForm.value.startingMessage}).subscribe(val => {
+            this.isStartingMessageExist = true;
+        }, error => {
+            this.isStartingMessageExist = false;
+        });
+
     }
 }

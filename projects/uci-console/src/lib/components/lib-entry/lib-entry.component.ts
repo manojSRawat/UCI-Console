@@ -7,6 +7,7 @@ import {ConfigService} from '../../services/config.service';
 import {UciService} from '../../services/uci.service';
 import {TelemetryUtilsService} from '../../telemetry-utils.service';
 import {NSDiscussData} from '../../models/discuss.model';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
     selector: 'lib-lib-entry',
@@ -15,7 +16,6 @@ import {NSDiscussData} from '../../models/discuss.model';
 })
 export class LibEntryComponent implements OnInit {
     @Input() user;
-    data: IdiscussionConfig;
 
     constructor(
         public activatedRoute: ActivatedRoute,
@@ -23,12 +23,14 @@ export class LibEntryComponent implements OnInit {
         private configService: ConfigService,
         private location: Location,
         private uciEventsService: UciEventsService,
-        private telemetryUtils: TelemetryUtilsService
+        private telemetryUtils: TelemetryUtilsService,
+        private globalService: GlobalService
     ) {
     }
 
     ngOnInit(): void {
-        console.log('user log', this.user);
+        console.log('user log is here', this.user);
+        this.globalService.setUser(this.user);
     }
 
     goBack(): void {
