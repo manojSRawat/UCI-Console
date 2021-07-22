@@ -15,7 +15,7 @@ const routes: Routes = [
         component: LibEntryComponent,
         children: [
             {
-                path: '',
+                path: 'home',
                 pathMatch: 'full',
                 component: ConversationListComponent
             },

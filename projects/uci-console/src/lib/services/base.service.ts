@@ -11,19 +11,28 @@ export class BaseService {
     constructor(public http: HttpClient, public globalService: GlobalService) {
     }
 
-    public getRequest(url, params: any = {}, headers: any = {}) {
+    private getDefaultHeaders() {
+        const headers: any = {};
         const user = this.globalService.getUser();
         if (user && user.id) {
             headers.ownerID = user.id;
         }
         if (user && user.rootOrgId) {
-            headers.ownerID = user.rootOrgId;
+            headers.ownerOrgID = user.rootOrgId;
         }
 
+        return headers;
+    }
+
+    public getRequest(url, params: any = {}, headers: any = {}) {
+        headers = {
+            ...headers,
+            ...this.getDefaultHeaders()
+        };
+
         return this.http.get(url, {params, headers}).pipe(
-            map(res => {
-                // console.log('-->>res.result', res['result']);
-                return res['result'];
+            map((res: any) => {
+                return res.result;
             }),
             catchError(err => {
                 return this.handleError(err);
@@ -32,17 +41,14 @@ export class BaseService {
     }
 
     public postRequest(url, data = {}, headers: any = {}) {
-        const user = this.globalService.getUser();
-        if (user && user.id) {
-            headers.ownerID = user.id;
-        }
-        if (user && user.rootOrgId) {
-            headers.ownerID = user.rootOrgId;
-        }
-        return this.http.post(url, data).pipe(
-            map(res => {
-                // console.log('-->>res', res['result']);
-                return res['result'];
+        headers = {
+            ...headers,
+            ...this.getDefaultHeaders()
+        };
+
+        return this.http.post(url, data, {headers}).pipe(
+            map((res: any) => {
+                return res.result;
             }),
             catchError(err => {
                 return this.handleError(err);

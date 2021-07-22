@@ -31,7 +31,6 @@ export class ConversationListComponent implements OnInit {
         private uciService: UciService,
         private router: Router
     ) {
-        console.log('xxxxxxxxxxxxxxx Conv list');
     }
 
     ngOnInit() {
