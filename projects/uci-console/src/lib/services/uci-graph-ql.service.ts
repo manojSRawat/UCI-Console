@@ -13,7 +13,11 @@ export class UciGraphQlService extends BaseService {
 
     constructor(public http: HttpClient, public globalService: GlobalService) {
         super(http, globalService);
-        this.BASE_URL = this.globalService.getBaseUrl() + '/v1/';
+        this.globalService.baseUrl$.subscribe(value => {
+            if (value) {
+                this.BASE_URL = value + '/v1/graphql';
+            }
+        });
     }
 
     getState() {

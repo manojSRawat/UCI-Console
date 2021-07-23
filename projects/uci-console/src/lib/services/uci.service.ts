@@ -14,8 +14,11 @@ export class UciService extends BaseService {
 
     constructor(public http: HttpClient, public globalService: GlobalService) {
         super(http, globalService);
-        console.log('----baseurl', this.globalService.getBaseUrl());
-        this.BASE_URL = this.globalService.getBaseUrl() + '/admin/v1/';
+        this.globalService.baseUrl$.subscribe(value => {
+            if (value) {
+                this.BASE_URL = value + '/admin/v1/';
+            }
+        });
     }
 
     fetchConversation(params): Observable<any> {
