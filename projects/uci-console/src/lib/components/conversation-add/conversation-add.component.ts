@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UciService} from '../../services/uci.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import moment from 'moment/moment';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
     selector: 'lib-conversation-add',
@@ -92,18 +93,25 @@ export class ConversationAddComponent implements OnInit {
     odkFileAlreadyExist: boolean = false;
     isStartingMessageExist = false;
     fileErrorStatus;
-
+    user;
     constructor(
         private uciService: UciService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private globalService: GlobalService
     ) {
         const tempDate = moment().add(1, 'days').format('YYYY-MM-DD');
         this.endMinDate = new Date(tempDate);
     }
 
     ngOnInit() {
+        this.user = this.globalService.getUser();
+        console.log('--->>users', this.user);
+        if (!this.user) {
+            this.router.navigate(['uci-admin']);
+            return;
+        }
         this.conversationForm = this.fb.group({
             name: ['', Validators.required],
             description: [''],

@@ -8,11 +8,14 @@ import {GlobalService} from './global.service';
     providedIn: 'root'
 })
 export class UciService extends BaseService {
-    BASE_URL = 'https://uci-server.ngrok.samagra.io/admin/v1/';
+    // BASE_URL = 'https://uci-server2.ngrok.samagra.io/admin/v1/';
+    BASE_URL;
     FORM_BASE_URL = 'https://dev.sunbirded.org/';
 
     constructor(public http: HttpClient, public globalService: GlobalService) {
         super(http, globalService);
+        console.log('----baseurl', this.globalService.getBaseUrl());
+        this.BASE_URL = this.globalService.getBaseUrl() + '/admin/v1/';
     }
 
     fetchConversation(params): Observable<any> {

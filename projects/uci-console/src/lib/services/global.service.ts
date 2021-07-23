@@ -7,6 +7,8 @@ import {BehaviorSubject} from 'rxjs';
 export class GlobalService {
     private user: BehaviorSubject<any> = new BehaviorSubject(undefined);
     public readonly user$ = this.user.asObservable();
+    private baseUrl: BehaviorSubject<any> = new BehaviorSubject(undefined);
+    public readonly baseUrl$ = this.baseUrl.asObservable();
 
     constructor() {
     }
@@ -17,5 +19,13 @@ export class GlobalService {
 
     getUser() {
         return this.user.value;
+    }
+
+    setBaseUrl(baseUrl) {
+        this.baseUrl.next(baseUrl);
+    }
+
+    getBaseUrl() {
+        return this.baseUrl.value;
     }
 }

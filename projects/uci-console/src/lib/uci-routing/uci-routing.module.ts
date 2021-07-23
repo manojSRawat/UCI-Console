@@ -30,16 +30,6 @@ const routes: Routes = [
                 component: ConversationAddComponent,
             },
             {
-                path: 'user-segment',
-                pathMatch: 'full',
-                component: UserSegmentListComponent,
-            },
-            {
-                path: 'add-segment',
-                pathMatch: 'full',
-                component: UserSegmentAddComponent,
-            },
-            {
                 path: 'success',
                 pathMatch: 'full',
                 component: ConversationSuccessComponent,
