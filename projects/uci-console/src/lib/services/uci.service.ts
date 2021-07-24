@@ -30,19 +30,19 @@ export class UciService extends BaseService {
     }
 
     pauseConversation(botId): Observable<any> {
-        return this.getRequest(this.BASE_URL + `bot/pause/${botId}`, {asset: 'bot'});
+        return this.getRequest(this.BASE_URL + `bot/pause/${botId}`, {}, {asset: 'bot'});
     }
 
     startConversation(botId): Observable<any> {
-        return this.getRequest(this.BASE_URL + `bot/start/${botId}`, {asset: 'bot'});
+        return this.getRequest(this.BASE_URL + `bot/start/${botId}`, {}, {asset: 'bot'});
     }
 
     deleteConversation(botId): Observable<any> {
-        return this.getRequest(this.BASE_URL + `bot/delete/${botId}`, {asset: 'bot'});
+        return this.getRequest(this.BASE_URL + `bot/delete/${botId}`, {}, {asset: 'bot'});
     }
 
     getBotUserDetails(id) {
-        return this.getRequest(this.BASE_URL + `bot/get/${id}`, {asset: 'bot'});
+        return this.getRequest(this.BASE_URL + `bot/get/${id}`, {}, {asset: 'bot'});
     }
 
     getCheckStartingMessage(param) {
