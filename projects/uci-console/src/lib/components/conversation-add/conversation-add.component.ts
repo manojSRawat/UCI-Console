@@ -397,4 +397,12 @@ export class ConversationAddComponent implements OnInit {
         });
 
     }
+
+    manualDownload() {
+        window.open('https://sunbirddev.blob.core.windows.net/uci/UCI%20_%20ODK%20Instruction%20Manual.pdf', '_blank');
+    }
+
+    sampleODKDownload() {
+        window.open('https://sunbirddev.blob.core.windows.net/uci/Sample_ODK.xlsx', '_blank');
+    }
 }
