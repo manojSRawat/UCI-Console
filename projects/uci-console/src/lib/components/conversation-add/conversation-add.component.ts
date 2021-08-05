@@ -107,7 +107,6 @@ export class ConversationAddComponent implements OnInit {
 
     ngOnInit() {
         this.user = this.globalService.getUser();
-        console.log('--->>users', this.user);
         if (!this.user) {
             this.router.navigate(['uci-admin']);
             return;

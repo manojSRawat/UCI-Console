@@ -8,7 +8,6 @@ import {GlobalService} from './global.service';
     providedIn: 'root'
 })
 export class UciGraphQlService extends BaseService {
-    // BASE_URL = 'https://uci-server2.ngrok.samagra.io/v1/graphql';
     BASE_URL;
 
     constructor(public http: HttpClient, public globalService: GlobalService) {

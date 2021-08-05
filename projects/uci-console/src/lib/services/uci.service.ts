@@ -8,7 +8,6 @@ import {GlobalService} from './global.service';
     providedIn: 'root'
 })
 export class UciService extends BaseService {
-    // BASE_URL = 'https://uci-server2.ngrok.samagra.io/admin/v1/';
     BASE_URL;
     FORM_BASE_URL = 'https://dev.sunbirded.org/';
 
