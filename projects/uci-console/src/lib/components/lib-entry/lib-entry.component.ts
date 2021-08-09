@@ -31,15 +31,12 @@ export class LibEntryComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // console.log('user log is here', this.user);
         if (this.user) {
             this.globalService.setUser(this.user);
         }
-        // console.log('baseUrl log is here', this.baseUrl);
         if (this.baseUrl) {
             this.globalService.setBaseUrl(this.baseUrl);
         }
-        // console.log('zzz', this.router.url);
         if (this.router.url === '/uci-admin') {
             this.router.navigate(['uci-admin/home']);
         }
