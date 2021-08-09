@@ -22,7 +22,7 @@ export class PostReplyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('conent came', this.content);
+    // console.log('conent came', this.content);
     this.initializeFormFields();
   }
 

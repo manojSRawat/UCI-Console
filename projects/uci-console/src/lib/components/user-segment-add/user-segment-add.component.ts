@@ -155,7 +155,6 @@ export class UserSegmentAddComponent implements OnInit {
 
     getUciState() {
         this.uciGraphQlService.getState().subscribe(res => {
-            console.log('--->>uci state', res);
         });
     }
 

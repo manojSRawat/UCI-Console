@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UciService} from '../../services/uci.service';
 import {Router} from '@angular/router';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
     selector: 'lib-conversation-list',
@@ -26,15 +27,20 @@ export class ConversationListComponent implements OnInit {
     reverse = false;
     queryParams: any;
     search;
-
+    user;
     constructor(
         private uciService: UciService,
-        private router: Router
+        private router: Router,
+        private globalService: GlobalService,
     ) {
-        console.log('xxxxxxxxxxxxxxx Conv list');
     }
 
     ngOnInit() {
+        this.user = this.globalService.getUser();
+        if (!this.user) {
+            this.router.navigate(['uci-admin']);
+            return;
+        }
         this.getAllChatBots();
     }
 

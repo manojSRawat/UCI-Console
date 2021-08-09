@@ -14,7 +14,7 @@ export class UciEventsService {
   constructor() { }
 
   emitTelemetry(event) {
-    console.log('Lib Event', event);
+    // console.log('Lib Event', event);
     if (!_.isEmpty(event)) {
       this.telemetryEvent.next(event);
     }

@@ -1,4 +1,4 @@
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Component, Input, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {UciEventsService} from '../../uci-events.service';
@@ -16,6 +16,7 @@ import {GlobalService} from '../../services/global.service';
 })
 export class LibEntryComponent implements OnInit {
     @Input() user;
+    @Input() baseUrl;
 
     constructor(
         public activatedRoute: ActivatedRoute,
@@ -24,13 +25,21 @@ export class LibEntryComponent implements OnInit {
         private location: Location,
         private uciEventsService: UciEventsService,
         private telemetryUtils: TelemetryUtilsService,
-        private globalService: GlobalService
+        private globalService: GlobalService,
+        private router: Router
     ) {
     }
 
     ngOnInit(): void {
-        console.log('user log is here', this.user);
-        this.globalService.setUser(this.user);
+        if (this.user) {
+            this.globalService.setUser(this.user);
+        }
+        if (this.baseUrl) {
+            this.globalService.setBaseUrl(this.baseUrl);
+        }
+        if (this.router.url === '/uci-admin') {
+            this.router.navigate(['uci-admin/home']);
+        }
     }
 
     goBack(): void {

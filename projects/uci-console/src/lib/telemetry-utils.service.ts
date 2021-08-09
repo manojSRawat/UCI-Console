@@ -104,7 +104,7 @@ export class TelemetryUtilsService {
 
       if (this._context.length > 1) {
         data.forEach((element, index) => {
-          console.log('rollup', element);
+          // console.log('rollup', element);
           rollUp['l' + (index + 1)] = element.toString();
         });
       }

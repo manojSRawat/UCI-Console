@@ -15,7 +15,7 @@ const routes: Routes = [
         component: LibEntryComponent,
         children: [
             {
-                path: '',
+                path: 'home',
                 pathMatch: 'full',
                 component: ConversationListComponent
             },
@@ -28,16 +28,6 @@ const routes: Routes = [
                 path: ':id/edit',
                 pathMatch: 'full',
                 component: ConversationAddComponent,
-            },
-            {
-                path: 'user-segment',
-                pathMatch: 'full',
-                component: UserSegmentListComponent,
-            },
-            {
-                path: 'add-segment',
-                pathMatch: 'full',
-                component: UserSegmentAddComponent,
             },
             {
                 path: 'success',
