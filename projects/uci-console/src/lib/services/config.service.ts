@@ -3,7 +3,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash'
-import { IdiscussionConfig } from '../models/discussion-config.model';
+import { IdiscussionConfig } from '../models/uci-config.model';
 
 @Injectable({
   providedIn: 'root'

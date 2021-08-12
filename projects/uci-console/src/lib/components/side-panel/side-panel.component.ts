@@ -1,4 +1,4 @@
-import {NSDiscussData} from '../../models/discuss.model';
+import {UciData} from '../../models/uci.model';
 import {TelemetryUtilsService} from '../../telemetry-utils.service';
 import {UciService} from '../../services/uci.service';
 import {Component, OnDestroy, OnInit} from '@angular/core';
@@ -8,7 +8,7 @@ import * as CONSTANTS from '../../common/constants.json';
 /* tslint:disable */
 import * as _ from 'lodash';
 import {ConfigService} from '../../services/config.service';
-import {IdiscussionConfig, IMenuOptions} from '../../models/discussion-config.model';
+import {IdiscussionConfig, IMenuOptions} from '../../models/uci-config.model';
 
 /* tslint:enable */
 
@@ -44,7 +44,7 @@ export class SidePanelComponent implements OnInit, OnDestroy {
         // TODO: loader or spinner
         this.telemetryUtils.setContext([]);
         this.hideSidePanel = document.body.classList.contains('widget');
-        this.telemetryUtils.logImpression(NSDiscussData.IPageName.HOME);
+        this.telemetryUtils.logImpression(UciData.IPageName.HOME);
         this.data = this.configService.getConfig();
         const menuArr = _.get(this.data, 'menuOptions') && _.get(this.data, 'menuOptions').length > 0 ? this.data.menuOptions : CONSTANTS.MENUOPTIONS;
         for (let i = 0; i < menuArr.length; i++) {
@@ -71,7 +71,7 @@ export class SidePanelComponent implements OnInit, OnDestroy {
         this.selectedTab = pageName;
         this.telemetryUtils.setContext([]);
         if (event) {
-            this.telemetryUtils.logInteract(event, NSDiscussData.IPageName.HOME);
+            this.telemetryUtils.logInteract(event, UciData.IPageName.HOME);
         }
         this.router.navigate([`uci-admin`], {queryParamsHandling: 'merge'});
         this.closeNav();
