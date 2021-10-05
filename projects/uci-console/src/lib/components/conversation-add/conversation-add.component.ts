@@ -4,6 +4,7 @@ import {UciService} from '../../services/uci.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import moment from 'moment/moment';
 import {GlobalService} from '../../services/global.service';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
     selector: 'lib-conversation-add',
@@ -140,6 +141,14 @@ export class ConversationAddComponent implements OnInit {
             const tempDate = moment(val).add(1, 'days').format('YYYY-MM-DD');
             this.endMinDate = new Date(tempDate);
         });
+
+        this.conversationForm.get('startingMessage').valueChanges
+            .pipe(debounceTime(1000))
+            .subscribe(
+                value => {
+                    this.onStarringMessageChange();
+                }
+            );
     }
 
     userSegment() {
@@ -388,7 +397,7 @@ export class ConversationAddComponent implements OnInit {
         });
     }
 
-    onKeyStarringMessage(event) {
+    onStarringMessageChange() {
         this.uciService.getCheckStartingMessage({startingMessage: this.conversationForm.value.startingMessage}).subscribe(val => {
             this.isStartingMessageExist = true;
         }, error => {

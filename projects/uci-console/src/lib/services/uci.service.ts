@@ -91,7 +91,7 @@ export class UciService extends BaseService {
         let headers = new HttpHeaders();
         headers = headers.set('Content-Type', 'multipart/form-data');
 
-        return this.http.post(this.BASE_URL + 'forms/upload', this.toFormData(obj), {headers});
+        return this.http.post(this.BASE_URL + 'forms/upload', this.toFormData(obj));
     }
 
     readForm(data) {
