@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UciService} from '../../services/uci.service';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import moment from 'moment/moment';
+
 import {GlobalService} from '../../services/global.service';
+import {UciService} from '../../services/uci.service';
+import moment from 'moment/moment';
 
 @Component({
     selector: 'lib-conversation-add',
@@ -324,6 +325,7 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onFileUpload(event) {
+        console.error("[UCI Console] - On file upload", {event});
         if (!event.target.files.length) {
             return;
         }
@@ -334,8 +336,9 @@ export class ConversationAddComponent implements OnInit {
         this.logicForm.patchValue({formId: ''});
         this.isModalLoaderShow = true;
         this.uciService.uploadFile(obj).subscribe((fileInfo: any) => {
-                if (fileInfo.formID) {
-                    this.logicForm.patchValue({formId: fileInfo.formID});
+                console.error("[UCI Console]", {fileInfo});
+                if (fileInfo.result?.data) {
+                    this.logicForm.patchValue({formId: fileInfo.result?.data});
                 }
                 this.isModalLoaderShow = false;
                 this.odkFileAlreadyExist = false;

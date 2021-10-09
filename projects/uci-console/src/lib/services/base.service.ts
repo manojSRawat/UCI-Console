@@ -1,8 +1,9 @@
-import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
+
 import {GlobalService} from './global.service';
+import {Injectable} from '@angular/core';
+import {throwError} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -67,6 +68,7 @@ export class BaseService {
 
     public toFormData<T>(formValue: T) {
         const formData = new FormData();
+        console.error("[UCI Console]", JSON.stringify(formValue))
 
         for (const key of Object.keys(formValue)) {
             const value = formValue[key];

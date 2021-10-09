@@ -1,8 +1,9 @@
-import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+
 import {BaseService} from './base.service';
-import {Observable} from 'rxjs';
 import {GlobalService} from './global.service';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -90,7 +91,7 @@ export class UciService extends BaseService {
     uploadFile(obj): Observable<any> {
         let headers = new HttpHeaders();
         headers = headers.set('Content-Type', 'multipart/form-data');
-
+        console.error("[UCI Console]", {obj})
         return this.http.post(this.BASE_URL + 'forms/upload', this.toFormData(obj), {headers});
     }
 
