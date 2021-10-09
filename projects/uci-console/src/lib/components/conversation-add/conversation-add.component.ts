@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GlobalService} from '../../services/global.service';
 import {UciService} from '../../services/uci.service';
 import moment from 'moment/moment';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
     selector: 'lib-conversation-add',
@@ -141,6 +142,14 @@ export class ConversationAddComponent implements OnInit {
             const tempDate = moment(val).add(1, 'days').format('YYYY-MM-DD');
             this.endMinDate = new Date(tempDate);
         });
+
+        this.conversationForm.get('startingMessage').valueChanges
+            .pipe(debounceTime(1000))
+            .subscribe(
+                value => {
+                    this.onStarringMessageChange();
+                }
+            );
     }
 
     userSegment() {
@@ -325,7 +334,6 @@ export class ConversationAddComponent implements OnInit {
     }
 
     onFileUpload(event) {
-        console.error("[UCI Console] - On file upload", {event});
         if (!event.target.files.length) {
             return;
         }
@@ -336,7 +344,6 @@ export class ConversationAddComponent implements OnInit {
         this.logicForm.patchValue({formId: ''});
         this.isModalLoaderShow = true;
         this.uciService.uploadFile(obj).subscribe((fileInfo: any) => {
-                console.error("[UCI Console]", {fileInfo});
                 if (fileInfo.result?.data) {
                     this.logicForm.patchValue({formId: fileInfo.result?.data});
                 }
@@ -391,7 +398,7 @@ export class ConversationAddComponent implements OnInit {
         });
     }
 
-    onKeyStarringMessage(event) {
+    onStarringMessageChange() {
         this.uciService.getCheckStartingMessage({startingMessage: this.conversationForm.value.startingMessage}).subscribe(val => {
             this.isStartingMessageExist = true;
         }, error => {

@@ -2,11 +2,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Component, Input, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {UciEventsService} from '../../uci-events.service';
-import {IdiscussionConfig} from '../../models/discussion-config.model';
+import {IdiscussionConfig} from '../../models/uci-config.model';
 import {ConfigService} from '../../services/config.service';
 import {UciService} from '../../services/uci.service';
 import {TelemetryUtilsService} from '../../telemetry-utils.service';
-import {NSDiscussData} from '../../models/discuss.model';
+import {UciData} from '../../models/uci.model';
 import {GlobalService} from '../../services/global.service';
 
 @Component({
@@ -51,6 +51,6 @@ export class LibEntryComponent implements OnInit {
             action: 'DF_CLOSE'
         };
         this.uciEventsService.emitTelemetry(eventAction);
-        this.telemetryUtils.logInteract(event, NSDiscussData.IPageName.LIB_ENTRY);
+        this.telemetryUtils.logInteract(event, UciData.IPageName.LIB_ENTRY);
     }
 }

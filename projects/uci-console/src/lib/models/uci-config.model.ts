@@ -5,18 +5,13 @@ export interface IdiscussionConfig {
     categories: Icategory
     path?: string
     routerSlug?: string
-  }
-  
-  export interface Icontext {
-   id: number
-  }
-  
-  export interface IMenuOptions {
+}
+
+export interface IMenuOptions {
     route: string
     enable: boolean
-  }
+}
 
-  export interface Icategory {
-    result : Array<string>
-  }
-  
+export interface Icategory {
+    result: Array<string>
+}

@@ -1,5 +1,4 @@
 import {TelemetryUtilsService} from './telemetry-utils.service';
-import {ElementsModule} from './elements/elements.module';
 import {LibEntryComponent} from './components/lib-entry/lib-entry.component';
 import {ComponentsModule} from './components/components.module';
 import {UciRoutingModule} from './uci-routing/uci-routing.module';
@@ -18,8 +17,7 @@ export function provideCsModule() {
     ],
     imports: [
         ComponentsModule,
-        UciRoutingModule,
-        ElementsModule
+        UciRoutingModule
     ],
     exports: [
         LibEntryComponent

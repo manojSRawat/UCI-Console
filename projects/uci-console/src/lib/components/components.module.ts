@@ -2,7 +2,6 @@ import {PipesModule} from '../pipes/pipes.module';
 import {UciService} from '../services/uci.service';
 import {ConfigService} from '../services/config.service';
 import {HttpClientModule} from '@angular/common/http';
-import {ElementsModule} from '../elements/elements.module';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SidePanelComponent} from './side-panel/side-panel.component';
@@ -32,7 +31,6 @@ import {TermsConditionsComponent} from './terms-conditions/terms-conditions.comp
     imports: [
         CommonModule,
         HttpClientModule,
-        ElementsModule,
         FormsModule,
         ReactiveFormsModule,
         TagInputModule,
