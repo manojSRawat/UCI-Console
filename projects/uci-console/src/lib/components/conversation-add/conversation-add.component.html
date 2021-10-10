@@ -329,7 +329,7 @@
 </sui-modal>
 <sui-modal *ngIf="verifyAllItemsModal" [mustScroll]="true" [isClosable]="false" [transitionDuration]="0"
            [size]="'large'"
-           class="sb-modal" (dismissed)="this.verifyAllItemsModal = false" #modal>
+           class="sb-modal" (dismissed)="this.verifyAllItemsModal = false" #verifyAllModal>
     <div class="sb-modal-header">
         <h4>
             Please confirm that ALL the following items are verified (by ticking the check-boxes) before you can submit:
@@ -398,7 +398,7 @@
             </button>
         </ng-template>
         <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
-                (click)="allCheck(false); modal.deny('denied');">
+                (click)="allCheck(false); verifyAllModal.deny('denied');">
             Cancel
         </button>
         <button class="sb-btn sb-btn-normal sb-btn-primary allCheckBtn" (click)="allCheck(true)">

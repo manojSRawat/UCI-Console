@@ -1,5 +1,5 @@
 import {ActivatedRoute, Router} from '@angular/router';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {GlobalService} from '../../services/global.service';
@@ -13,6 +13,7 @@ import {debounceTime} from 'rxjs/operators';
     styleUrls: ['./conversation-add.component.css']
 })
 export class ConversationAddComponent implements OnInit {
+    @ViewChild('verifyAllModal') verifyAllModal;
     currentViewState = 'ADD_CONVERSATION';
     stepIndex = 1;
     selectedLogic = [];
@@ -96,6 +97,7 @@ export class ConversationAddComponent implements OnInit {
     isStartingMessageExist = false;
     fileErrorStatus;
     user;
+
     constructor(
         private uciService: UciService,
         private router: Router,
@@ -212,7 +214,7 @@ export class ConversationAddComponent implements OnInit {
         if (this.conversationId) {
             this.uciService.botUpdate(this.conversationId, {data: reqObj}).subscribe(
                 data => {
-                    this.verifyAllItemsModal = false;
+                    this.closeVerifyModal();
                     this.isLoaderShow = false;
                     this.router.navigate(['uci-admin/success'], {queryParams: {text: reqObj.startingMessage, botId: this.conversationId}});
                 }, error => {
@@ -226,7 +228,7 @@ export class ConversationAddComponent implements OnInit {
                     if (isTriggerBot) {
                         this.startConversation(data.data);
                     } else {
-                        this.verifyAllItemsModal = false;
+                        this.closeVerifyModal();
                         this.isLoaderShow = false;
                         this.router.navigate(['uci-admin/success'], {queryParams: {text: reqObj.startingMessage, botId: data.data.id}});
                     }
@@ -243,7 +245,7 @@ export class ConversationAddComponent implements OnInit {
         this.uciService.startConversation(bot.id).subscribe(
             data => {
                 this.isLoaderShow = false;
-                this.verifyAllItemsModal = false;
+                this.closeVerifyModal();
                 this.router.navigate(['uci-admin/success'], {
                     queryParams: {
                         text: this.conversationForm.value.startingMessage,
@@ -255,6 +257,13 @@ export class ConversationAddComponent implements OnInit {
                 this.isLoaderShow = false;
             }
         );
+    }
+
+    closeVerifyModal() {
+        if (this.verifyAllModal) {
+            this.verifyAllModal.deny('denied');
+        }
+        this.verifyAllItemsModal = false;
     }
 
     openModel() {
