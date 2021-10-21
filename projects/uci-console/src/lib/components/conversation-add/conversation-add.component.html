@@ -1,6 +1,6 @@
 <ng-container [ngSwitch]="currentViewState">
 
-    <lib-user-segment-add *ngSwitchCase="'ADD_SEGMENT'"
+    <!--<lib-user-segment-add *ngSwitchCase="'ADD_SEGMENT'"
                           (cancel)="onUserSegmentCancel()"
                           (add)="onUserSegmentCreate($event)">
     </lib-user-segment-add>
@@ -9,7 +9,7 @@
                            (cancel)="onUserSegmentCancel()"
                            (add)="onUserSegmentAdd($event)"
                            [selectedUserSegments]="userSegments">
-    </lib-user-segment-list>
+    </lib-user-segment-list>-->
 
     <div *ngSwitchCase="'ADD_CONVERSATION'" class="uci-add-container">
         <div class="ui grid">
@@ -50,8 +50,9 @@
                                 <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" *ngIf="!isLoaderShow"
                                         (click)="backToStepOne()"> Back
                                 </button>
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="openItemsVerifyModal(false)"
-                                        *ngIf="!isLoaderShow">
+                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" *ngIf="!isLoaderShow"
+                                        (click)="openItemsVerifyModal(false)"
+                                        [disabled]="!isCheckedTermCondition">
                                     Save
                                 </button>
                                 <ng-container *ngIf="isLoaderShow; else submitBtn1">
@@ -140,7 +141,7 @@
                     </form>
                 </div>
             </div>
-            <div class="ui divider"></div>
+            <!--<div class="ui divider"></div>
             <div class="ui grid">
                 <div class="six wide column">
                     <h6>User segments</h6>
@@ -157,7 +158,7 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="ui grid">
                 <ng-container *ngIf="userSegments && userSegments.length">
                     <div class="ui three column grid">

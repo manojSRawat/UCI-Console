@@ -7,14 +7,15 @@ import {ActivatedRoute, Router} from '@angular/router';
     styleUrls: ['./conversation-success.component.css']
 })
 export class ConversationSuccessComponent implements OnInit {
-    text = '';
+    url = '';
     botId = '';
 
     constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        this.text = this.activatedRoute.snapshot.queryParams.text || '';
+        // tslint:disable-next-line:max-line-length
+        this.url = encodeURI('https://api.whatsapp.com/send?text=' + (this.activatedRoute.snapshot.queryParams.text || '') + '&phone=+912249757677');
         this.botId = this.activatedRoute.snapshot.queryParams.botId || '';
     }
 

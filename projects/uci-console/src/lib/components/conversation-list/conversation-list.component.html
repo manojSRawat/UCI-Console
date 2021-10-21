@@ -35,9 +35,9 @@
             <th class="two wide UpReviewTableHeader sorted bl-0">
                 Starting Message
             </th>
-            <th class="one wide UpReviewTableHeader sorted bl-0">
+            <!--<th class="one wide UpReviewTableHeader sorted bl-0">
                 User Count
-            </th>
+            </th>-->
             <th class="one wide UpReviewTableHeader sorted bl-0 center aligned">
                 Action
             </th>
@@ -49,7 +49,7 @@
             <td [ngClass]="'status-' + (content.status ? content.status.toLowerCase(): '')">{{content.status}}</td>
             <td>{{content?.description}}</td>
             <td>{{content.startingMessage}}</td>
-            <td class="center aligned">{{content.userCount}}</td>
+<!--            <td class="center aligned">{{content.userCount}}</td>-->
             <td class="center aligned">
                 <div class="ui dropdown" suiDropdown>
                     <i class="ellipsis vertical icon ellipsis-icon dropdown"></i>
