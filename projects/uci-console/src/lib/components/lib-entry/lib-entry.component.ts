@@ -17,6 +17,7 @@ import {GlobalService} from '../../services/global.service';
 export class LibEntryComponent implements OnInit {
     @Input() user;
     @Input() baseUrl;
+    @Input() blobUrl;
 
     constructor(
         public activatedRoute: ActivatedRoute,
@@ -36,6 +37,9 @@ export class LibEntryComponent implements OnInit {
         }
         if (this.baseUrl) {
             this.globalService.setBaseUrl(this.baseUrl);
+        }
+        if (this.blobUrl) {
+            this.globalService.setBlobUrl(this.blobUrl);
         }
         if (this.router.url === '/uci-admin') {
             this.router.navigate(['uci-admin/home']);

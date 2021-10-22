@@ -62,7 +62,7 @@ export class BaseService {
         if (error instanceof ErrorEvent) {
             return throwError(error.error.message);
         }
-        // console.log('=====', error);
+        console.log('=====', error, error.error);
         // this.toasterService.error(this.resourceService.messages.fmsg.m0091);
         return throwError(error.error);
     }

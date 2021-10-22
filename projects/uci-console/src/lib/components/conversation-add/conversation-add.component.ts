@@ -6,6 +6,7 @@ import {GlobalService} from '../../services/global.service';
 import {UciService} from '../../services/uci.service';
 import moment from 'moment/moment';
 import {debounceTime} from 'rxjs/operators';
+import {ToasterService} from '../../services/toaster.service';
 
 @Component({
     selector: 'lib-conversation-add',
@@ -95,6 +96,7 @@ export class ConversationAddComponent implements OnInit {
     isSubmit: boolean;
     odkFileAlreadyExist: boolean = false;
     isStartingMessageExist = false;
+    isStartingMessageAvailable = false;
     fileErrorStatus;
     user;
 
@@ -103,7 +105,8 @@ export class ConversationAddComponent implements OnInit {
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private fb: FormBuilder,
-        private globalService: GlobalService
+        private globalService: GlobalService,
+        private toasterService: ToasterService
     ) {
         const tempDate = moment().add(1, 'days').format('YYYY-MM-DD');
         this.endMinDate = new Date(tempDate);
@@ -135,7 +138,7 @@ export class ConversationAddComponent implements OnInit {
         // Edit case
         this.conversationId = this.activatedRoute.snapshot.paramMap.get('id');
         if (this.conversationId) {
-            this.getUserSegmentDetail();
+            this.getBotDetails();
         }
 
         // start date and end date value change
@@ -220,6 +223,9 @@ export class ConversationAddComponent implements OnInit {
                 }, error => {
                     this.isLoaderShow = false;
                     this.verifyAllItemsModal = true;
+                    if (error.result && error.result.error) {
+                        this.toasterService.error(error.result.error);
+                    }
                 }
             );
         } else {
@@ -236,6 +242,9 @@ export class ConversationAddComponent implements OnInit {
                 }, error => {
                     this.isLoaderShow = false;
                     this.verifyAllItemsModal = true;
+                    if (error.result && error.result.error) {
+                        this.toasterService.error(error.result.error);
+                    }
                 }
             );
         }
@@ -255,6 +264,9 @@ export class ConversationAddComponent implements OnInit {
             }, error => {
                 this.verifyAllItemsModal = true;
                 this.isLoaderShow = false;
+                if (error.result && error.result.error) {
+                    this.toasterService.error(error.result.error);
+                }
             }
         );
     }
@@ -353,15 +365,18 @@ export class ConversationAddComponent implements OnInit {
         this.logicForm.patchValue({formId: ''});
         this.isModalLoaderShow = true;
         this.uciService.uploadFile(obj).subscribe((fileInfo: any) => {
-                if (fileInfo.result?.data) {
-                    this.logicForm.patchValue({formId: fileInfo.result?.data});
+                if (fileInfo.data) {
+                    this.logicForm.patchValue({formId: fileInfo.data});
                 }
                 this.isModalLoaderShow = false;
                 this.odkFileAlreadyExist = false;
             }, error => {
                 this.isModalLoaderShow = false;
                 this.odkFileAlreadyExist = true;
-                this.fileErrorStatus = error.error.status;
+                this.fileErrorStatus = error.status;
+                if (error.result && error.result.error) {
+                    this.toasterService.error(error.result.error);
+                }
             }
         );
     }
@@ -374,16 +389,16 @@ export class ConversationAddComponent implements OnInit {
         );
     }
 
-    getUserSegmentDetail() {
-        this.uciService.getBotUserDetails(this.conversationId).subscribe((val: any) => {
+    getBotDetails() {
+        this.uciService.getBotDetails(this.conversationId).subscribe((val: any) => {
             if (val.data) {
                 this.conversationForm.patchValue({
                     name: val.data.name,
                     description: val.data.description,
                     purpose: val.data.purpose,
                     startingMessage: val.data.startingMessage,
-                    startDate: val.data.startDate ? val.data.startDate : '',
-                    endDate: val.data.endDate ? val.data.endDate : ''
+                    startDate: val.data.startDate ? val.data.startDate : null,
+                    endDate: val.data.endDate ? val.data.endDate : null
                 });
                 if (val.data.userSegments) {
                     this.userSegments = val.data.userSegments;
@@ -417,10 +432,10 @@ export class ConversationAddComponent implements OnInit {
     }
 
     manualDownload() {
-        window.open(this.globalService.getBaseUrl() + '/UCI%20_%20ODK%20Instruction%20Manual.pdf', '_blank');
+        window.open(this.globalService.getBlobUrl() + '/uci/UCI%20_%20ODK%20Instruction%20Manual.pdf', '_blank');
     }
 
     sampleODKDownload() {
-        window.open(this.globalService.getBaseUrl() + '/Sample_ODK.xlsx', '_blank');
+        window.open(this.globalService.getBlobUrl() + '/uci/Sample_ODK.xlsx', '_blank');
     }
 }

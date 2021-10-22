@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Helper} from '../../utils/helper';
 
 @Component({
     selector: 'lib-conversation-success',
@@ -14,24 +15,12 @@ export class ConversationSuccessComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // tslint:disable-next-line:max-line-length
-        this.url = encodeURI('https://api.whatsapp.com/send?text=' + (this.activatedRoute.snapshot.queryParams.text || '') + '&phone=+912249757677');
+        this.url = Helper.makBotUrl(this.activatedRoute.snapshot.queryParams.text || '');
         this.botId = this.activatedRoute.snapshot.queryParams.botId || '';
     }
 
     onCopy(id) {
-        const val = document.getElementById(id).innerText;
-        const selBox = document.createElement('textarea');
-        selBox.style.position = 'fixed';
-        selBox.style.left = '0';
-        selBox.style.top = '0';
-        selBox.style.opacity = '0';
-        selBox.value = val;
-        document.body.appendChild(selBox);
-        selBox.focus();
-        selBox.select();
-        document.execCommand('copy');
-        document.body.removeChild(selBox);
+        Helper.copyData(id);
     }
 
     onClose() {
