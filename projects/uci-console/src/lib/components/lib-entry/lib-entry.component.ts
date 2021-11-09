@@ -42,7 +42,7 @@ export class LibEntryComponent implements OnInit {
             this.globalService.setBlobUrl(this.blobUrl);
         }
         if (this.router.url === '/uci-admin') {
-            this.router.navigate(['uci-admin/home']);
+            this.router.navigate(['uci-admin/home'], { skipLocationChange: true });
         }
     }
 

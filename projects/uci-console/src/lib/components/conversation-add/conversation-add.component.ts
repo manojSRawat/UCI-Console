@@ -17,7 +17,7 @@ export class ConversationAddComponent implements OnInit {
     @ViewChild('verifyAllModal') verifyAllModal;
     currentViewState = 'ADD_CONVERSATION';
     stepIndex = 1;
-    selectedLogic = [];
+    botLogics = [];
     userSegments = [];
     column = '';
     sortDirection = '';
@@ -208,7 +208,7 @@ export class ConversationAddComponent implements OnInit {
         this.userSegments.forEach(userSegment => {
             reqObj.users.push(userSegment.id);
         });
-        this.selectedLogic.forEach(logic => {
+        this.botLogics.forEach(logic => {
             reqObj.logic.push(logic.id);
         });
 
@@ -317,7 +317,7 @@ export class ConversationAddComponent implements OnInit {
                     this.isModalLoaderShow = false;
                     const existingLogic = reqData;
                     delete existingLogic.id;
-                    this.selectedLogic[this.selectedLogicIndex] = Object.assign(this.selectedLogic[this.selectedLogicIndex], existingLogic);
+                    this.botLogics[this.selectedLogicIndex] = Object.assign(this.botLogics[this.selectedLogicIndex], existingLogic);
                 }, error => {
                     this.isModalLoaderShow = false;
                 }
@@ -328,7 +328,7 @@ export class ConversationAddComponent implements OnInit {
                     this.isModalLoaderShow = false;
                     const existingLogic = reqData;
                     delete existingLogic.id;
-                    this.selectedLogic.push({
+                    this.botLogics.push({
                         id: data.data.id,
                         ...existingLogic,
                     });
@@ -384,7 +384,7 @@ export class ConversationAddComponent implements OnInit {
     onDelete(logic, index) {
         this.uciService.deleteLogic(logic.id).subscribe(
             file => {
-                this.selectedLogic.splice(index, 1);
+                this.botLogics.splice(index, 1);
             }
         );
     }
@@ -404,7 +404,7 @@ export class ConversationAddComponent implements OnInit {
                     this.userSegments = val.data.userSegments;
                 }
                 if (val.data.logic) {
-                    this.selectedLogic = val.data.logic;
+                    this.botLogics = val.data.logic;
                 }
             }
         });

@@ -52,7 +52,7 @@
                                 </button>
                                 <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" *ngIf="!isLoaderShow"
                                         (click)="openItemsVerifyModal(false)"
-                                        [disabled]="!isCheckedTermCondition">
+                                        [disabled]="!isCheckedTermCondition && !botLogics.length">
                                     Save
                                 </button>
                                 <ng-container *ngIf="isLoaderShow; else submitBtn1">
@@ -62,7 +62,7 @@
                                 </ng-container>
                                 <ng-template #submitBtn1>
                                     <button class="sb-btn sb-btn-normal sb-btn-primary"
-                                            [disabled]="!isCheckedTermCondition"
+                                            [disabled]="!isCheckedTermCondition && !botLogics.length"
                                             (click)="this.conversationId ? onSubmit(true) : openItemsVerifyModal(true)">
                                         {{conversationId ? 'Update' : 'Submit'}}
                                     </button>
@@ -113,7 +113,8 @@
                                    formControlName="startingMessage">
                             <small *ngIf="isStartingMessageExist" class="text-danger">This starting message is not available</small>
                         </div>
-                        <div class="two fields">
+                        <!--Will enable this in future-->
+                        <!--<div class="two fields">
                             <div class="field">
                                 <label>Start Date And Time</label>
                                 <div class="ui left icon input">
@@ -136,11 +137,12 @@
                                            [pickerUseNativeOnMobile]="false">
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
                     </form>
                 </div>
             </div>
+            <!--Will enable this in future-->
             <!--<div class="ui divider"></div>
             <div class="ui grid">
                 <div class="six wide column">
@@ -185,14 +187,14 @@
                 </div>
                 <div class="two wide column right aligned">
                     <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
-                            *ngIf="selectedLogic && selectedLogic.length"
+                            *ngIf="botLogics && botLogics.length"
                             (click)="openModel()">
                         Add Logic
                     </button>
                 </div>
             </div>
             <div class="ui grid">
-                <ng-container *ngIf="selectedLogic && selectedLogic.length <= 0; else showTable">
+                <ng-container *ngIf="botLogics && botLogics.length <= 0; else showTable">
                     <div class="twelve wide column center aligned">
                         <div class="pt-0">
                             <div class="w-25-per text-center" style="margin: auto; padding: 2rem;">
@@ -232,7 +234,7 @@
                             </thead>
                             <tbody>
                             <tr class="UpForReviewListHover"
-                                *ngFor="let logic of selectedLogic; let i = index;">
+                                *ngFor="let logic of botLogics; let i = index;">
                                 <td class="center aligned">{{i + 1}}</td>
                                 <td>{{logic?.name}}</td>
                                 <td>{{logic?.description}}</td>
