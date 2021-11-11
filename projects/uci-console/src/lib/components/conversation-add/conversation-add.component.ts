@@ -424,7 +424,9 @@ export class ConversationAddComponent implements OnInit {
 
     onStarringMessageChange() {
         this.uciService.getCheckStartingMessage({startingMessage: this.conversationForm.value.startingMessage}).subscribe(val => {
-            this.isStartingMessageExist = true;
+          if (val && val.data && val.data.id) {
+            this.isStartingMessageExist = (this.conversationId !== val.data.id)
+          }
         }, error => {
             this.isStartingMessageExist = false;
         });
