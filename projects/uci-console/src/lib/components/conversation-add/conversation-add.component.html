@@ -52,7 +52,7 @@
                                 </button>
                                 <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" *ngIf="!isLoaderShow"
                                         (click)="openItemsVerifyModal(false)"
-                                        [disabled]="!isCheckedTermCondition && !botLogics.length">
+                                        [disabled]="!isCheckedTermCondition || !botLogics.length">
                                     Save
                                 </button>
                                 <ng-container *ngIf="isLoaderShow; else submitBtn1">
@@ -62,7 +62,7 @@
                                 </ng-container>
                                 <ng-template #submitBtn1>
                                     <button class="sb-btn sb-btn-normal sb-btn-primary"
-                                            [disabled]="!isCheckedTermCondition && !botLogics.length"
+                                            [disabled]="!isCheckedTermCondition || !botLogics.length"
                                             (click)="this.conversationId ? onSubmit(true) : openItemsVerifyModal(true)">
                                         {{conversationId ? 'Update' : 'Submit'}}
                                     </button>
