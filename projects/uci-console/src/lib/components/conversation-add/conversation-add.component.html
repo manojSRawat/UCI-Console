@@ -347,7 +347,7 @@
                 </div>
                 <div class="ui grid" *ngFor="let list of Appropriateness; let i = index">
                     <div class="two wide column pb-0">
-                        <input type="checkbox" [name]="'appropriateness' + i" [(ngModel)]="list.checks">
+                        <input type="checkbox" [name]="'appropriateness' + i" [(ngModel)]="list.checks" (ngModelChange)="updateAllChecked()">
                     </div>
                     <div class="ten wide column pl-0 pb-0 line-height">
                         {{list.text}}
@@ -361,7 +361,7 @@
                 </div>
                 <div class="ui grid" *ngFor="let list of contentDetails; let i = index">
                     <div class="two wide column pb-0">
-                        <input type="checkbox" [name]="'contentDetails' + i" [(ngModel)]="list.checks">
+                        <input type="checkbox" [name]="'contentDetails' + i" [(ngModel)]="list.checks" (ngModelChange)="updateAllChecked()">
                     </div>
                     <div class="ten wide column pl-0 pb-0 line-height">
                         {{list.text}}
@@ -375,7 +375,7 @@
                 </div>
                 <div class="ui grid" *ngFor="let list of usability; let i = index">
                     <div class="two wide column pb-0">
-                        <input type="checkbox" [name]="'usability' + i" [(ngModel)]="list.checks">
+                        <input type="checkbox" [name]="'usability' + i" [(ngModel)]="list.checks" (ngModelChange)="updateAllChecked()">
                     </div>
                     <div class="ten wide column pl-0 pb-0 line-height">
                         {{list.text}}
@@ -392,10 +392,12 @@
         </ng-container>
         <ng-template #submitBtn>
             <button *ngIf="isSubmit" class="sb-btn sb-btn-normal sb-btn-primary"
+                    [disabled]="!this.allChecked"
                     (click)="onSubmit(true);">
                 Submit
             </button>
             <button *ngIf="!isSubmit" class="sb-btn sb-btn-normal sb-btn-primary"
+                    [disabled]="!this.allChecked"
                     (click)="onSubmit(false);">
                 Save
             </button>

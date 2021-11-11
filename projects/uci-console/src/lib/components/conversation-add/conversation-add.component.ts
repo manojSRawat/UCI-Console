@@ -93,6 +93,7 @@ export class ConversationAddComponent implements OnInit {
             checks: false
         }
     ];
+    allChecked: boolean;
     isSubmit: boolean;
     odkFileAlreadyExist: boolean = false;
     isStartingMessageExist = false;
@@ -199,6 +200,23 @@ export class ConversationAddComponent implements OnInit {
         this.router.navigate(['uci-admin']);
     }
 
+    updateAllChecked() {
+      let allChecked = true;
+      this.Appropriateness.forEach(val => {
+          if (!val.checks)
+            allChecked = false;
+      });
+      allChecked && this.contentDetails.forEach(val => {
+        if (!val.checks)
+          allChecked = false;
+      });
+      allChecked && this.usability.forEach(val => {
+        if (!val.checks)
+          allChecked = false;
+      });
+      this.allChecked = allChecked;
+    }
+
     onSubmit(isTriggerBot = false) {
         const reqObj = {
             ...this.conversationForm.value,
@@ -223,6 +241,7 @@ export class ConversationAddComponent implements OnInit {
                 }, error => {
                     this.isLoaderShow = false;
                     this.verifyAllItemsModal = true;
+                    this.allChecked = false;
                     if (error.result && error.result.error) {
                         this.toasterService.error(error.result.error);
                     }
@@ -242,6 +261,7 @@ export class ConversationAddComponent implements OnInit {
                 }, error => {
                     this.isLoaderShow = false;
                     this.verifyAllItemsModal = true;
+                    this.allChecked = false;
                     if (error.result && error.result.error) {
                         this.toasterService.error(error.result.error);
                     }
@@ -263,6 +283,7 @@ export class ConversationAddComponent implements OnInit {
                 });
             }, error => {
                 this.verifyAllItemsModal = true;
+                this.allChecked = false;
                 this.isLoaderShow = false;
                 if (error.result && error.result.error) {
                     this.toasterService.error(error.result.error);
@@ -292,6 +313,7 @@ export class ConversationAddComponent implements OnInit {
 
     openItemsVerifyModal(isSubmitBtn: boolean) {
         this.verifyAllItemsModal = true;
+        this.allChecked = false;
         this.isSubmit = isSubmitBtn;
     }
 
@@ -420,6 +442,7 @@ export class ConversationAddComponent implements OnInit {
         this.usability.forEach(val => {
             val.checks = isAllCheck;
         });
+        this.allChecked = true;
     }
 
     onStarringMessageChange() {
