@@ -201,20 +201,30 @@ export class ConversationAddComponent implements OnInit {
     }
 
     updateAllChecked() {
-      let allChecked = true;
-      this.Appropriateness.forEach(val => {
-          if (!val.checks)
-            allChecked = false;
-      });
-      allChecked && this.contentDetails.forEach(val => {
-        if (!val.checks)
-          allChecked = false;
-      });
-      allChecked && this.usability.forEach(val => {
-        if (!val.checks)
-          allChecked = false;
-      });
-      this.allChecked = allChecked;
+        let allChecked = true;
+        for (const val of this.Appropriateness) {
+            if (!val.checks) {
+                allChecked = false;
+                break;
+            }
+        }
+        if (allChecked) {
+            for (const val of this.contentDetails) {
+                if (!val.checks) {
+                    allChecked = false;
+                    break;
+                }
+            }
+        }
+        if (allChecked) {
+            for (const val of this.usability) {
+                if (!val.checks) {
+                    allChecked = false;
+                    break;
+                }
+            }
+        }
+        this.allChecked = allChecked;
     }
 
     onSubmit(isTriggerBot = false) {
@@ -447,9 +457,9 @@ export class ConversationAddComponent implements OnInit {
 
     onStarringMessageChange() {
         this.uciService.getCheckStartingMessage({startingMessage: this.conversationForm.value.startingMessage}).subscribe(val => {
-          if (val && val.data && val.data.id) {
-            this.isStartingMessageExist = (this.conversationId !== val.data.id)
-          }
+            if (val && val.data && val.data.id) {
+                this.isStartingMessageExist = (this.conversationId !== val.data.id);
+            }
         }, error => {
             this.isStartingMessageExist = false;
         });
