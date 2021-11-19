@@ -1,0 +1,38 @@
+<div class="uci-container">
+    <div class="twelve wide column center aligned mt-80">
+        <div class="pt-0 d-flex flex-row justify-content-center">
+            <div class="w-25-per text-center" style="margin: auto;">
+                <div class="text-center mb-20">
+                    <img alt="Search Icon" src="assets/uci-console/images/success.svg">
+                </div>
+
+                <div class="text-center p-5">
+                    Congratulations! You have successfully created a new conversation
+                </div>
+
+                <div class="text-center p-5">
+                    Use the following URL to use DIKSHA bot:
+                    <strong><span id="copyUrl">{{url}}</span></strong>
+                </div>
+
+                <div class="text-center p-5" *ngIf="botId">
+                    or share the following ID with DIKSHA team:
+                    <strong><span id="copyId">{{botId}}</span></strong>
+                </div>
+
+                <div class="mt-20">
+                    <button class="sb-btn sb-btn-normal sb-btn-primary mr-10" (click)="onCopy('copyUrl')">
+                        Copy URL
+                    </button>
+                    <button class="sb-btn sb-btn-normal sb-btn-primary mr-10" (click)="onCopy('copyId')">
+                        Copy ID
+                    </button>
+                    <button class="sb-btn sb-btn-normal sb-btn-outline-primary" (click)="onClose()">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
