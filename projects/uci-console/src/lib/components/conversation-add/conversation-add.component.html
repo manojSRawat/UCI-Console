@@ -16,17 +16,23 @@
             <div class="six wide column pr-0">
                 <div class="d-flex font-0-75" style="align-items: baseline;">
                     <div style="width: 30px">
-                        <button class="circular ui icon button" style="width: 100%; font-size: 0.75rem"
-                                (click)="backToStepOne()"
-                                [ngClass]="{'blue-bg-white-text': stepIndex === 1, 'green-bg-white-text': stepIndex === 2}">
-                            1
+                        <button mat-mini-fab
+                          class="circular-button"
+                          style="font-size: 0.75rem"
+                          (click)="backToStepOne()"
+                          [ngClass]="{'blue-bg-white-text': stepIndex === 1, 'green-bg-white-text': stepIndex === 2}">
+                          1
                         </button>
                     </div>
                     <div class="px-5 pt-10">Conversation setup</div>
                     <div class="line mt-20 ml-20 mr-20"></div>
                     <div style="width: 30px">
-                        <button class="circular ui icon button" style="width: 100%; font-size: 0.75rem"
-                                [ngClass]="{'blue-bg-white-text': stepIndex === 2}">2
+                        <button mat-mini-fab
+                          class="circular-button"
+                          style="font-size: 0.75rem"
+                          [disabled]="!(stepIndex === 2)"
+                          [ngClass]="{'blue-bg-white-text': stepIndex === 2}">
+                          2
                         </button>
                     </div>
                     <div class="px-5 pt-10 font-weight-bold">Conversation flow</div>
@@ -35,10 +41,10 @@
             <div class="six wide column">
                 <ng-container *ngIf="stepIndex === 1; else stp2_btn">
                     <div class="right-floated pt-0">
-                        <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" (click)="onAddCancel()">
+                        <button mat-mini-fab class="action-button" (click)="onAddCancel()">
                             Cancel
                         </button>
-                        <button class="sb-btn sb-btn-normal sb-btn-primary" [disabled]="conversationForm.invalid || isStartingMessageExist"
+                        <button mat-mini-fab class="action-button" [disabled]="conversationForm.invalid || isStartingMessageExist"
                                 (click)="nextStep()"> Next
                         </button>
                     </div>
@@ -47,21 +53,21 @@
                     <div class="ui grid">
                         <div class="twelve wide column">
                             <div class="right-floated pt-0">
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" *ngIf="!isLoaderShow"
+                                <button mat-raised-button class="action-button mr-10" *ngIf="!isLoaderShow"
                                         (click)="backToStepOne()"> Back
                                 </button>
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10" *ngIf="!isLoaderShow"
+                                <button mat-raised-button class="action-button mr-10" *ngIf="!isLoaderShow"
                                         (click)="openItemsVerifyModal(false)"
                                         [disabled]="!isCheckedTermCondition || !botLogics.length">
                                     Save
                                 </button>
                                 <ng-container *ngIf="isLoaderShow; else submitBtn1">
-                                    <button class="sb-btn sb-btn-normal sb-btn-primary p-0">
+                                    <button class="action-button p-0">
                                         <div class="ui active tiny inline loader"></div>
                                     </button>
                                 </ng-container>
                                 <ng-template #submitBtn1>
-                                    <button class="sb-btn sb-btn-normal sb-btn-primary"
+                                    <button mat-raised-button class="action-button"
                                             [disabled]="!isCheckedTermCondition || !botLogics.length"
                                             (click)="this.conversationId ? onSubmit(true) : openItemsVerifyModal(true)">
                                         {{conversationId ? 'Update' : 'Submit'}}
@@ -72,13 +78,13 @@
                         </div>
                         <div class="twelve wide column pt-0">
                             <div class="right-floated pt-0">
-                                <div class="ui checkbox">
-                                    <input type="checkbox" name="example"
+
+                                     <mat-checkbox name="example"
                                            [(ngModel)]="isCheckedTermCondition">
-                                    <label class="font-weight-normal t-and-c-title"
+                                    <mat-label class="font-weight-normal t-and-c-title"
                                            (click)="openTermAndConditionModel()"> I agree to the required terms and
-                                        conditions </label>
-                                </div>
+                                        conditions </mat-label>
+                                    </mat-checkbox>
                             </div>
                         </div>
                     </div>
@@ -94,28 +100,28 @@
                 <div class="ten wide column pt-0">
                     <form [formGroup]="conversationForm" class="ui form">
                         <div class="field">
-                            <label>Conversation name <sup><i class="asterisk icon asterisk-color"></i></sup></label>
-                            <input type="text" name="name" placeholder="Enter name" formControlName="name">
+                          <mat-label>Conversation name <sup><i class="asterisk icon asterisk-color"></i></sup></mat-label>
+                          <input matInput type="text" name="name" placeholder="Enter name" formControlName="name">
                         </div>
                         <div class="field">
-                            <label>Conversation description</label>
+                            <mat-label>Conversation description</mat-label>
                             <textarea rows="5" name="description" placeholder="Enter description"
                                       formControlName="description"></textarea>
                         </div>
                         <div class="field">
-                            <label>Purpose of the conversation <sup><i
-                                    class="asterisk icon asterisk-color"></i></sup></label>
-                            <input type="text" name="name" placeholder="Enter purpose" formControlName="purpose">
+                            <mat-label>Purpose of the conversation <sup><i
+                                    class="asterisk icon asterisk-color"></i></sup></mat-label>
+                            <input matInput type="text" name="name" placeholder="Enter purpose" formControlName="purpose">
                         </div>
                         <div class="field">
-                            <label>Starting message <sup><i class="asterisk icon asterisk-color"></i></sup></label>
-                            <input type="text" name="startingMessage" placeholder="Enter message"
+                            <mat-label>Starting message <sup><i class="asterisk icon asterisk-color"></i></sup></mat-label>
+                            <input matInput type="text" name="startingMessage" placeholder="Enter message"
                                    formControlName="startingMessage">
                             <small *ngIf="isStartingMessageExist" class="text-danger">This starting message is not available</small>
                         </div>
                         <div class="two fields">
                             <div class="field">
-                                <label>Start Date<sup><i class="asterisk icon asterisk-color"></i></sup></label>
+                                <mat-label>Start Date</mat-label>
                                 <div class="ui left icon input">
                                     <i class="calendar icon"></i>
                                     <input suiDatepicker
@@ -126,7 +132,7 @@
                                 </div>
                             </div>
                             <div class="field">
-                                <label>End Date</label>
+                                <mat-label>End Date</mat-label>
                                 <div class="ui left icon input">
                                     <i class="calendar icon"></i>
                                     <input suiDatepicker
@@ -150,11 +156,11 @@
                 </div>
                 <div class="six wide column  right aligned">
                     <div class="pt-0">
-                        <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10"
+                        <button mat-mini-fab class="action-button mr-10"
                                 (click)="onUserSegmentAddClick()">
                             Create new
                         </button>
-                        <button class="sb-btn sb-btn-normal sb-btn-outline-primary" (click)="userSegment()">
+                        <button mat-mini-fab class="action-button" (click)="userSegment()">
                             Choose from existing
                         </button>
                     </div>
@@ -185,7 +191,7 @@
                     Conversation flow
                 </div>
                 <div class="two wide column right aligned">
-                    <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
+                    <button mat-raised-button class="action-button"
                             *ngIf="botLogics && botLogics.length"
                             (click)="openModel()">
                         Add Logic
@@ -205,7 +211,7 @@
                                         No logic Added
                                     </div>
                                 </div>
-                                <button class="sb-btn sb-btn-normal sb-btn-outline-primary mt-10" (click)="openModel()">
+                                <button mat-raised-button class="action-button mt-10" (click)="openModel()">
                                     Add logic
                                 </button>
                             </div>
@@ -258,8 +264,7 @@
     </div>
 </ng-container>
 
-<sui-modal *ngIf="collectionListModal" [mustScroll]="true" [isClosable]="false" [transitionDuration]="0"
-           [size]="'large'"
+<mat-dialog-content *ngIf="collectionListModal"
            class="sb-modal" (dismissed)="this.collectionListModal = false;" #modal>
     <div class="sb-modal-header">
         {{logicForm.get('id').value ? ' Update' : 'Add'}} Conversation Logic
@@ -267,16 +272,16 @@
     <div class="sb-modal-content">
         <form [formGroup]="logicForm" class="ui form">
             <div class="field">
-                <label>Name <sup><i class="asterisk icon asterisk-color"></i></sup></label>
-                <input type="text" name="name" placeholder="Enter name" formControlName="name">
+                <mat-label>Name <sup><i class="asterisk icon asterisk-color"></i></sup></mat-label>
+                <input matInput type="text" name="name" placeholder="Enter name" formControlName="name">
             </div>
             <div class="field">
-                <label>Description</label>
+                <mat-label>Description</mat-label>
                 <textarea rows="3" name="description" placeholder="Enter description"
                           formControlName="description"></textarea>
             </div>
             <div class="field">
-                <label>
+                <mat-label>
                     <div class="two fields m-0">
                         <div class="field p-0">
                             Upload ODK Form (.xml)<sup><i class="asterisk icon asterisk-color"></i></sup>
@@ -287,7 +292,7 @@
                         </div>
                     </div>
 
-                </label>
+                </mat-label>
                 <input type="file" name="file" placeholder="Browse XML File..."
                        (change)="onFileUpload($event)" accept=".xml">
                 <small *ngIf="odkFileAlreadyExist" class="text-danger">{{fileErrorStatus}}</small>
@@ -296,22 +301,22 @@
     </div>
     <div class="sb-modal-actions">
         <ng-container *ngIf="isModalLoaderShow; else modalBtn">
-            <button class="sb-btn sb-btn-normal sb-btn-primary p-0">
+            <button mat-raised-button class="action-button p-0">
                 <div class="ui active tiny inline loader"></div>
             </button>
         </ng-container>
         <ng-template #modalBtn>
-            <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onLogicAdd();modal.deny('denied')"
+            <button mat-raised-button class="action-button" (click)="onLogicAdd();modal.deny('denied')"
                     [disabled]="logicForm.invalid">
                 {{logicForm.get('id').value ? ' Update' : 'Add'}}
             </button>
         </ng-template>
-        <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
+        <button mat-raised-button class="action-button"
                 (click)="modal.deny('denied');isModalLoaderShow = false;logicForm.patchValue({formId: ''});">
             Cancel
         </button>
     </div>
-</sui-modal>
+</mat-dialog-content>
 
 <sui-modal *ngIf="termsAndConditionModal" [mustScroll]="true" [isClosable]="false" [transitionDuration]="0"
            [size]="'large'"
@@ -323,7 +328,7 @@
         <lib-terms-conditions></lib-terms-conditions>
     </div>
     <div class="sb-modal-actions">
-        <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
+        <button mat-raised-button class="action-button"
                 (click)="modal.deny('denied');">
             Cancel
         </button>
@@ -346,7 +351,7 @@
                 </div>
                 <div class="ui grid" *ngFor="let list of Appropriateness; let i = index">
                     <div class="two wide column pb-0">
-                        <input type="checkbox" [name]="'appropriateness' + i" [(ngModel)]="list.checks" (ngModelChange)="updateAllChecked()">
+                        <input matInput type="checkbox" [name]="'appropriateness' + i" [(ngModel)]="list.checks" (ngModelChange)="updateAllChecked()">
                     </div>
                     <div class="ten wide column pl-0 pb-0 line-height">
                         {{list.text}}
@@ -360,7 +365,7 @@
                 </div>
                 <div class="ui grid" *ngFor="let list of contentDetails; let i = index">
                     <div class="two wide column pb-0">
-                        <input type="checkbox" [name]="'contentDetails' + i" [(ngModel)]="list.checks" (ngModelChange)="updateAllChecked()">
+                        <input matInput type="checkbox" [name]="'contentDetails' + i" [(ngModel)]="list.checks" (ngModelChange)="updateAllChecked()">
                     </div>
                     <div class="ten wide column pl-0 pb-0 line-height">
                         {{list.text}}
@@ -374,7 +379,7 @@
                 </div>
                 <div class="ui grid" *ngFor="let list of usability; let i = index">
                     <div class="two wide column pb-0">
-                        <input type="checkbox" [name]="'usability' + i" [(ngModel)]="list.checks" (ngModelChange)="updateAllChecked()">
+                        <input matInput type="checkbox" [name]="'usability' + i" [(ngModel)]="list.checks" (ngModelChange)="updateAllChecked()">
                     </div>
                     <div class="ten wide column pl-0 pb-0 line-height">
                         {{list.text}}
@@ -385,27 +390,27 @@
     </div>
     <div class="sb-modal-actions">
         <ng-container *ngIf="isLoaderShow; else submitBtn">
-            <button class="sb-btn sb-btn-normal sb-btn-primary p-0">
+            <button mat-raised-button class="action-button p-0">
                 <div class="ui active tiny inline loader"></div>
             </button>
         </ng-container>
         <ng-template #submitBtn>
-            <button *ngIf="isSubmit" class="sb-btn sb-btn-normal sb-btn-primary"
+            <button mat-raised-button *ngIf="isSubmit" class="action-button"
                     [disabled]="!this.allChecked"
                     (click)="onSubmit(true);">
                 Submit
             </button>
-            <button *ngIf="!isSubmit" class="sb-btn sb-btn-normal sb-btn-primary"
+            <button mat-raised-button *ngIf="!isSubmit" class="action-button"
                     [disabled]="!this.allChecked"
                     (click)="onSubmit(false);">
                 Save
             </button>
         </ng-template>
-        <button class="sb-btn sb-btn-normal sb-btn-outline-primary"
+        <button mat-raised-button class="action-button"
                 (click)="allCheck(false); verifyAllModal.deny('denied');">
             Cancel
         </button>
-        <button class="sb-btn sb-btn-normal sb-btn-primary allCheckBtn" (click)="allCheck(true)">
+        <button mat-raised-button class="action-button allCheckBtn" (click)="allCheck(true)">
             Confirm All
         </button>
     </div>
