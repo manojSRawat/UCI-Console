@@ -11,7 +11,7 @@ import {ToasterService} from '../../services/toaster.service';
 @Component({
     selector: 'lib-conversation-add',
     templateUrl: './conversation-add.component.html',
-    styleUrls: ['./conversation-add.component.css']
+    styleUrls: ['./conversation-add.component.css'],
 })
 export class ConversationAddComponent implements OnInit {
     @ViewChild('verifyAllModal') verifyAllModal;

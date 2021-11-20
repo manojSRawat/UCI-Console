@@ -20,62 +20,52 @@
         </div>
     </div>
 
-    <table class="ui single line upForReviewTable table">
-        <thead>
-        <tr>
-            <th class="three wide UpReviewTableHeader sorted bl-0">
-                Name
-            </th>
-            <th class="one wide UpReviewTableHeader sorted bl-0">
-                Status
-            </th>
-            <th class="four wide UpReviewTableHeader sorted bl-0">
-                Description
-            </th>
-            <th class="two wide UpReviewTableHeader sorted bl-0">
-                Starting Message
-            </th>
-            <!--<th class="one wide UpReviewTableHeader sorted bl-0">
-                User Count
-            </th>-->
-            <th class="one wide UpReviewTableHeader sorted bl-0">
-                Bot URL
-            </th>
-            <th class="one wide UpReviewTableHeader sorted bl-0">
-                Bot Id
-            </th>
-            <th class="one wide UpReviewTableHeader sorted bl-0 center aligned">
-                Action
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="UpForReviewListHover" *ngFor="let content of chatBots; let i = index;">
-            <td>{{content.name}}</td>
-            <td [ngClass]="'status-' + (content.status ? content.status.toLowerCase(): '')">{{content.status}}</td>
-            <td>{{content?.description}}</td>
-            <td>{{content.startingMessage}}</td>
-            <td>
-                <span class="hide" [id]="'copyUrl-' + i">{{content.url}}</span>
-                <button class="circular ui icon button" (click)="onCopy('copyUrl-' + i)">Copy</button>
-            </td>
-            <td>
-                <span class="hide" [id]="'copyId-' + i">{{content.id}}</span>
-                <button class="circular ui icon button" (click)="onCopy('copyId-' + i)">Copy</button>
-            </td>
-<!--            <td class="center aligned">{{content.userCount}}</td>-->
-            <td class="center aligned">
-                <div class="ui dropdown" suiDropdown>
-                    <i class="ellipsis vertical icon ellipsis-icon dropdown"></i>
-                    <div class="menu" suiDropdownMenu>
-                        <div class="item" (click)="onEdit(content)">Edit</div>
-                        <div class="item" (click)="onDelete(content, i)">Delete</div>
-                        <div class="item" (click)="onStatusChange(content, i)">{{content.status === 'Live' ? 'Disable' : 'Enable'}}</div>
-                    </div>
+    <table mat-table [dataSource]="chatBots">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>  Status </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="'status-' + (element.status ? element.status.toLowerCase(): '')"> {{element.status}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>  Description </th>
+          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Starting Message </th>
+          <td mat-cell *matCellDef="let element"> {{element.startingMessage}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Bot URL </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="hide" [id]="'copyUrl-' + chatBots.indexOf(element)">{{element.url}}</span>
+            <button class="circular ui icon button" (click)="onCopy('copyUrl-' + chatBots.indexOf(element))">Copy</button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Bot Id </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="hide" [id]="'copyId-' + chatBots.indexOf(element)">{{element.id}}</span>
+            <button class="circular ui icon button" (click)="onCopy('copyId-' + chatBots.indexOf(element))">Copy</button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element" class="center aligned">
+            <div class="ui dropdown" suiDropdown>
+                <i class="ellipsis vertical icon ellipsis-icon dropdown"></i>
+                <div class="menu" suiDropdownMenu>
+                    <div class="item" (click)="onEdit(element)">Edit</div>
+                    <div class="item" (click)="onDelete(element, chatBots.indexOf(element))">Delete</div>
+                    <div class="item" (click)="onStatusChange(element, chatBots.indexOf(element))">{{element.status === 'Live' ? 'Disable' : 'Enable'}}</div>
                 </div>
-            </td>
-        </tr>
-        </tbody>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <div class="ui grid">
         <div class="two wide column"></div>

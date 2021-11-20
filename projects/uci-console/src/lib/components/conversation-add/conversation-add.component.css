@@ -137,3 +137,18 @@ button:disabled {
 .text-success {
     color: green !important;
 }
+
+/* material-ui */
+
+.circular-button {
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-button {
+  min-width: 95px;
+  border-radius: 50px;
+}
