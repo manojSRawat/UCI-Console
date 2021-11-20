@@ -7,6 +7,7 @@ import {NgModule} from '@angular/core';
 
 import {UciEventsService} from './uci-events.service';
 import {ToasterService} from './services/toaster.service';
+import {AddLogicComponent} from './components/add-logic/add-logic.component';
 
 export function provideCsModule() {
     return window['CsModule'];
@@ -19,6 +20,7 @@ export function provideCsModule() {
     imports: [
         ComponentsModule,
         UciRoutingModule,
+        AddLogicComponent,
     ],
     exports: [
         LibEntryComponent

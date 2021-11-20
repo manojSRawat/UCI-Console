@@ -1,0 +1,12 @@
+.line {
+  flex: 1;
+  border-bottom: 2px solid black;
+}
+.oval {
+  border-radius: 50px;
+  margin: 8px;
+}
+.form-container {
+  flex:1;
+  padding: 42px;
+}
