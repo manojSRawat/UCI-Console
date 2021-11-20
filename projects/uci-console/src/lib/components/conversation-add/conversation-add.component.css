@@ -151,4 +151,5 @@ button:disabled {
 .action-button {
   min-width: 95px;
   border-radius: 50px;
+  color: #fff;
 }
