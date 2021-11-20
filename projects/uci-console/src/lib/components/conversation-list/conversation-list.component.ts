@@ -11,6 +11,7 @@ import {Helper} from '../../utils/helper';
 })
 export class ConversationListComponent implements OnInit {
     chatBots = [];
+    displayedColumns: string[] = ['Name', 'Status', 'Description', 'Starting Message', 'Bot URL', 'Bot Id', 'Action'];
     pager: any = {
         totalItems: 0,
         currentPage: 1,

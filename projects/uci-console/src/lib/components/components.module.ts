@@ -17,6 +17,13 @@ import {SuiModule} from 'ng2-semantic-ui-v9';
 import {ConversationSuccessComponent} from './conversation-success/conversation-success.component';
 import {UciGraphQlService} from '../services/uci-graph-ql.service';
 import {TermsConditionsComponent} from './terms-conditions/terms-conditions.component';
+//material-ui
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
     declarations: [
@@ -38,6 +45,12 @@ import {TermsConditionsComponent} from './terms-conditions/terms-conditions.comp
         InfiniteScrollModule,
         CommonFormElementsModule,
         SuiModule,
+        MatButtonModule,
+        MatInputModule,
+        MatGridListModule,
+        MatCheckboxModule,
+        MatDialogModule,
+        MatTableModule,
     ],
     exports: [
         SidePanelComponent,
