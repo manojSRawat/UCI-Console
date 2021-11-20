@@ -17,6 +17,7 @@ import {SuiModule} from 'ng2-semantic-ui-v9';
 import {ConversationSuccessComponent} from './conversation-success/conversation-success.component';
 import {UciGraphQlService} from '../services/uci-graph-ql.service';
 import {TermsConditionsComponent} from './terms-conditions/terms-conditions.component';
+import {AddLogicComponent} from './add-logic/add-logic.component';
 //material-ui
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -33,7 +34,7 @@ import {MatTableModule} from '@angular/material/table';
         UserSegmentListComponent,
         UserSegmentAddComponent,
         TermsConditionsComponent,
-        ConversationSuccessComponent
+        ConversationSuccessComponent,
     ],
     imports: [
         CommonModule,
@@ -59,7 +60,10 @@ import {MatTableModule} from '@angular/material/table';
         UciService,
         ConfigService,
         UciGraphQlService
-    ]
+    ],
+    entryComponents: [
+        AddLogicComponent,
+    ],
 })
 export class ComponentsModule {
 }

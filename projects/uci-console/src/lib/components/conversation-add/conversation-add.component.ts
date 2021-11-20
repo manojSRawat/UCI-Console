@@ -7,6 +7,8 @@ import {UciService} from '../../services/uci.service';
 import moment from 'moment/moment';
 import {debounceTime} from 'rxjs/operators';
 import {ToasterService} from '../../services/toaster.service';
+import { MatDialog } from '@angular/material/dialog';
+import {AddLogicComponent} from '../add-logic/add-logic.component';
 
 @Component({
     selector: 'lib-conversation-add',
@@ -107,7 +109,8 @@ export class ConversationAddComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private fb: FormBuilder,
         private globalService: GlobalService,
-        private toasterService: ToasterService
+        private toasterService: ToasterService,
+        public dialog: MatDialog,
     ) {
         this.endMinDate = new Date(moment().add(1, 'days').format('YYYY-MM-DD'));
     }
@@ -322,6 +325,14 @@ export class ConversationAddComponent implements OnInit {
         this.logicForm.reset();
         this.fileErrorStatus = null;
         this.isStartingMessageExist = false;
+        let dialogRef = this.dialog.open(AddLogicComponent, {
+          width: '250px',
+          data: { name: 'Scooby', animal: 'Dog' }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log("mat-dialog-result",result)
+        });
     }
 
     openTermAndConditionModel() {
