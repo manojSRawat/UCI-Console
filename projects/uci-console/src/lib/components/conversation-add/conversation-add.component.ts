@@ -467,10 +467,10 @@ export class ConversationAddComponent implements OnInit {
     }
 
     manualDownload() {
-        window.open(this.globalService.getBlobUrl() + '/uci/UCI%20_%20ODK%20Instruction%20Manual.pdf', '_blank');
+        window.open(this.globalService.getBlobUrl() + 'uci/UCI%20_%20ODK%20Instruction%20Manual.pdf', '_blank');
     }
 
     sampleODKDownload() {
-        window.open(this.globalService.getBlobUrl() + '/uci/Sample_ODK.xlsx', '_blank');
+        window.open(this.globalService.getBlobUrl() + 'uci/Sample_ODK.xlsx', '_blank');
     }
 }
