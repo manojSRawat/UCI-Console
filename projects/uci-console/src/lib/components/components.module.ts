@@ -25,6 +25,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,7 @@ import {MatTableModule} from '@angular/material/table';
         UserSegmentAddComponent,
         TermsConditionsComponent,
         ConversationSuccessComponent,
+        AddLogicComponent
     ],
     imports: [
         CommonModule,
@@ -52,6 +54,7 @@ import {MatTableModule} from '@angular/material/table';
         MatCheckboxModule,
         MatDialogModule,
         MatTableModule,
+        MatPaginatorModule,
     ],
     exports: [
         SidePanelComponent,
