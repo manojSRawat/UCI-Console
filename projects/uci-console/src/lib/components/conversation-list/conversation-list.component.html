@@ -2,94 +2,87 @@
     <div class="ui grid">
         <div class="ten wide column">
             <div class="sb-search-box b-0 ml-0 large">
-                <div class="input-div relative" id="search-input-container">
+                <!--<div class="input-div relative" id="search-input-container">
                     <img alt="Search Icon" class="search icon" src="assets/images/search-icon.svg">
                     <input class="sb-search-input disabled ng-untouched ng-pristine" id="keyword" name="filter_search"
                            [(ngModel)]="search" type="text" placeholder="Search">
-                </div>
-                <button class="sb-btn sb-btn-normal disabled" (click)="getSearch()">Search</button>
+                </div>-->
+                <mat-form-field class="example-full-width">
+<!--                    <span matPrefix> <mat-icon matPrefix>search</mat-icon> &nbsp;</span>-->
+                    <input type="text" matInput [(ngModel)]="search" placeholder="Search">
+                </mat-form-field>
+                <button mat-raised-button color="primary" (click)="getSearch()">Search</button>
             </div>
 
         </div>
         <div class="two wide column">
             <div class="pb-10">
                 <div class="right-floated pt-0">
-                    <button class="sb-btn sb-btn-normal sb-btn-primary" (click)="onAddNew()"> Add New</button>
+                    <button mat-raised-button color="primary" (click)="onAddNew()"> Add New</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <table mat-table [dataSource]="chatBots">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>  Status </th>
-          <td mat-cell *matCellDef="let element" [ngClass]="'status-' + (element.status ? element.status.toLowerCase(): '')"> {{element.status}} </td>
-        </ng-container>
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>  Description </th>
-          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-        </ng-container>
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Starting Message </th>
-          <td mat-cell *matCellDef="let element"> {{element.startingMessage}} </td>
-        </ng-container>
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Bot URL </th>
-          <td mat-cell *matCellDef="let element">
-            <span class="hide" [id]="'copyUrl-' + chatBots.indexOf(element)">{{element.url}}</span>
-            <button class="circular ui icon button" (click)="onCopy('copyUrl-' + chatBots.indexOf(element))">Copy</button>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Bot Id </th>
-          <td mat-cell *matCellDef="let element">
-            <span class="hide" [id]="'copyId-' + chatBots.indexOf(element)">{{element.id}}</span>
-            <button class="circular ui icon button" (click)="onCopy('copyId-' + chatBots.indexOf(element))">Copy</button>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Action </th>
-          <td mat-cell *matCellDef="let element" class="center aligned">
-            <div class="ui dropdown" suiDropdown>
-                <i class="ellipsis vertical icon ellipsis-icon dropdown"></i>
-                <div class="menu" suiDropdownMenu>
-                    <div class="item" (click)="onEdit(element)">Edit</div>
-                    <div class="item" (click)="onDelete(element, chatBots.indexOf(element))">Delete</div>
-                    <div class="item" (click)="onStatusChange(element, chatBots.indexOf(element))">{{element.status === 'Live' ? 'Disable' : 'Enable'}}</div>
-                </div>
-            </div>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <mat-paginator [length]="100"
-                   [pageSize]="10"
-                   [pageSizeOptions]="[5, 10, 25, 100]">
-    </mat-paginator>
     <div class="ui grid">
-        <div class="two wide column"></div>
-        <div class="ten wide column">
-            <div class="pb-10">
-
-
-                <!--<div class="ui pagination menu mt-10 right-floated pt-0" *ngIf="pager.pages">
-                    <a [ngClass]="{disabled:pager.currentPage===1 }" class="item "
-                       (click)="navigateToPage(1) ">First</a>
-                    <a [ngClass]="{disabled:pager.currentPage===1 }" class="item "
-                       (click)="navigateToPage(pager.currentPage - 1)">Previous</a>
-                    <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage===page}"
-                       (click)="navigateToPage(page)" class="item">{{page}}</a>
-                    <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}"
-                       (click)="navigateToPage(pager.currentPage + 1)" class="item">Next</a>
-                    <a [ngClass]="{disabled:pager.currentPage=== pager.totalPages}"
-                       (click)="navigateToPage(pager.totalPages)" class="item ">Last</a>
-                </div>-->
-            </div>
-        </div>
+        <table mat-table [dataSource]="chatBots">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name</th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status</th>
+                <td mat-cell *matCellDef="let element"
+                    [ngClass]="'status-' + (element.status ? element.status.toLowerCase(): '')"> {{element.status}} </td>
+            </ng-container>
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> Description</th>
+                <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+            </ng-container>
+            <ng-container matColumnDef="startingMessage">
+                <th mat-header-cell *matHeaderCellDef> Starting Message</th>
+                <td mat-cell *matCellDef="let element"> {{element.startingMessage}} </td>
+            </ng-container>
+            <ng-container matColumnDef="botUrl">
+                <th mat-header-cell *matHeaderCellDef> Bot URL</th>
+                <td mat-cell *matCellDef="let element">
+                    <span class="hide" [id]="'copyUrl-' + chatBots.indexOf(element)">{{element.url}}</span>
+                    <button mat-raised-button color="primary" (click)="onCopy('copyUrl-' + chatBots.indexOf(element))">
+                        Copy
+                    </button>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="botId">
+                <th mat-header-cell *matHeaderCellDef> Bot Id</th>
+                <td mat-cell *matCellDef="let element">
+                    <span class="hide" [id]="'copyId-' + chatBots.indexOf(element)">{{element.id}}</span>
+                    <button mat-raised-button color="primary" (click)="onCopy('copyId-' + chatBots.indexOf(element))">
+                        Copy
+                    </button>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action</th>
+                <td mat-cell *matCellDef="let element" class="center aligned">
+                    <button mat-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="onEdit(element)">Edit</button>
+                        <button mat-menu-item (click)="onDelete(element, chatBots.indexOf(element))">Delete</button>
+                        <button mat-menu-item (click)="onStatusChange(element, chatBots.indexOf(element))">
+                            {{element.status === 'Live' ? 'Disable' : 'Enable'}}
+                        </button>
+                    </mat-menu>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [length]="pager.totalItems"
+                       [pageSize]="pager.pageSize"
+                       [pageIndex]="pager.currentPage - 1"
+                       (page)="navigateToPage($event)">
+        </mat-paginator>
     </div>
 </div>
