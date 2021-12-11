@@ -3,6 +3,7 @@ import {UciService} from '../../services/uci.service';
 import {Router} from '@angular/router';
 import {GlobalService} from '../../services/global.service';
 import {Helper} from '../../utils/helper';
+import {PageEvent} from '@angular/material/paginator/paginator';
 
 @Component({
     selector: 'lib-conversation-list',
@@ -11,19 +12,13 @@ import {Helper} from '../../utils/helper';
 })
 export class ConversationListComponent implements OnInit {
     chatBots = [];
-    displayedColumns: string[] = ['Name', 'Status', 'Description', 'Starting Message', 'Bot URL', 'Bot Id', 'Action'];
-    pager: any = {
-        totalItems: 0,
+    displayedColumns: string[] = ['name', 'status', 'description', 'startingMessage', 'botUrl', 'botId', 'action'];
+    pager = {
+        pageSizeOption: [5, 10, 25, 100],
         currentPage: 1,
-        pageSize: 10,
-        totalPages: 0,
-        startPage: 0,
-        endPage: 0,
-        startIndex: 0,
-        endIndex: 0,
-        pages: []
+        totalItems: 0,
+        pageSize: 10
     };
-    pageNumber = 1;
     column = '';
     sortDirection = '';
     reverse = false;
@@ -85,13 +80,6 @@ export class ConversationListComponent implements OnInit {
             this.chatBots.push(obj);
         });
         this.pager.totalItems = data.total;
-        this.pager.totalPages = Math.ceil(data.total / this.pager.pageSize);
-        this.pager.pages = [];
-        let i = 1;
-        while (i <= Math.ceil(data.total / this.pager.pageSize)) {
-            this.pager.pages.push(i);
-            i++;
-        }
     }
 
     sortColumns(column) {
@@ -100,12 +88,8 @@ export class ConversationListComponent implements OnInit {
         this.reverse = !this.reverse;
     }
 
-    navigateToPage(page: number): undefined | void {
-        if (page < 1 || page > this.pager.totalPages) {
-            return;
-        }
-        this.pageNumber = page;
-        this.pager.currentPage = page;
+    navigateToPage(pageEvent): void {
+        this.pager.currentPage = pageEvent.pageIndex + 1;
         this.getAllChatBots();
     }
 

@@ -26,6 +26,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
     declarations: [
@@ -55,6 +57,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
         MatDialogModule,
         MatTableModule,
         MatPaginatorModule,
+        MatIconModule,
+        MatMenuModule,
     ],
     exports: [
         SidePanelComponent,
