@@ -76,7 +76,7 @@ export class ConversationListComponent implements OnInit {
             });
             obj.segmentText = segmentNames.join(', ');
 
-            obj.url = Helper.makBotUrl(bot.startingMessage || '');
+            obj.url = Helper.makBotUrl(bot.startingMessage || '', this.globalService.getBotPhoneNumber());
             obj.botId = bot.id || '';
 
             this.chatBots.push(obj);

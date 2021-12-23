@@ -9,6 +9,7 @@ export class GlobalService {
     public readonly user$ = this.user.asObservable();
     private baseUrl: BehaviorSubject<any> = new BehaviorSubject(undefined);
     private blobUrl: BehaviorSubject<any> = new BehaviorSubject(undefined);
+    private botPhoneNumber: BehaviorSubject<any> = new BehaviorSubject('');
     public readonly baseUrl$ = this.baseUrl.asObservable();
 
     constructor() {
@@ -36,5 +37,13 @@ export class GlobalService {
 
     getBlobUrl() {
         return this.blobUrl.value;
+    }
+
+    setBotPhoneNumber(phoneNumber) {
+        this.botPhoneNumber.next(phoneNumber);
+    }
+
+    getBotPhoneNumber() {
+        return this.botPhoneNumber.value;
     }
 }

@@ -19,7 +19,7 @@ export class Helper {
         document.body.removeChild(selBox);
     }
 
-    static makBotUrl(startingMessage) {
-        return encodeURI('https://api.whatsapp.com/send?text=' + startingMessage + '&phone=+912249757677');
+    static makBotUrl(startingMessage, phoneNumber) {
+        return encodeURI('https://api.whatsapp.com/send?text=' + startingMessage + '&phone=' + phoneNumber);
     }
 }
