@@ -124,7 +124,7 @@ export class ConversationAddComponent implements OnInit {
             description: [''],
             purpose: ['', Validators.required],
             startingMessage: ['', Validators.required],
-            startDate: [null],
+            startDate: [null, Validators.required],
             endDate: [null],
             status: ['Draft']
         });
