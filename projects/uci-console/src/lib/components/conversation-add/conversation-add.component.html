@@ -115,23 +115,23 @@
                         </div>
                         <div class="two fields">
                             <div class="field">
-                                <label>Start Date And Time<sup><i class="asterisk icon asterisk-color"></i></sup></label>
+                                <label>Start Date<sup><i class="asterisk icon asterisk-color"></i></sup></label>
                                 <div class="ui left icon input">
                                     <i class="calendar icon"></i>
                                     <input suiDatepicker
                                            formControlName="startDate"
-                                           [pickerMode]="'datetime'"
+                                           [pickerMode]="'date'"
                                            [pickerMinDate]="startMinDate"
                                            [pickerUseNativeOnMobile]="false">
                                 </div>
                             </div>
                             <div class="field">
-                                <label>End Date And Time</label>
+                                <label>End Date</label>
                                 <div class="ui left icon input">
                                     <i class="calendar icon"></i>
                                     <input suiDatepicker
                                            formControlName="endDate"
-                                           [pickerMode]="'datetime'"
+                                           [pickerMode]="'date'"
                                            [pickerMinDate]="endMinDate"
                                            [pickerUseNativeOnMobile]="false">
                                 </div>

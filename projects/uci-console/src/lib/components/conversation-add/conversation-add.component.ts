@@ -33,7 +33,7 @@ export class ConversationAddComponent implements OnInit {
     verifyAllItemsModal = false;
     conversationId;
     selectedLogicIndex;
-    startMinDate = new Date();
+    startMinDate = new Date(moment().subtract(1, 'd').format('YYYY-MM-DD'));
     endMinDate;
     Appropriateness = [
         {
@@ -109,8 +109,7 @@ export class ConversationAddComponent implements OnInit {
         private globalService: GlobalService,
         private toasterService: ToasterService
     ) {
-        const tempDate = moment().add(1, 'days').format('YYYY-MM-DD');
-        this.endMinDate = new Date(tempDate);
+        this.endMinDate = new Date(moment().add(1, 'days').format('YYYY-MM-DD'));
     }
 
     ngOnInit() {
@@ -144,8 +143,10 @@ export class ConversationAddComponent implements OnInit {
 
         // start date and end date value change
         this.conversationForm.get('startDate').valueChanges.subscribe(val => {
-            this.conversationForm.get('endDate').patchValue(null);
-            const tempDate = moment(val).add(1, 'days').format('YYYY-MM-DD');
+            if ((this.conversationForm.value.endDate && moment(this.conversationForm.value.endDate).isBefore(moment(val))) || !val) {
+                this.conversationForm.get('endDate').patchValue(null);
+            }
+            const tempDate = moment(val).format('YYYY-MM-DD');
             this.endMinDate = new Date(tempDate);
         });
 
@@ -239,6 +240,12 @@ export class ConversationAddComponent implements OnInit {
         this.botLogics.forEach(logic => {
             reqObj.logic.push(logic.id);
         });
+        if (reqObj.startDate) {
+            reqObj.startDate = moment(reqObj.startDate).format('YYYY-MM-DD');
+        }
+        if (reqObj.endDate) {
+            reqObj.endDate = moment(reqObj.endDate).format('YYYY-MM-DD');
+        }
 
         this.isLoaderShow = true;
 
@@ -429,9 +436,12 @@ export class ConversationAddComponent implements OnInit {
                     description: val.data.description,
                     purpose: val.data.purpose,
                     startingMessage: val.data.startingMessage,
-                    startDate: val.data.startDate ? val.data.startDate : null,
-                    endDate: val.data.endDate ? val.data.endDate : null
+                    startDate: val.data.startDate ? new Date(moment(val.data.startDate).format('YYYY-MM-DD')) : null,
+                    endDate: val.data.endDate ? new Date(moment(val.data.endDate).format('YYYY-MM-DD')) : null
                 });
+                if (val.data.startDate) {
+                    this.startMinDate = new Date(moment(val.data.startDate).format('YYYY-MM-DD'));
+                }
                 if (val.data.userSegments) {
                     this.userSegments = val.data.userSegments;
                 }
