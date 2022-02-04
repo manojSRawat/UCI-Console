@@ -436,6 +436,7 @@ export class ConversationAddComponent implements OnInit {
                     description: val.data.description,
                     purpose: val.data.purpose,
                     startingMessage: val.data.startingMessage,
+                    status: val.data.status,
                     startDate: val.data.startDate ? new Date(moment(val.data.startDate).format('YYYY-MM-DD')) : null,
                     endDate: val.data.endDate ? new Date(moment(val.data.endDate).format('YYYY-MM-DD')) : null
                 });
