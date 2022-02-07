@@ -441,7 +441,8 @@ export class ConversationAddComponent implements OnInit {
                     endDate: val.data.endDate ? new Date(moment(val.data.endDate).format('YYYY-MM-DD')) : null
                 });
                 if (val.data.startDate) {
-                    this.startMinDate = new Date(moment(val.data.startDate).format('YYYY-MM-DD'));
+                    const minDate = moment().isBefore(moment(val.data.startDate)) ?  moment().subtract(1, 'd') : moment(val.data.startDate);
+                    this.startMinDate = new Date(moment(minDate).format('YYYY-MM-DD'));
                 }
                 if (val.data.userSegments) {
                     this.userSegments = val.data.userSegments;
