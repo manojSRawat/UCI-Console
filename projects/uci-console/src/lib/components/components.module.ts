@@ -28,6 +28,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
     declarations: [
@@ -59,6 +61,8 @@ import {MatMenuModule} from '@angular/material/menu';
         MatPaginatorModule,
         MatIconModule,
         MatMenuModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ],
     exports: [
         SidePanelComponent,
@@ -66,7 +70,8 @@ import {MatMenuModule} from '@angular/material/menu';
     providers: [
         UciService,
         ConfigService,
-        UciGraphQlService
+        UciGraphQlService,
+        MatDatepickerModule
     ],
     entryComponents: [
         AddLogicComponent,

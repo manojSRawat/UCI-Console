@@ -123,8 +123,14 @@
                             </small>
                         </div>
                         <div class="two fields">
-                            <div class="field">
+                            <!--<mat-form-field appearance="fill">
                                 <mat-label>{{resourceService.frmelmnts?.lbl?.startDate}}</mat-label>
+                                <input matInput [matDatepicker]="picker">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>-->
+                            <div class="field">
+                                <mat-label></mat-label>
                                 <div class="ui left icon input">
                                     <i class="calendar icon"></i>
                                     <input suiDatepicker
