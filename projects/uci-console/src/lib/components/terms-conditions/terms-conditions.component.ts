@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {UciService} from '../../services/uci.service';
 import {UciGraphQlService} from '../../services/uci-graph-ql.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
     selector: 'lib-terms-conditions',
@@ -9,11 +10,13 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
     styleUrls: ['./terms-conditions.component.css']
 })
 export class TermsConditionsComponent implements OnInit {
-    constructor() {
+    resourceService;
+    constructor(private globalService: GlobalService) {
     }
 
 
     ngOnInit() {
+        this.resourceService = this.globalService.getResourceService();
     }
 
 }

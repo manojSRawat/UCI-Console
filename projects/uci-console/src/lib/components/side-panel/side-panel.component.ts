@@ -9,6 +9,7 @@ import * as CONSTANTS from '../../common/constants.json';
 import * as _ from 'lodash';
 import {ConfigService} from '../../services/config.service';
 import {IdiscussionConfig, IMenuOptions} from '../../models/uci-config.model';
+import {GlobalService} from '../../services/global.service';
 
 /* tslint:enable */
 
@@ -30,17 +31,20 @@ export class SidePanelComponent implements OnInit, OnDestroy {
     menu: Array<IMenuOptions> = [];
     selectedTab: string;
     showSideMenu: Boolean = true;
+    resourceService;
 
     constructor(
         public router: Router,
         public uciService: UciService,
         public activatedRoute: ActivatedRoute,
         private telemetryUtils: TelemetryUtilsService,
-        private configService: ConfigService
+        private configService: ConfigService,
+        private globalService: GlobalService
     ) {
     }
 
     ngOnInit() {
+        this.resourceService = this.globalService.getResourceService();
         // TODO: loader or spinner
         this.telemetryUtils.setContext([]);
         this.hideSidePanel = document.body.classList.contains('widget');

@@ -24,7 +24,7 @@
                           1
                         </button>
                     </div>
-                    <div class="px-5 pt-10">Conversation setup</div>
+                    <div class="px-5 pt-10">{{resourceService.frmelmnts?.lbl?.conversationSetup}}</div>
                     <div class="line mt-20 ml-20 mr-20"></div>
                     <div style="width: 30px">
                         <button mat-mini-fab
@@ -35,17 +35,17 @@
                           2
                         </button>
                     </div>
-                    <div class="px-5 pt-10 font-weight-bold">Conversation flow</div>
+                    <div class="px-5 pt-10 font-weight-bold">{{resourceService.frmelmnts?.lbl?.conversationFlow}}</div>
                 </div>
             </div>
             <div class="six wide column">
                 <ng-container *ngIf="stepIndex === 1; else stp2_btn">
                     <div class="right-floated pt-0">
                         <button mat-mini-fab class="action-button" (click)="onAddCancel()">
-                            Cancel
+                            {{resourceService.frmelmnts?.btn?.cancel}}
                         </button>
                         <button mat-mini-fab class="action-button" [disabled]="conversationForm.invalid || isStartingMessageExist"
-                                (click)="nextStep()"> Next
+                                (click)="nextStep()"> {{resourceService.frmelmnts?.btn?.next}}
                         </button>
                     </div>
                 </ng-container>
@@ -54,12 +54,12 @@
                         <div class="twelve wide column">
                             <div class="right-floated pt-0">
                                 <button mat-raised-button class="action-button mr-10" *ngIf="!isLoaderShow"
-                                        (click)="backToStepOne()"> Back
+                                        (click)="backToStepOne()"> {{resourceService.frmelmnts?.btn?.back}}
                                 </button>
                                 <button mat-raised-button class="action-button mr-10" *ngIf="!isLoaderShow"
                                         (click)="openItemsVerifyModal(false)"
                                         [disabled]="!isCheckedTermCondition || !botLogics.length">
-                                    Save
+                                    {{resourceService.frmelmnts?.btn?.save}}
                                 </button>
                                 <ng-container *ngIf="isLoaderShow; else submitBtn1">
                                     <button class="action-button p-0">
@@ -70,7 +70,7 @@
                                     <button mat-raised-button class="action-button"
                                             [disabled]="!isCheckedTermCondition || !botLogics.length"
                                             (click)="this.conversationId ? onSubmit(true) : openItemsVerifyModal(true)">
-                                        {{conversationId ? 'Update' : 'Submit'}}
+                                        {{conversationId ? resourceService.frmelmnts?.btn?.update : resourceService.frmelmnts?.btn?.submit}}
                                     </button>
                                 </ng-template>
 
@@ -82,8 +82,9 @@
                                      <mat-checkbox name="example"
                                            [(ngModel)]="isCheckedTermCondition">
                                     <mat-label class="font-weight-normal t-and-c-title"
-                                           (click)="openTermAndConditionModel()"> I agree to the required terms and
-                                        conditions </mat-label>
+                                           (click)="openTermAndConditionModel()">
+                                        {{resourceService.frmelmnts?.lbl?.aggreeTc}}
+                                    </mat-label>
                                     </mat-checkbox>
                             </div>
                         </div>
@@ -95,33 +96,35 @@
         <div class="step1-wrapper" *ngIf="stepIndex === 1">
             <div class="ui grid">
                 <div class="ten wide column font-1-2 font-weight-bold">
-                    Add new conversation
+                    {{resourceService.frmelmnts?.lbl?.addConversation}}
                 </div>
                 <div class="ten wide column pt-0">
                     <form [formGroup]="conversationForm" class="ui form">
                         <div class="field">
-                          <mat-label>Conversation name <sup><i class="asterisk icon asterisk-color"></i></sup></mat-label>
+                          <mat-label>{{resourceService.frmelmnts?.lbl?.conversationName}} <sup><i class="asterisk icon asterisk-color"></i></sup></mat-label>
                           <input matInput type="text" name="name" placeholder="Enter name" formControlName="name">
                         </div>
                         <div class="field">
-                            <mat-label>Conversation description</mat-label>
+                            <mat-label>{{resourceService.frmelmnts?.lbl?.conversationDescription}}</mat-label>
                             <textarea rows="5" name="description" placeholder="Enter description"
                                       formControlName="description"></textarea>
                         </div>
                         <div class="field">
-                            <mat-label>Purpose of the conversation <sup><i
+                            <mat-label>{{resourceService.frmelmnts?.lbl?.conversationPurpose}} <sup><i
                                     class="asterisk icon asterisk-color"></i></sup></mat-label>
                             <input matInput type="text" name="name" placeholder="Enter purpose" formControlName="purpose">
                         </div>
                         <div class="field">
-                            <mat-label>Starting message <sup><i class="asterisk icon asterisk-color"></i></sup></mat-label>
+                            <mat-label>{{resourceService.frmelmnts?.lbl?.startMessage}} <sup><i class="asterisk icon asterisk-color"></i></sup></mat-label>
                             <input matInput type="text" name="startingMessage" placeholder="Enter message"
                                    formControlName="startingMessage">
-                            <small *ngIf="isStartingMessageExist" class="text-danger">This starting message is not available</small>
+                            <small *ngIf="isStartingMessageExist" class="text-danger">
+                                {{resourceService.frmelmnts?.lbl?.startMessageError}}
+                            </small>
                         </div>
                         <div class="two fields">
                             <div class="field">
-                                <mat-label>Start Date</mat-label>
+                                <mat-label>{{resourceService.frmelmnts?.lbl?.startDate}}</mat-label>
                                 <div class="ui left icon input">
                                     <i class="calendar icon"></i>
                                     <input suiDatepicker
@@ -132,7 +135,7 @@
                                 </div>
                             </div>
                             <div class="field">
-                                <mat-label>End Date</mat-label>
+                                <mat-label>{{resourceService.frmelmnts?.lbl?.endDate}}</mat-label>
                                 <div class="ui left icon input">
                                     <i class="calendar icon"></i>
                                     <input suiDatepicker
@@ -175,7 +178,7 @@
                                     <i class="right floated icon trash delete-icon"
                                        (click)="onUserSegmentDelete(i)"></i>
                                     {{userSegment.name}}
-                                    <div class="meta">User count {{userSegment.count}}</div>
+                                    <div class="meta">{{resourceService.frmelmnts?.lbl?.userCount}} {{userSegment.count}}</div>
                                 </div>
                             </div>
                         </div>
@@ -188,7 +191,7 @@
         <div class="step2-wrapper" *ngIf="stepIndex === 2">
             <div class="ui grid">
                 <div class="ten wide column font-1-2 font-weight-bold">
-                    Conversation flow
+                    {{resourceService.frmelmnts?.lbl?.startMessageError}}
                 </div>
                 <div class="two wide column right aligned">
                     <button mat-raised-button class="action-button"
@@ -208,11 +211,11 @@
                                         <img alt="Search Icon" src="assets/uci-console/images/empty.svg">
                                     </div>
                                     <div class="text-center mt-20">
-                                        No logic Added
+                                        {{resourceService.frmelmnts?.lbl?.noLogic}}
                                     </div>
                                 </div>
                                 <button mat-raised-button class="action-button mt-10" (click)="openModel()">
-                                    Add logic
+                                    {{resourceService.frmelmnts?.btn?.addLogic}}
                                 </button>
                             </div>
                         </div>
@@ -224,16 +227,16 @@
                             <thead>
                             <tr>
                                 <th class="one wide center aligned UpReviewTableHeader sorted bl-0">
-                                    Step
+                                    {{resourceService.frmelmnts?.lbl?.step}}
                                 </th>
                                 <th class="three wide UpReviewTableHeader sorted bl-0">
-                                    Name
+                                    {{resourceService.frmelmnts?.lbl?.name}}
                                 </th>
                                 <th class="five wide UpReviewTableHeader sorted bl-0">
-                                    Description
+                                    {{resourceService.frmelmnts?.lbl?.description}}
                                 </th>
                                 <th class="one wide center aligned UpReviewTableHeader sorted bl-0">
-                                    Action
+                                    {{resourceService.frmelmnts?.lbl?.action}}
                                 </th>
                             </tr>
                             </thead>
@@ -248,9 +251,12 @@
                                         <i class="ellipsis vertical icon ellipsis-icon dropdown"
                                         ></i>
                                         <div class="menu" suiDropdownMenu>
-                                            <div class="item" (click)="openModel(); getEditLogicData(logic, i)">Edit
+                                            <div class="item" (click)="openModel(); getEditLogicData(logic, i)">
+                                                {{resourceService.frmelmnts?.lbl?.edit}}
                                             </div>
-                                            <div class="item" (click)="onDelete(logic, i)">Delete</div>
+                                            <div class="item" (click)="onDelete(logic, i)">
+                                                {{resourceService.frmelmnts?.lbl?.delete}}
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
@@ -322,7 +328,7 @@
            [size]="'large'"
            class="sb-modal" (dismissed)="this.termsAndConditionModal = false" #modal>
     <div class="sb-modal-header">
-        Terms and Conditions
+        {{resourceService.frmelmnts?.lbl?.termsConditions}}
     </div>
     <div class="sb-modal-content">
         <lib-terms-conditions></lib-terms-conditions>
@@ -330,7 +336,7 @@
     <div class="sb-modal-actions">
         <button mat-raised-button class="action-button"
                 (click)="modal.deny('denied');">
-            Cancel
+            {{resourceService.frmelmnts?.btn?.cancel}}
         </button>
     </div>
 </sui-modal>
@@ -339,7 +345,7 @@
            class="sb-modal" (dismissed)="this.verifyAllItemsModal = false" #verifyAllModal>
     <div class="sb-modal-header">
         <h4>
-            Please confirm that ALL the following items are verified (by ticking the check-boxes) before you can submit:
+            {{resourceService.frmelmnts?.lbl?.confirmWarning}}:
         </h4>
     </div>
     <div class="sb-modal-content">

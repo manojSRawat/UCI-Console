@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UciService} from '../../services/uci.service';
 import {Router} from '@angular/router';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
     selector: 'lib-user-segment-list',
@@ -30,14 +31,17 @@ export class UserSegmentListComponent implements OnInit {
     reverse = false;
     queryParams: any;
     search;
+    resourceService;
 
     constructor(
         private uciService: UciService,
-        private route: Router
+        private route: Router,
+        private globalService: GlobalService
     ) {
     }
 
     ngOnInit() {
+        this.resourceService = this.globalService.getResourceService();
         this.selectedUserSegments.forEach(selectedUserSegment => {
             this.selectedUserSegmentMap[selectedUserSegment.id] = selectedUserSegment;
         });

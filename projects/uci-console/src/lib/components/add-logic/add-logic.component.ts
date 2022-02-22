@@ -1,18 +1,23 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {Component, Inject} from '@angular/core';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
-  selector: 'add-logic',
-  templateUrl: './add-logic.component.html',
+    selector: 'add-logic',
+    templateUrl: './add-logic.component.html',
 })
 export class AddLogicComponent {
+    resourceService;
 
-  constructor(
-    public dialogRef: MatDialogRef<AddLogicComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    constructor(
+        private globalService: GlobalService,
+        public dialogRef: MatDialogRef<AddLogicComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+        this.resourceService = this.globalService.getResourceService();
+    }
 
-  onCancel(): void {
-    this.dialogRef.close();
-  }
+    onCancel(): void {
+        this.dialogRef.close();
+    }
 
 }

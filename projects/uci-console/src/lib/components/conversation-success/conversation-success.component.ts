@@ -11,6 +11,7 @@ import {GlobalService} from '../../services/global.service';
 export class ConversationSuccessComponent implements OnInit {
     url = '';
     botId = '';
+    resourceService;
 
     constructor(private router: Router,
                 private activatedRoute: ActivatedRoute,
@@ -20,6 +21,7 @@ export class ConversationSuccessComponent implements OnInit {
     ngOnInit(): void {
         this.url = Helper.makBotUrl(this.activatedRoute.snapshot.queryParams.text || '', this.globalService.getBotPhoneNumber());
         this.botId = this.activatedRoute.snapshot.queryParams.botId || '';
+        this.resourceService = this.globalService.getResourceService();
     }
 
     onCopy(id) {

@@ -102,6 +102,7 @@ export class ConversationAddComponent implements OnInit {
     isStartingMessageAvailable = false;
     fileErrorStatus;
     user;
+    resourceService;
 
     constructor(
         private uciService: UciService,
@@ -117,6 +118,7 @@ export class ConversationAddComponent implements OnInit {
 
     ngOnInit() {
         this.user = this.globalService.getUser();
+        this.resourceService = this.globalService.getResourceService();
         if (!this.user) {
             this.router.navigate(['uci-admin']);
             return;

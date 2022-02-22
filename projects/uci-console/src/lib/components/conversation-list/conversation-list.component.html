@@ -11,14 +11,14 @@
 <!--                    <span matPrefix> <mat-icon matPrefix>search</mat-icon> &nbsp;</span>-->
                     <input type="text" matInput [(ngModel)]="search" placeholder="Search">
                 </mat-form-field>
-                <button mat-raised-button color="primary" (click)="getSearch()">Search</button>
+                <button mat-raised-button color="primary" (click)="getSearch()">{{resourceService.frmelmnts?.btn?.search}}</button>
             </div>
 
         </div>
         <div class="two wide column">
             <div class="pb-10">
                 <div class="right-floated pt-0">
-                    <button mat-raised-button color="primary" (click)="onAddNew()"> {{resourceService.frmelmnts?.btn?.addNew}}</button>
+                    <button mat-raised-button color="primary" (click)="onAddNew()"> {{resourceService.frmelmnts?.btn?.addNew}} </button>
                 </div>
             </div>
         </div>
@@ -27,24 +27,24 @@
     <div class="ui grid">
         <table mat-table [dataSource]="chatBots">
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name</th>
+                <th mat-header-cell *matHeaderCellDef> {{resourceService.frmelmnts?.lbl?.name}}</th>
                 <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
             <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef> Status</th>
+                <th mat-header-cell *matHeaderCellDef> {{resourceService.frmelmnts?.lbl?.status}} </th>
                 <td mat-cell *matCellDef="let element"
                     [ngClass]="'status-' + (element.status ? element.status.toLowerCase(): '')"> {{element.status}} </td>
             </ng-container>
             <ng-container matColumnDef="description">
-                <th mat-header-cell *matHeaderCellDef> Description</th>
+                <th mat-header-cell *matHeaderCellDef> {{resourceService.frmelmnts?.lbl?.status}}</th>
                 <td mat-cell *matCellDef="let element"> {{element.description}} </td>
             </ng-container>
             <ng-container matColumnDef="startingMessage">
-                <th mat-header-cell *matHeaderCellDef> Starting Message</th>
+                <th mat-header-cell *matHeaderCellDef> {{resourceService.frmelmnts?.lbl?.startingMessage}} </th>
                 <td mat-cell *matCellDef="let element"> {{element.startingMessage}} </td>
             </ng-container>
             <ng-container matColumnDef="botUrl">
-                <th mat-header-cell *matHeaderCellDef> Bot URL</th>
+                <th mat-header-cell *matHeaderCellDef> {{resourceService.frmelmnts?.lbl?.botUrl}} </th>
                 <td mat-cell *matCellDef="let element">
                     <span class="hide" [id]="'copyUrl-' + chatBots.indexOf(element)">{{element.url}}</span>
                     <button mat-raised-button color="primary" (click)="onCopy('copyUrl-' + chatBots.indexOf(element))">
@@ -53,7 +53,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="botId">
-                <th mat-header-cell *matHeaderCellDef> Bot Id</th>
+                <th mat-header-cell *matHeaderCellDef> {{resourceService.frmelmnts?.lbl?.botId}}</th>
                 <td mat-cell *matCellDef="let element">
                     <span class="hide" [id]="'copyId-' + chatBots.indexOf(element)">{{element.id}}</span>
                     <button mat-raised-button color="primary" (click)="onCopy('copyId-' + chatBots.indexOf(element))">
@@ -62,16 +62,16 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef> Action</th>
+                <th mat-header-cell *matHeaderCellDef> {{resourceService.frmelmnts?.lbl?.action}}</th>
                 <td mat-cell *matCellDef="let element" class="center aligned">
                     <button mat-button [matMenuTriggerFor]="menu">
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="onEdit(element)">Edit</button>
-                        <button mat-menu-item (click)="onDelete(element, chatBots.indexOf(element))">Delete</button>
+                        <button mat-menu-item (click)="onEdit(element)">{{resourceService.frmelmnts?.lbl?.edit}} </button>
+                        <button mat-menu-item (click)="onDelete(element, chatBots.indexOf(element))">{{resourceService.frmelmnts?.lbl?.delete}} </button>
                         <button mat-menu-item (click)="onStatusChange(element, chatBots.indexOf(element))">
-                            {{element.status === 'Live' ? 'Disable' : 'Enable'}}
+                            {{element.status === 'Live' ? resourceService.frmelmnts?.lbl?.disable : resourceService.frmelmnts?.lbl?.enable}}
                         </button>
                     </mat-menu>
                 </td>
