@@ -19,6 +19,7 @@ export class LibEntryComponent implements OnInit {
     @Input() baseUrl;
     @Input() blobUrl;
     @Input() botPhoneNumber;
+    @Input() resourceService;
 
     constructor(
         public activatedRoute: ActivatedRoute,
@@ -44,6 +45,9 @@ export class LibEntryComponent implements OnInit {
         }
         if (this.botPhoneNumber) {
             this.globalService.setBotPhoneNumber(this.botPhoneNumber);
+        }
+        if (this.resourceService) {
+            this.globalService.setResourceService(this.resourceService);
         }
         if (this.router.url === '/uci-admin') {
             this.router.navigate(['uci-admin/home'], { skipLocationChange: true });

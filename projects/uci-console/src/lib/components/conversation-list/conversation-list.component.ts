@@ -29,6 +29,7 @@ export class ConversationListComponent implements OnInit {
     queryParams: any;
     search;
     user;
+    resourceService;
     constructor(
         private uciService: UciService,
         private router: Router,
@@ -42,6 +43,7 @@ export class ConversationListComponent implements OnInit {
             this.router.navigate(['uci-admin']);
             return;
         }
+        this.resourceService = this.globalService.getResourceService();
         this.getAllChatBots();
     }
 

@@ -10,6 +10,7 @@ export class GlobalService {
     private baseUrl: BehaviorSubject<any> = new BehaviorSubject(undefined);
     private blobUrl: BehaviorSubject<any> = new BehaviorSubject(undefined);
     private botPhoneNumber: BehaviorSubject<any> = new BehaviorSubject('');
+    private resourceService: BehaviorSubject<any> = new BehaviorSubject({});
     public readonly baseUrl$ = this.baseUrl.asObservable();
 
     constructor() {
@@ -45,5 +46,13 @@ export class GlobalService {
 
     getBotPhoneNumber() {
         return this.botPhoneNumber.value;
+    }
+
+    setResourceService(resourceService) {
+        this.resourceService.next(resourceService);
+    }
+
+    getResourceService() {
+        return this.resourceService.value;
     }
 }
