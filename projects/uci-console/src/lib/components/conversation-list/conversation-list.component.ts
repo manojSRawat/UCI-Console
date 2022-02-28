@@ -3,7 +3,7 @@ import {UciService} from '../../services/uci.service';
 import {Router} from '@angular/router';
 import {GlobalService} from '../../services/global.service';
 import {Helper} from '../../utils/helper';
-import {PageEvent} from '@angular/material/paginator/paginator';
+//import {PageEvent} from '@angular/material/paginator/paginator';
 
 @Component({
     selector: 'lib-conversation-list',
