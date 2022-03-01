@@ -1,0 +1,62 @@
+.mat-table {
+  width: 100%;
+}
+
+.mat-column-action {
+  width: 5px;
+}
+
+.uci-list-menu {
+  background: red;
+}
+
+#cdk-overlay-0 {
+  width: auto !important;
+  height: auto !important;
+}
+
+/* Old CSS*/
+
+.uci-container {
+  /*padding-top: 1.5rem;*/
+  /*padding-left: 1.5rem;*/
+  /*padding-right: 1.5rem;*/
+}
+
+.filter_search {
+}
+
+.ellipsis-icon {
+  font-size: 1.2rem;
+}
+
+.status-live {
+  color: #3c763d;
+}
+
+.status-draft {
+  color: #ffb300;
+}
+
+.status-disabled {
+  color: #ff4a2f;
+}
+
+.action-dropdown {
+  top: 2px;
+  left: -56px;
+  z-index: 2;
+  position: absolute;
+}
+
+.action-dropdown .item {
+  cursor: pointer;
+}
+
+.action-dropdown .item:hover {
+  background-color: #f6f6f6;
+}
+
+.hide {
+  display: none;
+}

@@ -17,6 +17,7 @@ import {SuiModule} from 'ng2-semantic-ui-v9';
 import {ConversationSuccessComponent} from './conversation-success/conversation-success.component';
 import {UciGraphQlService} from '../services/uci-graph-ql.service';
 import {TermsConditionsComponent} from './terms-conditions/terms-conditions.component';
+import {TermsConditionConfirmComponent} from './terms-condition-confirm/terms-condition-confirm.component';
 import {AddLogicComponent} from './add-logic/add-logic.component';
 //material-ui
 import {MatButtonModule} from '@angular/material/button';
@@ -39,6 +40,7 @@ import {MatNativeDateModule} from '@angular/material/core';
         UserSegmentListComponent,
         UserSegmentAddComponent,
         TermsConditionsComponent,
+        TermsConditionConfirmComponent,
         ConversationSuccessComponent,
         AddLogicComponent
     ],
@@ -75,6 +77,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     ],
     entryComponents: [
         AddLogicComponent,
+        TermsConditionsComponent,
+        TermsConditionConfirmComponent
     ],
 })
 export class ComponentsModule {

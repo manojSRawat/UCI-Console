@@ -7,28 +7,28 @@
                 </div>
 
                 <div class="text-center p-5">
-                    Congratulations! You have successfully created a new conversation
+                    {{resourceService.frmelmnts?.lbl?.botSuccess}}
                 </div>
 
                 <div class="text-center p-5">
-                    Use the following URL to use DIKSHA bot:
+                    {{resourceService.frmelmnts?.lbl?.botUrlMessage}} :
                     <strong><span id="copyUrl">{{url}}</span></strong>
                 </div>
 
                 <div class="text-center p-5" *ngIf="botId">
-                    or share the following ID with DIKSHA team:
+                    {{resourceService.frmelmnts?.lbl?.botIdMessage}}:
                     <strong><span id="copyId">{{botId}}</span></strong>
                 </div>
 
                 <div class="mt-20">
                     <button class="sb-btn sb-btn-normal sb-btn-primary mr-10" (click)="onCopy('copyUrl')">
-                        Copy URL
+                        {{resourceService.frmelmnts?.btn?.copyUrl}}
                     </button>
                     <button class="sb-btn sb-btn-normal sb-btn-primary mr-10" (click)="onCopy('copyId')">
-                        Copy ID
+                        {{resourceService.frmelmnts?.btn?.copyId}}
                     </button>
                     <button class="sb-btn sb-btn-normal sb-btn-outline-primary" (click)="onClose()">
-                        Close
+                        {{resourceService.frmelmnts?.btn?.close}}
                     </button>
                 </div>
             </div>

@@ -7,8 +7,10 @@ import {UciService} from '../../services/uci.service';
 import moment from 'moment/moment';
 import {debounceTime} from 'rxjs/operators';
 import {ToasterService} from '../../services/toaster.service';
-import { MatDialog } from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {AddLogicComponent} from '../add-logic/add-logic.component';
+import {TermsConditionsComponent} from '../terms-conditions/terms-conditions.component';
+import {TermsConditionConfirmComponent} from '../terms-condition-confirm/terms-condition-confirm.component';
 
 @Component({
     selector: 'lib-conversation-add',
@@ -30,7 +32,7 @@ export class ConversationAddComponent implements OnInit {
     logicFormRequest = {};
     isCheckedTermCondition = false;
     conversationForm: FormGroup;
-    logicForm: FormGroup;
+    // logicForm: FormGroup;
     termsAndConditionModal = false;
     verifyAllItemsModal = false;
     conversationId;
@@ -133,12 +135,12 @@ export class ConversationAddComponent implements OnInit {
             status: ['Draft']
         });
 
-        this.logicForm = this.fb.group({
+        /*this.logicForm = this.fb.group({
             id: [null],
             name: ['', Validators.required],
             description: [''],
             formId: ['', Validators.required]
-        });
+        });*/
 
         // Edit case
         this.conversationId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -321,41 +323,66 @@ export class ConversationAddComponent implements OnInit {
         this.verifyAllItemsModal = false;
     }
 
-    openModel() {
+    openModel(logic = null, index = null) {
         this.logicFormRequest = {};
         this.collectionListModal = true;
-        this.logicForm.reset();
+        // this.logicForm.reset();
         this.fileErrorStatus = null;
         this.isStartingMessageExist = false;
-        let dialogRef = this.dialog.open(AddLogicComponent, {
-          width: '250px',
-          data: { name: 'Scooby', animal: 'Dog' }
+        let data = {};
+        if (logic && logic.id) {
+            this.selectedLogicIndex = index;
+            data = {
+                id: logic.id,
+                name: logic.name,
+                description: logic.description,
+                formId: logic.transformers[0].meta.formID
+            };
+        }
+        const dialogRef = this.dialog.open(AddLogicComponent, {
+            data
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-          console.log("mat-dialog-result",result)
+        dialogRef.afterClosed().subscribe(logicFormData => {
+            console.log('mat-dialog-result', logicFormData);
+            if (logicFormData) {
+                this.onLogicAdd(logicFormData);
+            }
         });
     }
 
     openTermAndConditionModel() {
-        this.termsAndConditionModal = true;
+        // this.termsAndConditionModal = true;
+        const dialogRef = this.dialog.open(TermsConditionsComponent);
+
+        dialogRef.afterClosed().subscribe(result => {
+        });
     }
 
     openItemsVerifyModal(isSubmitBtn: boolean) {
         this.verifyAllItemsModal = true;
         this.allChecked = false;
         this.isSubmit = isSubmitBtn;
+        const dialogRef = this.dialog.open(TermsConditionConfirmComponent, {
+            data: {isSubmit: this.isSubmit}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result !== undefined) {
+                this.onSubmit(result);
+            }
+        });
     }
 
-    onLogicAdd() {
+    onLogicAdd(logicFormData) {
         const reqData = {
-            ...this.logicForm.value,
+            ...logicFormData,
             transformers: [
                 {
                     id: 'bbf56981-b8c9-40e9-8067-468c2c753659',
                     meta: {
                         form: 'https://hosted.my.form.here.com',
-                        formID: this.logicForm.value.formId
+                        formID: logicFormData.formId
                     }
                 }
             ],
@@ -363,8 +390,8 @@ export class ConversationAddComponent implements OnInit {
         };
 
         this.isModalLoaderShow = true;
-        if (this.logicForm.get('id').value) {
-            this.uciService.updateLogic(this.logicForm.get('id').value, {data: reqData}).subscribe(
+        if (logicFormData.id) {
+            this.uciService.updateLogic(logicFormData.id, {data: reqData}).subscribe(
                 (data: any) => {
                     this.isModalLoaderShow = false;
                     const existingLogic = reqData;
@@ -389,48 +416,6 @@ export class ConversationAddComponent implements OnInit {
                 }
             );
         }
-
-    }
-
-    getEditLogicData(item, index) {
-        if (item.id) {
-            this.selectedLogicIndex = index;
-            this.logicForm.patchValue(
-                {
-                    id: item.id,
-                    name: item.name,
-                    description: item.description,
-                    formId: item.transformers[0].meta.formID
-                }
-            );
-        }
-    }
-
-    onFileUpload(event) {
-        if (!event.target.files.length) {
-            return;
-        }
-        const file = event.target.files[0];
-        const obj = {
-            form: file
-        };
-        this.logicForm.patchValue({formId: ''});
-        this.isModalLoaderShow = true;
-        this.uciService.uploadFile(obj).subscribe((fileInfo: any) => {
-                if (fileInfo.data) {
-                    this.logicForm.patchValue({formId: fileInfo.data});
-                }
-                this.isModalLoaderShow = false;
-                this.odkFileAlreadyExist = false;
-            }, error => {
-                this.isModalLoaderShow = false;
-                this.odkFileAlreadyExist = true;
-                this.fileErrorStatus = error.status;
-                if (error.result && error.result.error) {
-                    this.toasterService.error(error.result.error);
-                }
-            }
-        );
     }
 
     onDelete(logic, index) {
@@ -454,7 +439,7 @@ export class ConversationAddComponent implements OnInit {
                     endDate: val.data.endDate ? new Date(moment(val.data.endDate).format('YYYY-MM-DD')) : null
                 });
                 if (val.data.startDate) {
-                    const minDate = moment().isBefore(moment(val.data.startDate)) ?  moment().subtract(1, 'd') : moment(val.data.startDate);
+                    const minDate = moment().isBefore(moment(val.data.startDate)) ? moment().subtract(1, 'd') : moment(val.data.startDate);
                     this.startMinDate = new Date(moment(minDate).format('YYYY-MM-DD'));
                 }
                 if (val.data.userSegments) {
@@ -467,19 +452,6 @@ export class ConversationAddComponent implements OnInit {
         });
     }
 
-    allCheck(isAllCheck: boolean = false) {
-        this.Appropriateness.forEach(val => {
-            val.checks = isAllCheck;
-        });
-        this.contentDetails.forEach(val => {
-            val.checks = isAllCheck;
-        });
-        this.usability.forEach(val => {
-            val.checks = isAllCheck;
-        });
-        this.allChecked = true;
-    }
-
     onStarringMessageChange() {
         this.uciService.getCheckStartingMessage({startingMessage: this.conversationForm.value.startingMessage}).subscribe(val => {
             if (val && val.data && val.data.id) {
@@ -489,13 +461,5 @@ export class ConversationAddComponent implements OnInit {
             this.isStartingMessageExist = false;
         });
 
-    }
-
-    manualDownload() {
-        window.open(this.globalService.getBlobUrl().replace('/player', '') + 'UCI%20_%20ODK%20Instruction%20Manual.pdf', '_blank');
-    }
-
-    sampleODKDownload() {
-        window.open(this.globalService.getBlobUrl().replace('/player', '') + 'Sample_ODK.xlsx', '_blank');
     }
 }
