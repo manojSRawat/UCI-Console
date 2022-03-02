@@ -1,3 +1,5 @@
+@import "../../style";
+
 .uci-add-container {
     /*padding-top: 1.5rem;*/
     /*padding-left: 1.5rem;*/
@@ -95,10 +97,6 @@ button:disabled {
     border-color: #89CFF0;
 }
 
-.asterisk-color {
-    color: red;
-}
-
 .t-and-c-title {
     cursor: pointer !important;
 }
@@ -152,4 +150,8 @@ button:disabled {
   min-width: 95px;
   border-radius: 50px;
   color: #fff;
+}
+
+.tc-tag {
+    text-decoration: none;
 }

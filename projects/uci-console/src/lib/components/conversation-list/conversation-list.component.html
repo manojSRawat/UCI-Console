@@ -9,7 +9,7 @@
                 </div>-->
                 <mat-form-field class="example-full-width">
 <!--                    <span matPrefix> <mat-icon matPrefix>search</mat-icon> &nbsp;</span>-->
-                    <input type="text" matInput [(ngModel)]="search" placeholder="Search">
+                    <input type="text" matInput [(ngModel)]="search" [placeholder]="resourceService.frmelmnts?.btn?.search">
                 </mat-form-field>
                 <button mat-raised-button color="primary" (click)="getSearch()">{{resourceService.frmelmnts?.btn?.search}}</button>
             </div>

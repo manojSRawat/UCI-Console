@@ -81,9 +81,10 @@
                             <div class="right-floated pt-0">
                                 <mat-checkbox name="isCheckedTermCondition"  [color]="'primary'"
                                               [(ngModel)]="isCheckedTermCondition">
-                                    <mat-label class="font-weight-normal t-and-c-title"
-                                               (click)="openTermAndConditionModel()">
-                                        {{resourceService.frmelmnts?.lbl?.aggreeTc}}
+                                    <mat-label class="font-weight-normal t-and-c-title">
+                                        <a class="tc-tag" href="https://diksha.gov.in/term-of-use.html" target="_blank">
+                                            {{resourceService.frmelmnts?.lbl?.aggreeTc}}
+                                        </a>
                                     </mat-label>
                                 </mat-checkbox>
                             </div>
@@ -198,82 +199,7 @@
         </div>
 
         <div class="step2-wrapper" *ngIf="stepIndex === 2">
-            <div class="ui grid">
-                <div class="ten wide column font-1-2 font-weight-bold">
-                    {{resourceService.frmelmnts?.lbl?.conversationFlow}}
-                </div>
-                <div class="two wide column right aligned">
-                    <button mat-raised-button class="primary" *ngIf="botLogics && botLogics.length"
-                            (click)="openModel()">
-                        {{resourceService.frmelmnts?.btn?.addLogic}}
-                    </button>
-                </div>
-            </div>
-            <div class="ui grid">
-                <ng-container *ngIf="botLogics && botLogics.length <= 0; else showTable">
-                    <div class="twelve wide column center aligned">
-                        <div class="pt-0">
-                            <div class="w-25-per text-center" style="margin: auto; padding: 2rem;">
-                                <div class="text-center">
-                                    <div class="text-center">
-                                        <img alt="Search Icon" src="assets/uci-console/images/empty.svg">
-                                    </div>
-                                    <div class="text-center mt-20">
-                                        {{resourceService.frmelmnts?.lbl?.noLogic}}
-                                    </div>
-                                </div>
-                                <button mat-raised-button class="mt-10" (click)="openModel()">
-                                    {{resourceService.frmelmnts?.btn?.addLogic}}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </ng-container>
-                <ng-template #showTable>
-                    <div class="twelve wide column">
-                        <table class="ui table" style="width: 100%">
-                            <thead>
-                            <tr>
-                                <th class="one wide center aligned UpReviewTableHeader sorted bl-0">
-                                    {{resourceService.frmelmnts?.lbl?.step}}
-                                </th>
-                                <th class="three wide UpReviewTableHeader sorted bl-0">
-                                    {{resourceService.frmelmnts?.lbl?.name}}
-                                </th>
-                                <th class="five wide UpReviewTableHeader sorted bl-0">
-                                    {{resourceService.frmelmnts?.lbl?.description}}
-                                </th>
-                                <th class="one wide center aligned UpReviewTableHeader sorted bl-0">
-                                    {{resourceService.frmelmnts?.lbl?.action}}
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="UpForReviewListHover"
-                                *ngFor="let logic of botLogics; let i = index;">
-                                <td class="center aligned">{{i + 1}}</td>
-                                <td>{{logic?.name}}</td>
-                                <td>{{logic?.description}}</td>
-                                <td class="center aligned">
-                                    <div class="ui dropdown" suiDropdown>
-                                        <i class="ellipsis vertical icon ellipsis-icon dropdown"
-                                        ></i>
-                                        <div class="menu" suiDropdownMenu>
-                                            <div class="item" (click)="openModel(logic, i);">
-                                                {{resourceService.frmelmnts?.lbl?.edit}}
-                                            </div>
-                                            <div class="item" (click)="onDelete(logic, i)">
-                                                {{resourceService.frmelmnts?.lbl?.delete}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </ng-template>
-            </div>
+            <lib-logic-list [botLogics]="botLogics" (modify)="onBotLogicModify($event)"></lib-logic-list>
         </div>
     </div>
 </ng-container>

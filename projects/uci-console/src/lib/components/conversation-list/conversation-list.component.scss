@@ -1,6 +1,4 @@
-.mat-table {
-  width: 100%;
-}
+@import "../../style";
 
 .mat-column-action {
   width: 5px;
@@ -8,11 +6,6 @@
 
 .uci-list-menu {
   background: red;
-}
-
-#cdk-overlay-0 {
-  width: auto !important;
-  height: auto !important;
 }
 
 /* Old CSS*/
@@ -55,8 +48,4 @@
 
 .action-dropdown .item:hover {
   background-color: #f6f6f6;
-}
-
-.hide {
-  display: none;
 }

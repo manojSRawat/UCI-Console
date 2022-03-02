@@ -4,8 +4,6 @@ import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {ConversationListComponent} from '../components/conversation-list/conversation-list.component';
 import {ConversationAddComponent} from '../components/conversation-add/conversation-add.component';
-import {UserSegmentListComponent} from '../components/user-segment-list/user-segment-list.component';
-import {UserSegmentAddComponent} from '../components/user-segment-add/user-segment-add.component';
 import {ConversationSuccessComponent} from '../components/conversation-success/conversation-success.component';
 
 

@@ -1,17 +1,18 @@
 export interface IdiscussionConfig {
-    menuOptions?: Array<IMenuOptions>
-    userName: string
-    context?: Object
-    categories: Icategory
-    path?: string
-    routerSlug?: string
+    menuOptions?: Array<IMenuOptions>;
+    userName: string;
+    context?: object;
+    categories: Icategory;
+    path?: string;
+    routerSlug?: string;
 }
 
 export interface IMenuOptions {
-    route: string
-    enable: boolean
+    route: string;
+    label: string;
+    enable: boolean;
 }
 
 export interface Icategory {
-    result: Array<string>
+    result: Array<string>;
 }

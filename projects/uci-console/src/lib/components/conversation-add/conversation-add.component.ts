@@ -15,7 +15,7 @@ import {TermsConditionConfirmComponent} from '../terms-condition-confirm/terms-c
 @Component({
     selector: 'lib-conversation-add',
     templateUrl: './conversation-add.component.html',
-    styleUrls: ['./conversation-add.component.css'],
+    styleUrls: ['./conversation-add.component.scss'],
 })
 export class ConversationAddComponent implements OnInit {
     @ViewChild('verifyAllModal') verifyAllModal;
@@ -32,74 +32,14 @@ export class ConversationAddComponent implements OnInit {
     logicFormRequest = {};
     isCheckedTermCondition = false;
     conversationForm: FormGroup;
-    // logicForm: FormGroup;
     termsAndConditionModal = false;
     verifyAllItemsModal = false;
     conversationId;
     selectedLogicIndex;
     startMinDate = new Date(moment().subtract(1, 'd').format('YYYY-MM-DD'));
     endMinDate;
-    Appropriateness = [
-        {
-            text: 'No Hate speech, Abuse, Violence, Profanity',
-            checks: false
-        },
-        {
-            text: 'No Sexual content, Nudity or Vulgarity',
-            checks: false
-        },
-        {
-            text: 'No Discrimination or Defamation',
-            checks: false
-        },
-        {
-            text: 'Is suitable for children',
-            checks: false
-        }
-    ];
-    contentDetails = [
-        {
-            text: 'Appropriate Title, Description',
-            checks: false
-        },
-        {
-            text: 'Correct Board, Grade, Subject, Medium',
-            checks: false
-        },
-        {
-            text: 'Appropriate tags such as Resource Type, Concepts',
-            checks: false
-        },
-        {
-            text: 'Relevant keywords',
-            checks: false
-        }
-    ];
-    usability = [
-        {
-            text: 'Content plays correctly',
-            checks: false
-        },
-        {
-            text: 'Can see the content clearly on Desktop and App',
-            checks: false
-        },
-        {
-            text: 'Audio (if any) is clear and easy to understand',
-            checks: false
-        },
-        {
-            text: 'No spelling mistakes in the text',
-            checks: false
-        },
-        {
-            text: 'Language is simple to understand',
-            checks: false
-        }
-    ];
     allChecked: boolean;
     isSubmit: boolean;
-    odkFileAlreadyExist: boolean = false;
     isStartingMessageExist = false;
     isStartingMessageAvailable = false;
     fileErrorStatus;
@@ -134,13 +74,6 @@ export class ConversationAddComponent implements OnInit {
             endDate: [null],
             status: ['Draft']
         });
-
-        /*this.logicForm = this.fb.group({
-            id: [null],
-            name: ['', Validators.required],
-            description: [''],
-            formId: ['', Validators.required]
-        });*/
 
         // Edit case
         this.conversationId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -206,33 +139,6 @@ export class ConversationAddComponent implements OnInit {
 
     onAddCancel() {
         this.router.navigate(['uci-admin']);
-    }
-
-    updateAllChecked() {
-        let allChecked = true;
-        for (const val of this.Appropriateness) {
-            if (!val.checks) {
-                allChecked = false;
-                break;
-            }
-        }
-        if (allChecked) {
-            for (const val of this.contentDetails) {
-                if (!val.checks) {
-                    allChecked = false;
-                    break;
-                }
-            }
-        }
-        if (allChecked) {
-            for (const val of this.usability) {
-                if (!val.checks) {
-                    allChecked = false;
-                    break;
-                }
-            }
-        }
-        this.allChecked = allChecked;
     }
 
     onSubmit(isTriggerBot = false) {
@@ -323,34 +229,6 @@ export class ConversationAddComponent implements OnInit {
         this.verifyAllItemsModal = false;
     }
 
-    openModel(logic = null, index = null) {
-        this.logicFormRequest = {};
-        this.collectionListModal = true;
-        // this.logicForm.reset();
-        this.fileErrorStatus = null;
-        this.isStartingMessageExist = false;
-        let data = {};
-        if (logic && logic.id) {
-            this.selectedLogicIndex = index;
-            data = {
-                id: logic.id,
-                name: logic.name,
-                description: logic.description,
-                formId: logic.transformers[0].meta.formID
-            };
-        }
-        const dialogRef = this.dialog.open(AddLogicComponent, {
-            data
-        });
-
-        dialogRef.afterClosed().subscribe(logicFormData => {
-            console.log('mat-dialog-result', logicFormData);
-            if (logicFormData) {
-                this.onLogicAdd(logicFormData);
-            }
-        });
-    }
-
     openTermAndConditionModel() {
         // this.termsAndConditionModal = true;
         const dialogRef = this.dialog.open(TermsConditionsComponent);
@@ -372,58 +250,6 @@ export class ConversationAddComponent implements OnInit {
                 this.onSubmit(result);
             }
         });
-    }
-
-    onLogicAdd(logicFormData) {
-        const reqData = {
-            ...logicFormData,
-            transformers: [
-                {
-                    id: 'bbf56981-b8c9-40e9-8067-468c2c753659',
-                    meta: {
-                        form: 'https://hosted.my.form.here.com',
-                        formID: logicFormData.formId
-                    }
-                }
-            ],
-            adapter: '44a9df72-3d7a-4ece-94c5-98cf26307324'
-        };
-
-        this.isModalLoaderShow = true;
-        if (logicFormData.id) {
-            this.uciService.updateLogic(logicFormData.id, {data: reqData}).subscribe(
-                (data: any) => {
-                    this.isModalLoaderShow = false;
-                    const existingLogic = reqData;
-                    delete existingLogic.id;
-                    this.botLogics[this.selectedLogicIndex] = Object.assign(this.botLogics[this.selectedLogicIndex], existingLogic);
-                }, error => {
-                    this.isModalLoaderShow = false;
-                }
-            );
-        } else {
-            this.uciService.createLogic({data: reqData}).subscribe(
-                (data: any) => {
-                    this.isModalLoaderShow = false;
-                    const existingLogic = reqData;
-                    delete existingLogic.id;
-                    this.botLogics.push({
-                        id: data.data.id,
-                        ...existingLogic,
-                    });
-                }, error => {
-                    this.isModalLoaderShow = false;
-                }
-            );
-        }
-    }
-
-    onDelete(logic, index) {
-        this.uciService.deleteLogic(logic.id).subscribe(
-            file => {
-                this.botLogics.splice(index, 1);
-            }
-        );
     }
 
     getBotDetails() {
@@ -461,5 +287,9 @@ export class ConversationAddComponent implements OnInit {
             this.isStartingMessageExist = false;
         });
 
+    }
+
+    onBotLogicModify(bots) {
+        this.botLogics = bots;
     }
 }
