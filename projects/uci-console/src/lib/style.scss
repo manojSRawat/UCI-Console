@@ -14,3 +14,37 @@
 .asterisk-color {
   color: red;
 }
+
+.mobilehide{
+  @media screen and (max-width: 600px) {
+      display: none;
+    }
+  }
+.actionbut{
+  align-content: flex-start;
+  align-items: flex-start;
+}
+
+  .mobilecard {
+    width: auto;
+    margin-bottom: 10px;
+    @media only screen
+    and (min-device-width : 320px)
+    and (max-device-width : 480px){ 
+      display: block;
+  }
+  }
+  .sameline {
+    display: flex;
+    text-align: left;
+    justify-content: space-evenly;
+  }
+  .live{
+    align-self: right;
+    color:green;
+}
+
+.draft{
+    align-self: right;
+    color:orange;
+}

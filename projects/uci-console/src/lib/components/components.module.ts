@@ -32,6 +32,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {LogicListComponent} from './logic-list/logic-list.component';
+import {MatCardModule} from '@angular/material/card'; 
 
 @NgModule({
     declarations: [
@@ -66,7 +67,8 @@ import {LogicListComponent} from './logic-list/logic-list.component';
         MatIconModule,
         MatMenuModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatCardModule
     ],
     exports: [
         SidePanelComponent,
