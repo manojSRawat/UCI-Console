@@ -44,7 +44,7 @@
                         <button mat-raised-button class="mr-10" (click)="onAddCancel()">
                             {{resourceService.frmelmnts?.btn?.cancel}}
                         </button>
-                        <button mat-raised-button class="mat-primary"
+                        <button mat-raised-button class="uci-action-button"
                                 [disabled]="conversationForm.invalid || isStartingMessageExist"
                                 (click)="nextStep()"> {{resourceService.frmelmnts?.btn?.next}}
                         </button>
@@ -68,7 +68,7 @@
                                     </button>
                                 </ng-container>
                                 <ng-template #submitBtn1>
-                                    <button mat-raised-button class="mat-primary"
+                                    <button mat-raised-button class="uci-action-button"
                                             [disabled]="!isCheckedTermCondition || !botLogics.length"
                                             (click)="this.conversationId ? onSubmit(true) : openItemsVerifyModal(true)">
                                         {{conversationId ? resourceService.frmelmnts?.btn?.update : resourceService.frmelmnts?.btn?.submit}}
@@ -104,23 +104,23 @@
                         <div class="field">
                             <mat-label>{{resourceService.frmelmnts?.lbl?.conversationName}} <sup><i
                                     class="asterisk icon asterisk-color"></i></sup></mat-label>
-                            <input matInput type="text" name="name" placeholder="Enter name" formControlName="name">
+                            <input matInput type="text" name="name" placeholder="{{resourceService.frmelmnts?.lbl?.enterName}}" formControlName="name">
                         </div>
                         <div class="field">
                             <mat-label>{{resourceService.frmelmnts?.lbl?.conversationDescription}}</mat-label>
-                            <textarea rows="5" name="description" placeholder="Enter description"
+                            <textarea rows="5" name="description" placeholder="{{resourceService.frmelmnts?.lbl?.enterDescription}}"
                                       formControlName="description"></textarea>
                         </div>
                         <div class="field">
                             <mat-label>{{resourceService.frmelmnts?.lbl?.conversationPurpose}} <sup><i
                                     class="asterisk icon asterisk-color"></i></sup></mat-label>
-                            <input matInput type="text" name="name" placeholder="Enter purpose"
+                            <input matInput type="text" name="name" placeholder="{{resourceService.frmelmnts?.lbl?.enterPurpose}}"
                                    formControlName="purpose">
                         </div>
                         <div class="field">
                             <mat-label>{{resourceService.frmelmnts?.lbl?.startMessage}} <sup><i
                                     class="asterisk icon asterisk-color"></i></sup></mat-label>
-                            <input matInput type="text" name="startingMessage" placeholder="Enter message"
+                            <input matInput type="text" name="startingMessage" placeholder="{{resourceService.frmelmnts?.lbl?.enterMessage}}"
                                    formControlName="startingMessage">
                             <small *ngIf="isStartingMessageExist" class="text-danger">
                                 {{resourceService.frmelmnts?.lbl?.startMessageError}}

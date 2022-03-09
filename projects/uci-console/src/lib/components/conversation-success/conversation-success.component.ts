@@ -6,7 +6,7 @@ import {GlobalService} from '../../services/global.service';
 @Component({
     selector: 'lib-conversation-success',
     templateUrl: './conversation-success.component.html',
-    styleUrls: ['./conversation-success.component.css']
+    styleUrls: ['./conversation-success.component.scss']
 })
 export class ConversationSuccessComponent implements OnInit {
     url = '';

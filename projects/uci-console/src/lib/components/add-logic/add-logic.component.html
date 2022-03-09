@@ -1,53 +1,59 @@
 <section style="background: white;margin-top: 10%;padding: 20px">
-  <div class="uci-logic-container">
-    <h1 mat-dialog-title>
-      {{logicForm.get('id').value ? ' Update' : 'Add'}} Conversation Logic
-    </h1>
-    <mat-dialog-content>
-      <form [formGroup]="logicForm" class="ui form">
-        <div class="field">
-          <mat-label>Name <sup><i class="asterisk icon asterisk-color"></i></sup></mat-label>
-          <input matInput type="text" name="name" placeholder="Enter name" formControlName="name">
-        </div>
-        <div class="field">
-          <mat-label>Description</mat-label>
-          <textarea rows="3" name="description" placeholder="Enter description"
-                    formControlName="description"></textarea>
-        </div>
-        <div class="field">
-          <mat-label>
-            <div class="two fields m-0">
-              <div class="field p-0">
-                Upload ODK Form (.xml)<sup><i class="asterisk icon asterisk-color"></i></sup>
-              </div>
-              <div class="field text-right p-0">
-                <a class="mx-20 sample-download" (click)="manualDownload()">Instruction Manual</a>
-                <a class="ml-1 sample-download" (click)="sampleODKDownload()">Sample ODK Form (.xlsx)</a>
-              </div>
-            </div>
+    <div class="uci-logic-container">
+        <h1 mat-dialog-title>
+            {{logicForm.get('id').value ? resourceService.frmelmnts?.lbl?.updateConversationLogic : resourceService.frmelmnts?.lbl?.addConversationLogic}}
+        </h1>
+        <mat-dialog-content>
+            <form [formGroup]="logicForm" class="ui form">
+                <div class="field">
+                    <mat-label>{{resourceService.frmelmnts?.lbl?.name}}<sup><i class="asterisk icon asterisk-color"></i></sup>
+                    </mat-label>
+                    <input matInput type="text" name="name" placeholder="{{resourceService.frmelmnts?.lbl?.enterName}}"
+                           formControlName="name">
+                </div>
+                <div class="field">
+                    <mat-label>{{resourceService.frmelmnts?.lbl?.description}}</mat-label>
+                    <textarea rows="3" name="description"
+                              placeholder="{{resourceService.frmelmnts?.lbl?.enterDescription}}"
+                              formControlName="description"></textarea>
+                </div>
+                <div class="field">
+                    <mat-label>
+                        <div class="two fields m-0">
+                            <div class="field p-0">
+                                {{resourceService.frmelmnts?.lbl?.uploadOdkForm}} <sup><i
+                                    class="asterisk icon asterisk-color"></i></sup>
+                            </div>
+                            <div class="field text-right p-0">
+                                <a class="mx-20 sample-download"
+                                   (click)="manualDownload()">{{resourceService.frmelmnts?.lbl?.instructionManual}}</a>
+                                <a class="ml-1 sample-download"
+                                   (click)="sampleODKDownload()">{{resourceService.frmelmnts?.lbl?.sampleOdkForm}}</a>
+                            </div>
+                        </div>
 
-          </mat-label>
-          <input type="file" name="file" placeholder="Browse XML File..."
-                 (change)="onFileUpload($event)" accept=".xml">
-          <small *ngIf="odkFileAlreadyExist" class="text-danger">{{fileErrorStatus}}</small>
-        </div>
-      </form>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <ng-container *ngIf="isModalLoaderShow; else modalBtn">
-        <button mat-stroked-button class="action-button p-0">
-          <div class="ui active tiny inline loader"></div>
-        </button>
-      </ng-container>
-      <ng-template #modalBtn>
-        <button mat-stroked-button class="action-button" (click)="onLogicAdd()"
-                [disabled]="logicForm.invalid">
-          {{logicForm.get('id').value ? ' Update' : 'Add'}}
-        </button>
-      </ng-template>
-      <button mat-stroked-button class="action-button" (click)="onCancel()">
-        Cancel
-      </button>
-    </mat-dialog-actions>
-  </div>
+                    </mat-label>
+                    <input type="file" name="file" placeholder="Browse XML File..."
+                           (change)="onFileUpload($event)" accept=".xml">
+                    <small *ngIf="odkFileAlreadyExist" class="text-danger">{{fileErrorStatus}}</small>
+                </div>
+            </form>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <ng-container *ngIf="isModalLoaderShow; else modalBtn">
+                <button mat-stroked-button class="action-button p-0">
+                    <div class="ui active tiny inline loader"></div>
+                </button>
+            </ng-container>
+            <ng-template #modalBtn>
+                <button mat-stroked-button class="action-button" (click)="onLogicAdd()"
+                        [disabled]="logicForm.invalid">
+                    {{logicForm.get('id').value ? resourceService.frmelmnts?.btn?.update : resourceService.frmelmnts?.btn?.add}}
+                </button>
+            </ng-template>
+            <button mat-stroked-button class="action-button" (click)="onCancel()">
+                {{resourceService.frmelmnts?.btn?.cancel}}
+            </button>
+        </mat-dialog-actions>
+    </div>
 </section>
