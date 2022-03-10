@@ -92,16 +92,6 @@
 
 /* ----- flex css end ----------  */
 
-
-
-/* ----- Media Query --------- */
-.mobilehide{
-  @media screen and (max-width: 600px) {
-    display: none;
-  }
-}
-/* ----- Media Query End -------- */
-
 .actionbut{
   align-content: flex-start;
   align-items: flex-start;
@@ -130,3 +120,7 @@
   align-self: right;
   color:orange;
 }
+
+/* ----- Media Query --------- */
+
+/* ----- Media Query End -------- */
