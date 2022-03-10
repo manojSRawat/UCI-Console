@@ -29,6 +29,33 @@
   text-align: right;
 }
 
+.small-btn {
+  padding: 6px 14px;
+  font-size: 12px;
+  line-height: 1;
+  min-width: auto;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.align-middle {
+  align-items: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
 /* ----- flex css start ---------- */
 .d-flex {
   display: flex;
@@ -92,7 +119,7 @@
 
 /* ----- flex css end ----------  */
 
-.actionbut{
+.actionbut {
   align-content: flex-start;
   align-items: flex-start;
 }
@@ -100,25 +127,25 @@
 .mobilecard {
   width: auto;
   margin-bottom: 10px;
-  @media only screen
-  and (min-device-width : 320px)
-  and (max-device-width : 480px){
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
     display: block;
   }
 }
+
 .sameline {
   display: flex;
   text-align: left;
   justify-content: space-evenly;
 }
-.live{
+
+.live {
   align-self: right;
-  color:green;
+  color: green;
 }
 
-.draft{
+.draft {
   align-self: right;
-  color:orange;
+  color: orange;
 }
 
 /* ----- Media Query --------- */
