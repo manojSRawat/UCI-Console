@@ -3,7 +3,6 @@ import {UciService} from '../../services/uci.service';
 import {Router} from '@angular/router';
 import {GlobalService} from '../../services/global.service';
 import {Helper} from '../../utils/helper';
-import {PageEvent} from '@angular/material/paginator/paginator';
 
 @Component({
     selector: 'lib-conversation-list',
@@ -19,6 +18,7 @@ export class ConversationListComponent implements OnInit {
         totalItems: 0,
         pageSize: 10
     };
+    pageSizeOptions = [5, 10, 25, 30];
     column = '';
     sortDirection = '';
     reverse = false;
@@ -26,6 +26,7 @@ export class ConversationListComponent implements OnInit {
     search;
     user;
     resourceService;
+
     constructor(
         private uciService: UciService,
         private router: Router,

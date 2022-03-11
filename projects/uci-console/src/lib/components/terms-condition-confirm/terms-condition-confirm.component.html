@@ -3,55 +3,68 @@
         {{resourceService.frmelmnts?.lbl?.confirmWarning}}:
     </h1>
 
-    <div mat-dialog-content class="tabs-content-wrapper mb-40">
-        <div class="ui grid" style="margin-bottom: 20px;">
-            <div class="four wide column">
-                <div class="mb-20">
-                    <h4>{{resourceService.frmelmnts?.lbl?.appropriateness}}</h4>
-                    <div class="ui divider"></div>
+    <div mat-dialog-content class="mb-40">
+        <mat-grid-list [cols]="breakpoint" (window:resize)="onResize($event)">
+            <mat-grid-tile>
+                <div>
+                    <mat-list>
+                        <mat-list-item>
+                            <h4>{{resourceService.frmelmnts?.lbl?.appropriateness}}</h4>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+
+                        <mat-list-item *ngFor="let list of Appropriateness; let i = index">
+                            <mat-checkbox [color]="'primary'" [name]="'appropriateness' + i"
+                                          [(ngModel)]="list.checks" (ngModelChange)="updateAllChecked()">
+                                <div class="confirm-checkbox-label">
+                                    {{list.text}}
+                                </div>
+                            </mat-checkbox>
+                        </mat-list-item>
+                    </mat-list>
                 </div>
-                <div class="ui grid" *ngFor="let list of Appropriateness; let i = index">
-                    <div class="two wide column pb-0">
-                        <mat-checkbox [color]="'primary'" [name]="'appropriateness' + i"
-                                      [(ngModel)]="list.checks" (ngModelChange)="updateAllChecked()">
-                        </mat-checkbox>
-                    </div>
-                    <div class="ten wide column pl-0 pb-0 line-height">
-                        {{list.text}}
-                    </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <div>
+                    <mat-list>
+                        <mat-list-item>
+                            <h4>{{resourceService.frmelmnts?.lbl?.contentDetails}}</h4>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+
+                        <mat-list-item *ngFor="let list of contentDetails; let i = index">
+                            <mat-checkbox [color]="'primary'" [name]="'contentDetails' + i" [(ngModel)]="list.checks"
+                                          (ngModelChange)="updateAllChecked()">
+                                <div class="confirm-checkbox-label">
+                                    {{list.text}}
+                                </div>
+                            </mat-checkbox>
+                        </mat-list-item>
+                    </mat-list>
                 </div>
-            </div>
-            <div class="four wide column">
-                <div class="mb-20">
-                    <h4>{{resourceService.frmelmnts?.lbl?.contentDetails}}</h4>
-                    <div class="ui divider"></div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <div>
+                    <mat-list>
+                        <mat-list-item>
+                            <h4>{{resourceService.frmelmnts?.lbl?.usability}}</h4>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+
+                        <mat-list-item *ngFor="let list of usability; let i = index">
+                            <mat-checkbox [color]="'primary'" [name]="'usability' + i" [(ngModel)]="list.checks"
+                                          (ngModelChange)="updateAllChecked()">
+                                <div class="confirm-checkbox-label">
+                                    {{list.text}}
+                                </div>
+                            </mat-checkbox>
+                        </mat-list-item>
+                    </mat-list>
                 </div>
-                <div class="ui grid" *ngFor="let list of contentDetails; let i = index">
-                    <div class="two wide column pb-0">
-                        <mat-checkbox [color]="'primary'" [name]="'contentDetails' + i" [(ngModel)]="list.checks" (ngModelChange)="updateAllChecked()">
-                        </mat-checkbox>
-                    </div>
-                    <div class="ten wide column pl-0 pb-0 line-height">
-                        {{list.text}}
-                    </div>
-                </div>
-            </div>
-            <div class="four wide column">
-                <div class="mb-20">
-                    <h4>{{resourceService.frmelmnts?.lbl?.usability}}</h4>
-                    <div class="ui divider"></div>
-                </div>
-                <div class="ui grid" *ngFor="let list of usability; let i = index">
-                    <div class="two wide column pb-0">
-                        <mat-checkbox [color]="'primary'" [name]="'usability' + i" [(ngModel)]="list.checks" (ngModelChange)="updateAllChecked()">
-                        </mat-checkbox>
-                    </div>
-                    <div class="ten wide column pl-0 pb-0 line-height">
-                        {{list.text}}
-                    </div>
-                </div>
-            </div>
-        </div>
+            </mat-grid-tile>
+        </mat-grid-list>
     </div>
 
     <mat-dialog-actions class="confirm-all-action">

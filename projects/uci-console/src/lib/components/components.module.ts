@@ -34,6 +34,8 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {LogicListComponent} from './logic-list/logic-list.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatStepperModule} from '@angular/material/stepper';
+import {ConversationSetupComponent} from './conversation-setup/conversation-setup.component';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
     declarations: [
@@ -46,7 +48,8 @@ import {MatStepperModule} from '@angular/material/stepper';
         TermsConditionConfirmComponent,
         ConversationSuccessComponent,
         AddLogicComponent,
-        LogicListComponent
+        LogicListComponent,
+        ConversationSetupComponent
     ],
     imports: [
         CommonModule,
@@ -70,7 +73,8 @@ import {MatStepperModule} from '@angular/material/stepper';
         MatDatepickerModule,
         MatNativeDateModule,
         MatCardModule,
-        MatStepperModule
+        MatStepperModule,
+        MatListModule
     ],
     exports: [
         SidePanelComponent,

@@ -24,18 +24,23 @@
                                 {{resourceService.frmelmnts?.lbl?.uploadOdkForm}} <sup><i
                                     class="asterisk icon asterisk-color"></i></sup>
                             </div>
-                            <div class="field text-right p-0">
+                            <div class="computer only field text-right p-0">
                                 <a class="mx-20 sample-download"
                                    (click)="manualDownload()">{{resourceService.frmelmnts?.lbl?.instructionManual}}</a>
                                 <a class="ml-1 sample-download"
                                    (click)="sampleODKDownload()">{{resourceService.frmelmnts?.lbl?.sampleOdkForm}}</a>
                             </div>
                         </div>
-
                     </mat-label>
                     <input type="file" name="file" placeholder="Browse XML File..."
                            (change)="onFileUpload($event)" accept=".xml">
                     <small *ngIf="odkFileAlreadyExist" class="text-danger">{{fileErrorStatus}}</small>
+                    <div class="mobile only field text-right p-0">
+                        <a class="mr-5 sample-download"
+                           (click)="manualDownload()">{{resourceService.frmelmnts?.lbl?.instructionManual}}</a>
+                        <a class="sample-download"
+                           (click)="sampleODKDownload()">{{resourceService.frmelmnts?.lbl?.sampleOdkForm}}</a>
+                    </div>
                 </div>
             </form>
         </mat-dialog-content>

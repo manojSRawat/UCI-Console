@@ -15,6 +15,7 @@ export class TermsConditionConfirmComponent implements OnInit {
     Appropriateness = [];
     contentDetails = [];
     usability = [];
+    breakpoint;
 
     constructor(
         private globalService: GlobalService,
@@ -23,6 +24,7 @@ export class TermsConditionConfirmComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.breakpoint = (window.innerWidth <= 1000) ? 1 : 3;
         this.resourceService = this.globalService.getResourceService();
         this.Appropriateness = [
             {
@@ -133,5 +135,9 @@ export class TermsConditionConfirmComponent implements OnInit {
 
     onSubmit(event) {
         this.dialogRef.close(event);
+    }
+
+    onResize(event) {
+        this.breakpoint = (event.target.innerWidth <= 1000) ? 1 : 3;
     }
 }

@@ -7,7 +7,21 @@
 }
 
 .uci-modal {
-  background: white;
+  background: #fff;
   margin-top: 10%;
   padding: 20px;
+  max-height: 90%;
+  overflow: auto;
+
+  .mat-dialog-content {
+    max-height: initial !important;
+  }
+
+  ::ng-deep .mat-figure {
+    align-items: initial !important;
+  }
+
+  .confirm-checkbox-label {
+    white-space: break-spaces;
+  }
 }

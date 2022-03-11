@@ -1,5 +1,9 @@
 @import "../../style";
 
+::ng-deep .mat-select-panel-wrap {
+  flex-basis: auto;
+}
+
 .mat-column-action {
   width: 5px;
 }
@@ -11,6 +15,9 @@
 /* Old CSS*/
 
 .uci-container {
+  ::ng-deep .cdk-overlay-pane {
+    width: auto;
+  }
 }
 
 .filter_search {

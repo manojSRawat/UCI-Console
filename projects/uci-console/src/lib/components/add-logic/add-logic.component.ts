@@ -8,6 +8,7 @@ import {ToasterService} from '../../services/toaster.service';
 @Component({
     selector: 'lib-add-logic',
     templateUrl: './add-logic.component.html',
+    styleUrls: ['./add-logic.component.scss'],
 })
 export class AddLogicComponent {
     resourceService;

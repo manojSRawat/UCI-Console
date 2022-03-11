@@ -11,6 +11,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddLogicComponent} from '../add-logic/add-logic.component';
 import {TermsConditionsComponent} from '../terms-conditions/terms-conditions.component';
 import {TermsConditionConfirmComponent} from '../terms-condition-confirm/terms-condition-confirm.component';
+import {MatStepper} from '@angular/material/stepper';
 
 @Component({
     selector: 'lib-conversation-add',
@@ -19,6 +20,8 @@ import {TermsConditionConfirmComponent} from '../terms-condition-confirm/terms-c
 })
 export class ConversationAddComponent implements OnInit {
     @ViewChild('verifyAllModal') verifyAllModal;
+    @ViewChild('horizontalStepper') horizontalStepper;
+    @ViewChild('verticalStepper') verticalStepper;
     currentViewState = 'ADD_CONVERSATION';
     stepIndex = 1;
     botLogics = [];
@@ -80,23 +83,6 @@ export class ConversationAddComponent implements OnInit {
         if (this.conversationId) {
             this.getBotDetails();
         }
-
-        // start date and end date value change
-        this.conversationForm.get('startDate').valueChanges.subscribe(val => {
-            if ((this.conversationForm.value.endDate && moment(this.conversationForm.value.endDate).isBefore(moment(val))) || !val) {
-                this.conversationForm.get('endDate').patchValue(null);
-            }
-            const tempDate = moment(val).format('YYYY-MM-DD');
-            this.endMinDate = new Date(tempDate);
-        });
-
-        this.conversationForm.get('startingMessage').valueChanges
-            .pipe(debounceTime(1000))
-            .subscribe(
-                value => {
-                    this.onStarringMessageChange();
-                }
-            );
     }
 
     userSegment() {
@@ -127,6 +113,8 @@ export class ConversationAddComponent implements OnInit {
 
     nextStep() {
         if (this.stepIndex === 1 && this.conversationForm.valid) {
+            this.horizontalStepper.next();
+            this.verticalStepper.next();
             this.stepIndex = 2;
         }
     }
@@ -134,6 +122,8 @@ export class ConversationAddComponent implements OnInit {
     backToStepOne() {
         if (this.stepIndex === 2) {
             this.stepIndex = 1;
+            this.horizontalStepper.previous();
+            this.verticalStepper.previous();
         }
     }
 
