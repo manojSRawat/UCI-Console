@@ -1,21 +1,16 @@
 <div class="uci-container">
     <mat-grid-list cols="2" rowHeight="4rem">
         <mat-grid-tile colspan="1">
-            <div class="w-100 text-left sb-search-box b-0 ml-0">
-                <!--<div class="input-div relative" id="search-input-container">
-                    <img alt="Search Icon" class="search icon" src="assets/images/search-icon.svg">
-                    <input class="sb-search-input disabled ng-untouched ng-pristine" id="keyword" name="filter_search"
-                           [(ngModel)]="search" type="text" placeholder="Search">
-                </div>-->
-                <mat-form-field class="example-full-width">
-<!--                    <span matPrefix> <mat-icon matPrefix>search</mat-icon> &nbsp;</span>-->
-                    <input type="text" matInput [(ngModel)]="search"
+            <div class="w-100 text-left">
+                <mat-form-field>
+                    <input matInput type="text" [(ngModel)]="search"
                            [placeholder]="resourceService.frmelmnts?.btn?.search"
                            (keyup.enter)="getSearch()">
+                    <button mat-button matSuffix mat-stroked-button aria-label="search" class="uci-action-button computer only">
+<!--                        <mat-icon>search</mat-icon>-->
+                        {{resourceService.frmelmnts?.btn?.search}}
+                    </button>
                 </mat-form-field>
-                <button mat-raised-button class="uci-action-button computer only" (click)="getSearch()">
-                    {{resourceService.frmelmnts?.btn?.search}}
-                </button>
             </div>
         </mat-grid-tile>
         <mat-grid-tile colspan="1">
@@ -29,7 +24,7 @@
     </mat-grid-list>
 
     <mat-grid-list cols="1">
-        <table mat-table class="computer only" [dataSource]="chatBots">
+        <table mat-table class="computer only" [dataSource]="chatBots" #botTable>
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> {{resourceService.frmelmnts?.lbl?.name}}</th>
                 <td mat-cell *matCellDef="let element"> {{element.name}} </td>

@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {UciService} from '../../services/uci.service';
 import {Router} from '@angular/router';
 import {GlobalService} from '../../services/global.service';
 import {Helper} from '../../utils/helper';
+import {MatTable} from '@angular/material/table';
 
 @Component({
     selector: 'lib-conversation-list',
@@ -10,6 +11,7 @@ import {Helper} from '../../utils/helper';
     styleUrls: ['./conversation-list.component.scss']
 })
 export class ConversationListComponent implements OnInit {
+    @ViewChild('botTable') botTable: MatTable<any>;
     chatBots = [];
     displayedColumns: string[] = ['name', 'status', 'description', 'startingMessage', 'botUrl', 'botId', 'action'];
     pager = {
@@ -111,12 +113,14 @@ export class ConversationListComponent implements OnInit {
             this.uciService.pauseConversation(conversation.id).subscribe(
                 data => {
                     this.chatBots[index].status = 'Disabled';
+                    this.updateDatasource();
                 }
             );
         } else {
             this.uciService.startConversation(conversation.id).subscribe(
                 data => {
                     this.chatBots[index].status = 'Live';
+                    this.updateDatasource();
                 }
             );
         }
@@ -126,11 +130,16 @@ export class ConversationListComponent implements OnInit {
         this.uciService.deleteConversation(conversation.id).subscribe(
             data => {
                 this.chatBots.splice(index, 1);
+                this.updateDatasource();
             }
         );
     }
 
     onCopy(id) {
         Helper.copyData(id);
+    }
+
+    updateDatasource() {
+        this.botTable.renderRows();
     }
 }
