@@ -44,7 +44,10 @@
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>-->
-                    <mat-label>{{resourceService.frmelmnts?.lbl?.startDate}}</mat-label>
+                    <mat-label>
+                        {{resourceService.frmelmnts?.lbl?.startDate}}
+                        <sup><i class="asterisk icon asterisk-color"></i></sup>
+                    </mat-label>
                     <div class="ui left icon input">
                         <i class="calendar icon"></i>
                         <input suiDatepicker

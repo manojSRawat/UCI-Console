@@ -50,6 +50,7 @@ export class LogicListComponent implements OnInit {
             };
         }
         const dialogRef = this.dialog.open(AddLogicComponent, {
+            width: '850px',
             data
         });
 

@@ -16,6 +16,7 @@ export class AddLogicComponent {
     logicForm: FormGroup;
     odkFileAlreadyExist = false;
     fileErrorStatus;
+    breakpoint;
 
     constructor(
         private uciService: UciService,
@@ -32,6 +33,7 @@ export class AddLogicComponent {
     }
 
     initialize() {
+        this.breakpoint = (window.innerWidth <= 1000) ? 1 : 3;
         this.logicForm = this.fb.group({
             id: [null],
             name: ['', Validators.required],
@@ -92,6 +94,10 @@ export class AddLogicComponent {
 
     sampleODKDownload(): void {
         window.open(this.globalService.getBlobUrl().replace('/player', '') + 'Sample_ODK.xlsx', '_blank');
+    }
+
+    onResize(event) {
+        this.breakpoint = (event.target.innerWidth <= 1000) ? 1 : 3;
     }
 
 }

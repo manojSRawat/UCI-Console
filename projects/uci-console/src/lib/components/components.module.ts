@@ -36,6 +36,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatStepperModule} from '@angular/material/stepper';
 import {ConversationSetupComponent} from './conversation-setup/conversation-setup.component';
 import {MatListModule} from '@angular/material/list';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
@@ -74,7 +75,8 @@ import {MatListModule} from '@angular/material/list';
         MatNativeDateModule,
         MatCardModule,
         MatStepperModule,
-        MatListModule
+        MatListModule,
+        MatTooltipModule
     ],
     exports: [
         SidePanelComponent,
