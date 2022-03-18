@@ -142,4 +142,8 @@ export class ConversationListComponent implements OnInit {
     updateDatasource() {
         this.botTable.renderRows();
     }
+
+    onReport(conversation, i): void {
+        this.router.navigateByUrl(`uci-admin/${conversation.id}/reports`);
+    }
 }

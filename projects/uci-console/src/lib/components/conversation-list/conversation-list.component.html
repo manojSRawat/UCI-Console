@@ -75,6 +75,9 @@
                         <button mat-menu-item (click)="onStatusChange(element, i)">
                             {{element.status === 'Live' ? resourceService.frmelmnts?.lbl?.disable : resourceService.frmelmnts?.lbl?.enable}}
                         </button>
+                        <button mat-menu-item (click)="onReport(element, i)">
+                            {{resourceService.frmelmnts?.lbl?.report}}
+                        </button>
                     </mat-menu>
                 </td>
             </ng-container>
@@ -101,6 +104,9 @@
                                         <button mat-menu-item (click)="onDelete(chatBot, i)">{{resourceService.frmelmnts?.lbl?.delete}} </button>
                                         <button mat-menu-item (click)="onStatusChange(chatBot, i)">
                                             {{chatBot.status === 'Live' ? resourceService.frmelmnts?.lbl?.disable : resourceService.frmelmnts?.lbl?.enable}}
+                                        </button>
+                                        <button mat-menu-item (click)="onReport(chatBot, i)">
+                                            {{resourceService.frmelmnts?.lbl?.report}}
                                         </button>
                                     </mat-menu>
                                 </div>

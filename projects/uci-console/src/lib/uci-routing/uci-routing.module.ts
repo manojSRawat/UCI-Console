@@ -5,6 +5,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {ConversationListComponent} from '../components/conversation-list/conversation-list.component';
 import {ConversationAddComponent} from '../components/conversation-add/conversation-add.component';
 import {ConversationSuccessComponent} from '../components/conversation-success/conversation-success.component';
+import {ExhaustReportComponent} from '../components/exhaust-report/exhaust-report.component';
 
 
 const routes: Routes = [
@@ -31,6 +32,11 @@ const routes: Routes = [
                 path: 'success',
                 pathMatch: 'full',
                 component: ConversationSuccessComponent,
+            },
+            {
+                path: ':id/reports',
+                pathMatch: 'full',
+                component: ExhaustReportComponent,
             },
         ]
     }

@@ -38,6 +38,7 @@ import {GlobalService} from '../services/global.service';
 import {PaginatorIntl} from '../services/paginator-intl.service';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {ExhaustReportComponent} from './exhaust-report/exhaust-report.component';
 
 @NgModule({
     declarations: [
@@ -51,7 +52,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
         ConversationSuccessComponent,
         AddLogicComponent,
         LogicListComponent,
-        ConversationSetupComponent
+        ConversationSetupComponent,
+        ExhaustReportComponent
     ],
     imports: [
         CommonModule,
