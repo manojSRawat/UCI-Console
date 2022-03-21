@@ -12,6 +12,10 @@ import {ToasterService} from '../../services/toaster.service';
 })
 export class ExhaustReportComponent {
     resourceService;
+    exhaustTypes = [
+        {name: 'Response Exhaust', value: 'Response Exhaust'},
+        {name: 'Private Exhaust', value: 'Private Exhaust'},
+    ];
     displayedColumns: string[] = ['requestid', 'requesttype', 'requestdate', 'conversationid', 'startdate', 'enddate', 'status', 'reportlink', 'generateddate'];
     dataSource = [
         {
