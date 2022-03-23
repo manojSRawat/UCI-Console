@@ -92,18 +92,16 @@
                             <mat-grid-tile colspan="3" class="overflow-visible">
                                 <div class="w-100 d-flex justify-between align-middle">
                                     <h5>{{chatBot.name}}</h5>
-                                    <div class="ui dropdown" suiDropdown>
-                                        <button mat-button [matMenuTriggerFor]="menuMobile">
-                                            <mat-icon>more_vert</mat-icon>
+                                    <button mat-button [matMenuTriggerFor]="menuMobile">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menuMobile="matMenu" class="uci-list-menu">
+                                        <button mat-menu-item (click)="onEdit(chatBot)">{{resourceService.frmelmnts?.lbl?.edit}} </button>
+                                        <button mat-menu-item (click)="onDelete(chatBot, i)">{{resourceService.frmelmnts?.lbl?.delete}} </button>
+                                        <button mat-menu-item (click)="onStatusChange(chatBot, i)">
+                                            {{chatBot.status === 'Live' ? resourceService.frmelmnts?.lbl?.disable : resourceService.frmelmnts?.lbl?.enable}}
                                         </button>
-                                        <mat-menu #menuMobile="matMenu" class="uci-list-menu">
-                                            <button mat-menu-item (click)="onEdit(chatBot)">{{resourceService.frmelmnts?.lbl?.edit}} </button>
-                                            <button mat-menu-item (click)="onDelete(chatBot, i)">{{resourceService.frmelmnts?.lbl?.delete}} </button>
-                                            <button mat-menu-item (click)="onStatusChange(chatBot, i)">
-                                                {{chatBot.status === 'Live' ? resourceService.frmelmnts?.lbl?.disable : resourceService.frmelmnts?.lbl?.enable}}
-                                            </button>
-                                        </mat-menu>
-                                    </div>
+                                    </mat-menu>
                                 </div>
                             </mat-grid-tile>
                             <mat-grid-tile colspan="1">

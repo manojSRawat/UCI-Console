@@ -12,6 +12,7 @@ export class GlobalService {
     private botPhoneNumber: BehaviorSubject<any> = new BehaviorSubject('');
     private resourceService: BehaviorSubject<any> = new BehaviorSubject({});
     public readonly baseUrl$ = this.baseUrl.asObservable();
+    public readonly resourceService$ = this.resourceService.asObservable();
 
     constructor() {
     }

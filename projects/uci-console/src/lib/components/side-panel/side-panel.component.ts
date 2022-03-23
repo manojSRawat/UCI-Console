@@ -4,9 +4,7 @@ import {UciService} from '../../services/uci.service';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
-import * as CONSTANTS from '../../common/constants.json';
 /* tslint:disable */
-import * as _ from 'lodash';
 import {ConfigService} from '../../services/config.service';
 import {IdiscussionConfig, IMenuOptions} from '../../models/uci-config.model';
 import {GlobalService} from '../../services/global.service';
@@ -49,6 +47,18 @@ export class SidePanelComponent implements OnInit, OnDestroy {
         this.telemetryUtils.setContext([]);
         this.hideSidePanel = document.body.classList.contains('widget');
         this.telemetryUtils.logImpression(UciData.IPageName.HOME);
+        this.setMenu();
+        if (this.globalService.getResourceService() && this.globalService.getResourceService().languageSelected$) {
+            this.globalService.getResourceService().languageSelected$.subscribe(
+                lang => {
+                    this.menu = [];
+                    this.setMenu();
+                }
+            );
+        }
+    }
+
+    setMenu() {
         this.menu = [
             {
                 route: '',

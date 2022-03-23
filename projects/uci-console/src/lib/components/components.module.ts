@@ -26,7 +26,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -37,6 +37,8 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {ConversationSetupComponent} from './conversation-setup/conversation-setup.component';
 import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {GlobalService} from '../services/global.service';
+import {PaginatorIntl} from '../services/paginator-intl.service';
 
 @NgModule({
     declarations: [
@@ -82,10 +84,14 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         SidePanelComponent,
     ],
     providers: [
+        GlobalService,
         UciService,
         ConfigService,
         UciGraphQlService,
-        MatDatepickerModule
+        MatDatepickerModule,
+        {
+            provide: MatPaginatorIntl, useClass: PaginatorIntl
+        }
     ],
     entryComponents: [
         AddLogicComponent,

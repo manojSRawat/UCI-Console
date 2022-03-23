@@ -15,7 +15,7 @@
         <div class="computer only d-flex align-items-baseline justify-content-between">
             <div class="col-3">
                 <mat-horizontal-stepper [linear]="true" #horizontalStepper class="background-transparent">
-                    <mat-step label="Conversation setup">
+                    <mat-step label="{{resourceService.frmelmnts?.lbl?.conversationSetup}}">
                         <div class="step1-wrapper" *ngIf="stepIndex === 1">
                             <lib-conversation-setup
                                     [conversationForm]="conversationForm"
@@ -27,7 +27,7 @@
                             </lib-conversation-setup>
                         </div>
                     </mat-step>
-                    <mat-step label="Conversation flow">
+                    <mat-step label="{{resourceService.frmelmnts?.lbl?.conversationFlow}}">
                         <div class="step2-wrapper" *ngIf="stepIndex === 2">
                             <lib-logic-list [botLogics]="botLogics" (modify)="onBotLogicModify($event)">
                             </lib-logic-list>
@@ -86,7 +86,7 @@
 
         <div class="mobile only">
             <mat-vertical-stepper [linear]="true" #verticalStepper class="background-transparent">
-                <mat-step label="Conversation setup">
+                <mat-step label="{{resourceService.frmelmnts?.lbl?.conversationSetup}}">
                     <div class="step1-wrapper" *ngIf="stepIndex === 1">
                         <lib-conversation-setup
                                 [conversationForm]="conversationForm"
@@ -110,7 +110,7 @@
                         </div>
                     </div>
                 </mat-step>
-                <mat-step label="Conversation flow">
+                <mat-step label="{{resourceService.frmelmnts?.lbl?.conversationFlow}}">
                     <div class="step2-wrapper" *ngIf="stepIndex === 2">
                         <lib-logic-list [botLogics]="botLogics" (modify)="onBotLogicModify($event)">
                         </lib-logic-list>
