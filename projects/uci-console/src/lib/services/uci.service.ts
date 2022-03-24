@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {BaseService} from './base.service';
 import {Observable} from 'rxjs';
 import {GlobalService} from './global.service';
@@ -9,6 +9,7 @@ import {GlobalService} from './global.service';
 })
 export class UciService extends BaseService {
     BASE_URL;
+    DATASET_URL;
     FORM_BASE_URL = 'https://dev.sunbirded.org/';
 
     constructor(public http: HttpClient, public globalService: GlobalService) {
@@ -16,6 +17,7 @@ export class UciService extends BaseService {
         this.globalService.baseUrl$.subscribe(value => {
             if (value) {
                 this.BASE_URL = value + '/admin/v1/';
+                this.DATASET_URL = value.replace('/uci') + '/dataset/v1/';
             }
         });
     }
@@ -93,5 +95,18 @@ export class UciService extends BaseService {
 
     readForm(data) {
         return this.postRequest(this.FORM_BASE_URL + 'api/data/v1/form/read', data);
+    }
+
+    // Exhaust API
+    getJobList(id, params) {
+        return this.getRequest(this.DATASET_URL + `request/list/${id}`, params, {asset: 'conversationLogic'});
+    }
+
+    getJobInfo(id, params) {
+        return this.getRequest(this.DATASET_URL + `request/read/${id}`, params, {asset: 'conversationLogic'});
+    }
+
+    submitExhaust(data) {
+        return this.postRequest(this.DATASET_URL + `request/submit`, data, {asset: 'conversationLogic'});
     }
 }
