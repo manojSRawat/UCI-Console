@@ -6,7 +6,8 @@
                     <input matInput type="text" [(ngModel)]="search"
                            [placeholder]="resourceService.frmelmnts?.btn?.search"
                            (keyup.enter)="getSearch()">
-                    <button mat-button matSuffix mat-stroked-button aria-label="search" class="uci-action-button computer only">
+                    <button mat-button matSuffix mat-stroked-button aria-label="search"
+                            class="uci-action-button computer only" (click)="getSearch()">
 <!--                        <mat-icon>search</mat-icon>-->
                         {{resourceService.frmelmnts?.btn?.search}}
                     </button>
