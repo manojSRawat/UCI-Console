@@ -136,7 +136,7 @@
             <mat-paginator [length]="pager.totalItems"
                            [pageSize]="pager.pageSize"
                            [pageIndex]="pager.currentPage - 1"
-                           [pageSizeOptions]="pageSizeOptions"
+                           [pageSizeOptions]="pager.pageSizeOptions"
                            (page)="navigateToPage($event)">
             </mat-paginator>
         </div>

@@ -15,12 +15,11 @@ export class ConversationListComponent implements OnInit {
     chatBots = [];
     displayedColumns: string[] = ['name', 'status', 'description', 'startingMessage', 'botUrl', 'botId', 'action'];
     pager = {
-        pageSizeOption: [5, 10, 25, 100],
+        pageSizeOptions: [5, 10, 25, 30],
         currentPage: 1,
         totalItems: 0,
         pageSize: 10
     };
-    pageSizeOptions = [5, 10, 25, 30];
     column = '';
     sortDirection = '';
     reverse = false;
@@ -97,6 +96,7 @@ export class ConversationListComponent implements OnInit {
     }
 
     getSearch() {
+        this.pager.currentPage = 1;
         this.getAllChatBots();
     }
 
