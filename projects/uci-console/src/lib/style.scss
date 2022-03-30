@@ -1,4 +1,10 @@
-@import "../../assets/styles/material-icon";
+@import url( 'https://fonts.googleapis.com/css?family=Material+Icons');
+.uci-container {
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    background-color: white;
+    border-radius: 5px;
+  }
+}
 
 .mat-table {
   width: 100%;

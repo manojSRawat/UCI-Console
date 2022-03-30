@@ -6,12 +6,9 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SidePanelComponent} from './side-panel/side-panel.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {TagInputModule} from 'ngx-chips';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {ConversationListComponent} from './conversation-list/conversation-list.component';
 import {ConversationAddComponent} from './conversation-add/conversation-add.component';
 import {UserSegmentListComponent} from './user-segment-list/user-segment-list.component';
-import {CommonFormElementsModule} from 'common-form-elements-v9';
 import {UserSegmentAddComponent} from './user-segment-add/user-segment-add.component';
 import {SuiModule} from 'ng2-semantic-ui-v9';
 import {ConversationSuccessComponent} from './conversation-success/conversation-success.component';
@@ -39,6 +36,8 @@ import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {GlobalService} from '../services/global.service';
 import {PaginatorIntl} from '../services/paginator-intl.service';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
     declarations: [
@@ -59,10 +58,7 @@ import {PaginatorIntl} from '../services/paginator-intl.service';
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        TagInputModule,
         PipesModule,
-        InfiniteScrollModule,
-        CommonFormElementsModule,
         SuiModule,
         MatButtonModule,
         MatInputModule,
@@ -78,7 +74,9 @@ import {PaginatorIntl} from '../services/paginator-intl.service';
         MatCardModule,
         MatStepperModule,
         MatListModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatSelectModule,
+        MatFormFieldModule,
     ],
     exports: [
         SidePanelComponent,

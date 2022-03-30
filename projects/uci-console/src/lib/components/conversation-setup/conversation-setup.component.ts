@@ -18,6 +18,7 @@ export class ConversationSetupComponent implements OnInit {
     @Input() userSegments;
     @Output() starringMessageChange = new EventEmitter<any>();
     @Output() userSegmentDelete = new EventEmitter<any>();
+    matDateBreakpoint;
     endMinDate;
     resourceService;
 
@@ -30,6 +31,7 @@ export class ConversationSetupComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.matDateBreakpoint = (window.innerWidth <= 1000) ? 1 : 2;
         this.resourceService = this.globalService.getResourceService();
         if (this.conversationForm) {
             // start date and end date value change

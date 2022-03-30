@@ -1,77 +1,76 @@
-<div class="">
+<div class="uci-container">
     <mat-grid-list cols="1" rowHeight="4rem">
         <mat-grid-tile colspan="1" class="font-1-2 font-weight-bold">
             <div class="w-100 text-left">{{resourceService.frmelmnts?.lbl?.addConversation}}</div>
         </mat-grid-tile>
     </mat-grid-list>
-    <div class="ten wide column pt-0">
-        <form [formGroup]="conversationForm" class="ui form">
-            <div class="field">
-                <mat-label>{{resourceService.frmelmnts?.lbl?.conversationName}} <sup><i
-                        class="asterisk icon asterisk-color"></i></sup></mat-label>
-                <input matInput type="text" name="name"
-                       placeholder="{{resourceService.frmelmnts?.lbl?.enterName}}"
-                       formControlName="name">
-            </div>
-            <div class="field">
-                <mat-label>{{resourceService.frmelmnts?.lbl?.conversationDescription}}</mat-label>
-                <textarea rows="5" name="description"
-                          placeholder="{{resourceService.frmelmnts?.lbl?.enterDescription}}"
-                          formControlName="description"></textarea>
-            </div>
-            <div class="field">
-                <mat-label>{{resourceService.frmelmnts?.lbl?.conversationPurpose}} <sup><i
-                        class="asterisk icon asterisk-color"></i></sup></mat-label>
-                <input matInput type="text" name="name"
-                       placeholder="{{resourceService.frmelmnts?.lbl?.enterPurpose}}"
-                       formControlName="purpose">
-            </div>
-            <div class="field">
-                <mat-label>{{resourceService.frmelmnts?.lbl?.startMessage}} <sup><i
-                        class="asterisk icon asterisk-color"></i></sup></mat-label>
-                <input matInput type="text" name="startingMessage"
-                       placeholder="{{resourceService.frmelmnts?.lbl?.enterMessage}}"
-                       formControlName="startingMessage">
-                <small *ngIf="isStartingMessageExist" class="text-danger">
-                    {{resourceService.frmelmnts?.lbl?.startMessageError}}
-                </small>
-            </div>
-            <div class="two fields">
-                <div class="field">
-                    <!--<mat-form-field appearance="fill">
-                        <mat-label>{{resourceService.frmelmnts?.lbl?.startDate}}</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="startDate">
+
+    <form [formGroup]="conversationForm">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>{{resourceService.frmelmnts?.lbl?.conversationName}}
+                <sup><i class="asterisk icon asterisk-color"></i></sup>
+            </mat-label>
+            <input matInput type="text" name="name"
+                   placeholder="{{resourceService.frmelmnts?.lbl?.enterName}}"
+                   formControlName="name">
+        </mat-form-field>
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>{{resourceService.frmelmnts?.lbl?.conversationDescription}}</mat-label>
+            <textarea matInput rows="5" name="description"
+                      placeholder="{{resourceService.frmelmnts?.lbl?.enterDescription}}"
+                      formControlName="description">
+            </textarea>
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>
+                {{resourceService.frmelmnts?.lbl?.conversationPurpose}}
+                <sup><i class="asterisk icon asterisk-color"></i></sup>
+            </mat-label>
+            <input matInput type="text" name="name"
+                   placeholder="{{resourceService.frmelmnts?.lbl?.enterPurpose}}"
+                   formControlName="purpose">
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>{{resourceService.frmelmnts?.lbl?.startMessage}} <sup><i
+                    class="asterisk icon asterisk-color"></i></sup></mat-label>
+            <input matInput type="text" name="startingMessage"
+                   placeholder="{{resourceService.frmelmnts?.lbl?.enterMessage}}"
+                   formControlName="startingMessage">
+            <mat-error *ngIf="isStartingMessageExist">
+                {{resourceService.frmelmnts?.lbl?.startMessageError}}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-grid-list [cols]="matDateBreakpoint" rowHeight="6rem">
+            <mat-grid-tile>
+                <div class="w-100 text-left">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>
+                            {{resourceService.frmelmnts?.lbl?.startDate}}
+                            <sup><i class="asterisk icon asterisk-color"></i></sup>
+                        </mat-label>
+                        <input matInput [matDatepicker]="picker" [min]="startMinDate" formControlName="startDate">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>-->
-                    <mat-label>
-                        {{resourceService.frmelmnts?.lbl?.startDate}}
-                        <sup><i class="asterisk icon asterisk-color"></i></sup>
-                    </mat-label>
-                    <div class="ui left icon input">
-                        <i class="calendar icon"></i>
-                        <input suiDatepicker
-                               formControlName="startDate"
-                               [pickerMode]="'date'"
-                               [pickerMinDate]="startMinDate"
-                               [pickerUseNativeOnMobile]="false">
-                    </div>
+                    </mat-form-field>
                 </div>
-                <div class="field">
-                    <mat-label>{{resourceService.frmelmnts?.lbl?.endDate}}</mat-label>
-                    <div class="ui left icon input">
-                        <i class="calendar icon"></i>
-                        <input suiDatepicker
-                               formControlName="endDate"
-                               [pickerMode]="'date'"
-                               [pickerMinDate]="endMinDate"
-                               [pickerUseNativeOnMobile]="false">
-                    </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="w-100 text-left">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>
+                            {{resourceService.frmelmnts?.lbl?.endDate}}
+                        </mat-label>
+                        <input matInput [matDatepicker]="endPicker" [min]="endMinDate" formControlName="endDate">
+                        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endPicker></mat-datepicker>
+                    </mat-form-field>
                 </div>
-            </div>
-
-        </form>
-    </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </form>
 </div>
 <!--Will enable this in future-->
 <!--<div class="ui divider"></div>
