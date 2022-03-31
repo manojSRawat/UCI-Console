@@ -21,6 +21,9 @@ export class TermsConditionConfirmComponent implements OnInit {
         private globalService: GlobalService,
         public dialogRef: MatDialogRef<TermsConditionConfirmComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) {
+        if (data && data.isSubmit) {
+            this.isSubmit = data.isSubmit;
+        }
     }
 
     ngOnInit() {
