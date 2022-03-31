@@ -7,6 +7,8 @@ import {NgModule} from '@angular/core';
 
 import {UciEventsService} from './uci-events.service';
 import {ToasterService} from './services/toaster.service';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 export function provideCsModule() {
     return window['CsModule'];
@@ -18,7 +20,9 @@ export function provideCsModule() {
     ],
     imports: [
         ComponentsModule,
-        UciRoutingModule
+        UciRoutingModule,
+        MatButtonModule,
+        MatIconModule
     ],
     exports: [
         LibEntryComponent
