@@ -5,7 +5,7 @@
     "target": "es2015",
     "module": "es2015",
     "moduleResolution": "node",
-    "resolveJsonModule": true, 
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "declaration": true,
     "sourceMap": true,
@@ -25,7 +25,8 @@
     "strictMetadataEmit": true,
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "enableResourceInlining": true
+    "enableResourceInlining": true,
+    "compilationMode": "partial"
   },
   "exclude": [
     "src/test.ts",

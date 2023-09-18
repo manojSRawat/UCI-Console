@@ -90,12 +90,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
         {
             provide: MatPaginatorIntl, useClass: PaginatorIntl
         }
-    ],
-    entryComponents: [
-        AddLogicComponent,
-        TermsConditionsComponent,
-        TermsConditionConfirmComponent
-    ],
+    ]
 })
 export class ComponentsModule {
 }
